@@ -6,18 +6,16 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 16:13:44 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/06/09 18:17:13 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/06/12 20:27:31 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minilibx-linux/mlx_int.h"
-#include "minilibx-linux/mlx.h"
-#include <stdlib.h>
+
+#include "so_long.h"
 
 #define MALLOC_ERROR    1
 #define WIDTH   400
 #define HEIGHT  400
-
 
 int main()
 {
