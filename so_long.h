@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 16:13:48 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/06/12 20:46:23 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/06/13 21:49:59 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,51 @@
 
 #define SZ 40 //img size
 /*
-**                              C
+**                              IMAGES
 */
+# define FLOOR "./img/floor.xpm"
+# define WALL "./img/wall.xpm"
+# define BLOOD "./img/blood.xpm"
+# define EXIT "./img/ExitPriestess.xpm"
+
+# define PLAYER_FRONT_STAND "./img/gsFront2.xpm"
+# define PLAYER_FRONT_MV1 "./img/gsFront1.xpm"
+# define PLAYER_FRONT_MV2 "./img/gsFront3.xpm"
+# define PLAYER_BACK_MV1 "./img/gsBack1.xpm"
+# define PLAYER_BACK_MV2  "./img/gsBack2.xpm"
+# define PLAYER_BACK_MV3  "./img/gsBack3.xpm"
+# define PLAYER_LEFT_MV1 "./img/gsSideLeft1.xpm"
+# define PLAYER_LEFT_MV2  "./img/gsSideLeft2.xpm"
+# define PLAYER_LEFT_MV3  "./img/gsSideLeft3.xpm"
+# define PLAYER_RIGHT_MV1 "./img/gsSideLeft1.xpm"
+# define PLAYER_RIGHT_MV2  "./img/gsSideLeft2.xpm"
+# define PLAYER_RIGHT_MV3  "./img/gsSideLeft3.xpm"
+
+# define GOBLIN_FRONT_STAND "./img/GCFront2.xpm"
+# define GOBLIN_FRONT_MV1 "./img/GCFront1.xpm"
+# define GOBLIN_FRONT_MV2 "./img/GCFront3.xpm"
+# define GOBLIN_BACK_MV1 "./img/GCBack1.xpm"
+# define GOBLIN_BACK_MV2  "./img/GCBack2.xpm"
+# define GOBLIN_BACK_MV3  "./img/GCBack3.xpm"
+# define GOBLIN_LEFT_MV1 "./img/GCSideLeft1.xpm"
+# define GOBLIN_LEFT_MV2  "./img/GCSideLeft2.xpm"
+# define GOBLIN_LEFT_MV3  "./img/GCSideLeft3.xpm"
+# define GOBLIN_RIGHT_MV1 "./img/GCSideLeft1.xpm"
+# define GOBLIN_RIGHT_MV2  "./img/GCSideLeft2.xpm"
+# define GOBLIN_RIGHT_MV3  "./img/GCSideLeft3.xpm"
+
+# define ENEMY_FRONT_STAND "./img/GEnemyFront2.xpm"
+# define ENEMY_FRONT_MV1 "./img/GEnemyFront1.xpm"
+# define ENEMY_FRONT_MV2 "./img/GEnemyFront3.xpm"
+# define ENEMY_BACK_MV1 "./img/GEnemyBack1.xpm"
+# define ENEMY_BACK_MV2  "./img/GEnemyBack2.xpm"
+# define ENEMY_BACK_MV3  "./img/GEnemyBack3.xpm"
+# define ENEMY_LEFT_MV1 "./img/GEnemyLeft1.xpm"
+# define ENEMY_LEFT_MV2  "./img/GEnemyLeft2.xpm"
+# define ENEMY_LEFT_MV3  "./img/GEnemyLeft3.xpm"
+# define ENEMY_RIGHT_MV1 "./img/GEnemyLeft1.xpm"
+# define ENEMY_RIGHT_MV2  "./img/GEnemyLeft2.xpm"
+# define ENEMY_RIGHT_MV3  "./img/GEnemyLeft3.xpm"
 /*
 **                              FUNCTION PROTOTYPES
 */
