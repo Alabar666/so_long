@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 16:13:44 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/06/12 20:27:31 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/06/16 19:22:20 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,35 +17,25 @@
 #define WIDTH   400
 #define HEIGHT  400
 
-int main()
+int main(int ac, char **av)
 {
-    void *mlx_connection;
-    void *mlx_window;
+    t_game  game;
     
-    mlx_connection = mlx_init();
-    if (NULL == mlx_connection)
-        return(MALLOC_ERROR);
-
+    if(ac == 2)
+    {
+        map_start(av[1], &game);
+        draw_map(&game);
         
-    mlx_window = mlx_new_window(mlx_connection,
-        HEIGHT,/*size_x*/
-        WIDTH,/*size_y*/
-        "The Slayer");/*title*/
-    if(NULL == mlx_window){
-        mlx_destroy_display(mlx_connection);
-        free(mlx_connection);
-        return(MALLOC_ERROR);
+        mlx_loop(game.mlx);
+
+        mlx_destroy_image(game.mlx, game.map.img);
+        mlx_destroy_window(game.mlx, game.win);
+        mlx_destroy_display(game.mlx);
+     free(game.mlx);     
     }
-
-
-    mlx_loop(mlx_connection);
-
-
-    mlx_destroy_window(mlx_connection, mlx_window);
-    mlx_destroy_display(mlx_connection);
-    free(mlx_connection);
-
-    return (0);    
+    
+    
+	return (write(2, "Error\nInvalid input\n", 21));
 }
 
 

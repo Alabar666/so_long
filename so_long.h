@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 16:13:48 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/06/13 21:49:59 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/06/16 20:28:31 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 */
 # include "minilibx-linux/mlx_int.h"
 # include "minilibx-linux/mlx.h"
+# include "./Libft/libft.h"
+# include <X11/keysym.h>
 # include <fcntl.h>//open
 # include <stddef.h>
 # include <stdio.h>//error
@@ -96,13 +98,80 @@
 /*
 **                              FUNCTION PROTOTYPES
 */
+typedef struct s_sprite{
+    void *img;
+    int width;
+    int height;
+    
+} t_sprite;
+
+typedef struct s_collectible{
+   int x;
+   int y;
+   int direction;
+   void *gc;
+   t_sprite sprites[4][3];//4 directions, 3 sprites each direction
+   int active;
+} t_collectible;
+
+typedef struct s_player{
+   int x;
+   int y;
+   int direction;
+   void * plr;
+   t_sprite sprites[4][3];//4 directions, 3 sprites each direction
+   int alive;
+} t_player;
+
+typedef struct s_enemy{
+   int x;
+   int y;
+   int direction;
+   void * ge;
+   t_sprite sprites[4][3];//4 directions, 3 sprites each direction
+   int active;
+} t_enemy;
+
+typedef struct s_map{
+   char **map;
+   void **img;
+   int lines;
+   int colun;
+   int width;
+   int height;
+   void *floor;
+   void *wall;
+   void *exit;
+}  t_map;
+
+typedef struct s_game{
+   void *mlx;
+   void *win;
+   t_map map;
+   t_player plr;
+   t_collectible gc;
+   t_enemy ge;
+   void *e;
+   
+}  t_game;
+
+
+/*
+**                              FUNCTION PROTOTYPES
+*/
 char	*get_next_line(int fd);
 char	*read_line(int fd, char *backup);
 char	*get_line(char *backup);
 char	*get_next(char *backup);
-size_t	ft_strlen(char *s);
-char	*ft_strchr(char *s, int c);
-char	*ft_strjoin(char *s1, char *s2);
-void	*ft_calloc(size_t count, size_t size);
+size_t	ft_strlen_gnl(char *s);
+char	*ft_strchr_gnl(char *s, int c);
+char	*ft_strjoin_gnl(char *s1, char *s2);
+void	*ft_calloc_gnl(size_t count, size_t size);
+void	init_map(t_game *game);
+int		count_lines(char *file);
+void parse_map(char *file, t_game *game);
+void map_start(char * file, t_game *game);
+void	draw_map(t_game *game);
+void	load_images(t_game *game);
 
 #endif

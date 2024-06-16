@@ -6,29 +6,34 @@
 #    By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/09 19:22:40 by hluiz-ma          #+#    #+#              #
-#    Updated: 2024/06/12 20:58:53 by hluiz-ma         ###   ########.fr        #
+#    Updated: 2024/06/16 18:18:21 by hluiz-ma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = so_long
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g
 OBJS = $(SRCS:.c=.o)
 OBJS_BONUS = $(BONUS:.c=.o)
+LIBFT_DIR = ./Libft
+LIBFT = $(LIBFT_DIR)/libft.a
 MLX_DIR = minilibx-linux/
 MLX = $(MLX_DIR)libmlx.a
 MLXFLAGS = -L$(MLX_DIR) -lmlx -lm -lX11 -lXext
 GNL = get_next_line.c get_next_line_utils.c
-SRCS = so_long.c
+SRCS = so_long.c map.c
 BONUS = 
 RM= rm -rf
 
 all: $(NAME)
 
-$(NAME):	$(SRCS) $(MLX) $(OBJS)
-			@$(CC) $(CFLAGS) $(OBJS) $(MLXFLAGS) $(GNL) -o $(NAME)  
+$(NAME):	$(SRCS) $(LIBFT) $(MLX) $(OBJS)
+			@$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(MLXFLAGS) $(GNL) -o $(NAME)  
 			@echo "\033[1;32m[ ✔ ] $(NAME) ready!\033[0m"
 			@echo "\033[0;31m𓄿 𓅓  Made by Alabar 𓄿 𓅓"
+			
+$(LIBFT):
+				@make --silent -C $(LIBFT_DIR)			
 			
 # Build minilibx-linux library
 $(MLX): $(MLX_DIR)

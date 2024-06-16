@@ -1,0 +1,9 @@
+{
+    "files.associations": {
+        "libft.h": "c",
+        "stdlib.h": "c",
+        "unistd.h": "c",
+        "stdio.h": "c",
+        "ctype.h": "c"
+    }
+}

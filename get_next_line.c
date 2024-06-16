@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 19:43:57 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/06/12 20:35:57 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/06/16 18:22:18 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@ char	*read_line(int fd, char *backup)
 	int		bytes_read;
 	char	*buffer;
 
-	buffer = ft_calloc(sizeof(char), (BUFFER_SIZE + 1));
+	buffer = ft_calloc_gnl(sizeof(char), (BUFFER_SIZE + 1));
 	if (!buffer)
 		return (NULL);
 	bytes_read = 1;
-	while (!(ft_strchr(backup, '\n')) && bytes_read != 0)
+	while (!(ft_strchr_gnl(backup, '\n')) && bytes_read != 0)
 	{
 		bytes_read = read(fd, buffer, BUFFER_SIZE);
 		if (bytes_read < 0)
@@ -33,7 +33,7 @@ char	*read_line(int fd, char *backup)
 		buffer[bytes_read] = 0;
 		if (!buffer)
 			return (NULL);
-		backup = ft_strjoin(backup, buffer);
+		backup = ft_strjoin_gnl(backup, buffer);
 	}
 	free(buffer);
 	return (backup);
@@ -50,9 +50,9 @@ char	*get_line(char *backup)
 	while (backup[i] && backup[i] != '\n')
 		i++;
 	if (backup[i] == '\0')
-		line = ft_calloc(sizeof(char), (i + 1));
+		line = ft_calloc_gnl(sizeof(char), (i + 1));
 	else
-		line = ft_calloc(sizeof(char), (i + 2));
+		line = ft_calloc_gnl(sizeof(char), (i + 2));
 	if (!line)
 		return (NULL);
 	i = 0;
@@ -81,7 +81,7 @@ char	*get_next(char *backup)
 		free(backup);
 		return (NULL);
 	}
-	next = ft_calloc(sizeof(char), (ft_strlen(backup) - i + 1));
+	next = ft_calloc_gnl(sizeof(char), (ft_strlen_gnl(backup) - i + 1));
 	if (!next)
 	{
 		free(next);

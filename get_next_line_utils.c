@@ -6,13 +6,13 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 20:39:57 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/06/12 20:36:00 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/06/16 18:23:38 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-size_t	ft_strlen(char *s)
+size_t	ft_strlen_gnl(char *s)
 {
 	size_t	l;
 
@@ -22,7 +22,7 @@ size_t	ft_strlen(char *s)
 	return (l);
 }
 
-char	*ft_strchr(char *s, int c)
+char	*ft_strchr_gnl(char *s, int c)
 {
 	unsigned int	i;
 
@@ -36,13 +36,13 @@ char	*ft_strchr(char *s, int c)
 	return (0);
 }
 
-char	*ft_strjoin(char *s1, char *s2)
+char	*ft_strjoin_gnl(char *s1, char *s2)
 {
 	unsigned int	i;
 	unsigned int	j;
 	char			*str;
 
-	str = (char *)ft_calloc(sizeof(char), (ft_strlen(s1) + ft_strlen(s2) + 1));
+	str = (char *)ft_calloc_gnl(sizeof(char), (ft_strlen_gnl(s1) + ft_strlen_gnl(s2) + 1));
 	if (!str)
 		return (NULL);
 	i = 0;
@@ -62,7 +62,7 @@ char	*ft_strjoin(char *s1, char *s2)
 	return (str);
 }
 
-void	*ft_calloc(size_t count, size_t size)
+void	*ft_calloc_gnl(size_t count, size_t size)
 {
 	char			*str;
 	unsigned int	i;
