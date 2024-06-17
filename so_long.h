@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 16:13:48 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/06/16 20:28:31 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/06/17 19:54:08 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,5 +173,8 @@ void parse_map(char *file, t_game *game);
 void map_start(char * file, t_game *game);
 void	draw_map(t_game *game);
 void	load_images(t_game *game);
+void key_pressed(int key, t_game *game);
+void clean_img(t_game *game);
+void gameover(t_game *game);
 
 #endif

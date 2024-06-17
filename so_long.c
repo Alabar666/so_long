@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 16:13:44 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/06/16 19:22:20 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/06/17 19:37:22 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ int main(int ac, char **av)
     {
         map_start(av[1], &game);
         draw_map(&game);
-        
+        mlx_key_hook(game.win, key_pressed, &game);
         mlx_loop(game.mlx);
-
+        
         mlx_destroy_image(game.mlx, game.map.img);
         mlx_destroy_window(game.mlx, game.win);
         mlx_destroy_display(game.mlx);
