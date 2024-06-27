@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 16:13:48 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/06/25 20:28:54 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/06/24 18:16:29 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,16 @@
 # include <unistd.h>//read, write
 # include <stdlib.h>//malloc,free, exit + rand
 /*
+**                              BUFFERS
+*/
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 42
+# endif
+
+# ifndef MAX_FDS
+#  define MAX_FDS 4242
+# endif
+/*
 **                              KEY CODES
 */
 # define UP 65362
@@ -39,6 +49,7 @@
 # define ESC 65307
 
 #define SZ 40 //img size
+#define MALLOC_ERROR    1
 /*
 **                              IMAGES
 */
@@ -89,61 +100,38 @@
 **                              FUNCTION PROTOTYPES
 */
 typedef struct s_sprite{
-   void *img;
-   int width;
-   int height;
-   int		*px_size;
-	int		*px_height;
-	int		*px_width;
-	int		keyframe;
-	int		frame;
-   void  *p1[4][3];
-   void *floor;
-   void *wall;
-   void *exit;
+    void *img;
+    char *addr;
+    int width;
+    int height;
+    int bits_per_pixel;
+    int line_length;
+    int endian;
     
 } t_sprite;
 
-typedef struct s_collectible{
-   int x;
-   int y;
-   int direction;
-   void *gc;
-   t_sprite sprites[4][3];//4 directions, 3 sprites each direction
-   int active;
-} t_collectible;
-
-typedef struct s_player{
-   int x;
-   int y;
-   int score;
-} t_player;
-
-typedef struct s_enemy{
-   int x;
-   int y;
-   int direction;
-   void * ge;
-   t_sprite sprites[4][3];//4 directions, 3 sprites each direction
-   int active;
-} t_enemy;
-
 typedef struct s_map{
    char **map;
-   char **map_buff;
    int lines;
    int colun;
    int width;
    int height;
 }  t_map;
 
+typedef struct s_player{
+   int x;
+   int y;
+   t_sprite *p1;
+   int alive;
+} t_player;
+
 typedef struct s_game{
    void *mlx;
    void *win;
-   t_map *map;
-   t_player *p1;
-   t_collectible *gc;
-   t_enemy *ge;
+   t_map map;
+   t_sprite *world;
+   t_player p1;
+   void *e;
    
 }  t_game;
 
@@ -167,6 +155,15 @@ void	draw_map(t_game *game);
 void	load_images(t_game *game);
 int key_pressed(int key, t_game *game);
 void clean_img(t_game *game);
-void gameover(t_game *game);
+int gameover(t_game *game);
+char	*get_sprite_path(t_game *game, char c);
+void	create_map(t_game *game);
+void	put_pixel(t_sprite *sprite, int x, int y, int color);
+void    create_world(t_sprite *sprite, t_game *game, int posx, int posy);
+t_sprite *create_sprite(t_game *game, char *sprite_path);
+unsigned int	get_color_in_pixel(t_sprite *sprite, int x, int y);
+void	free_map(char **map);
+int	update_frame(t_game *game);
+
 
 #endif
