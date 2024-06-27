@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 16:13:48 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/06/17 19:54:08 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/06/25 20:28:54 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,6 @@
 # include <string.h>//strerror
 # include <unistd.h>//read, write
 # include <stdlib.h>//malloc,free, exit + rand
-/*
-**                              BUFFERS
-*/
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 42
-# endif
-
-# ifndef MAX_FDS
-#  define MAX_FDS 4242
-# endif
 /*
 **                              KEY CODES
 */
@@ -99,9 +89,18 @@
 **                              FUNCTION PROTOTYPES
 */
 typedef struct s_sprite{
-    void *img;
-    int width;
-    int height;
+   void *img;
+   int width;
+   int height;
+   int		*px_size;
+	int		*px_height;
+	int		*px_width;
+	int		keyframe;
+	int		frame;
+   void  *p1[4][3];
+   void *floor;
+   void *wall;
+   void *exit;
     
 } t_sprite;
 
@@ -117,10 +116,7 @@ typedef struct s_collectible{
 typedef struct s_player{
    int x;
    int y;
-   int direction;
-   void * plr;
-   t_sprite sprites[4][3];//4 directions, 3 sprites each direction
-   int alive;
+   int score;
 } t_player;
 
 typedef struct s_enemy{
@@ -134,24 +130,20 @@ typedef struct s_enemy{
 
 typedef struct s_map{
    char **map;
-   void **img;
+   char **map_buff;
    int lines;
    int colun;
    int width;
    int height;
-   void *floor;
-   void *wall;
-   void *exit;
 }  t_map;
 
 typedef struct s_game{
    void *mlx;
    void *win;
-   t_map map;
-   t_player plr;
-   t_collectible gc;
-   t_enemy ge;
-   void *e;
+   t_map *map;
+   t_player *p1;
+   t_collectible *gc;
+   t_enemy *ge;
    
 }  t_game;
 
@@ -173,7 +165,7 @@ void parse_map(char *file, t_game *game);
 void map_start(char * file, t_game *game);
 void	draw_map(t_game *game);
 void	load_images(t_game *game);
-void key_pressed(int key, t_game *game);
+int key_pressed(int key, t_game *game);
 void clean_img(t_game *game);
 void gameover(t_game *game);
 
