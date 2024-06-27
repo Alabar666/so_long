@@ -6,12 +6,20 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 21:07:19 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/06/25 20:31:18 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/06/27 20:35:35 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
+void	init_map(t_game *game)
+{
+	game->map.map = NULL;
+	game->map.colun = 0;
+	game->map.lines = 0;
+	game->map.width = 0;
+	game->map.height = 0;
+}
 int		count_lines(char *file)
 {
 	int		count;
@@ -48,11 +56,11 @@ void parse_map(char *file, t_game *game)
     while((map = get_next_line(fd)) != NULL)
     {   
         game->map.map[i] = ft_calloc(sizeof(char *), ft_strlen(map) + 1);
-        game->map.map[i] = ft_strdup(map);
+        ft_strlcpy(game->map.map[i], map, ft_strlen(map));
         free(map);   
         i++; 
     }
-    game->map.colun = ft_strlen(game->map.map[0]) - 1;
+    game->map.colun = ft_strlen(game->map.map[0]);
     close(fd);   
 }
 
@@ -60,7 +68,30 @@ void map_start(char * file, t_game *game)
 {
     parse_map(file, game);
     game->mlx = mlx_init();
+	if (!game->mlx)
+    {
+        fprintf(stderr, "Error\nFailed to initialize mlx\n");
+        exit(1);
+    }
     game->win = mlx_new_window(game->mlx, SZ*game->map.colun, SZ*game->map.lines, "The Slayer");
+	if (!game->win)
+    {
+        fprintf(stderr, "Error\nFailed to create window\n");
+        exit(1);
+    }
+}
+/*
+void	load_images(t_game *game)
+{
+	int	s;
+
+	s = SZ;
+	game->map.floor = mlx_xpm_file_to_image(game->mlx, FLOOR, &s, &s);
+    game->map.wall = mlx_xpm_file_to_image(game->mlx, WALL, &s, &s);
+	game->plr.plr = mlx_xpm_file_to_image(game->mlx, PLAYER_FRONT_STAND, &s, &s);
+    game->map.exit = mlx_xpm_file_to_image(game->mlx, EXIT, &s, &s);
+    game->ge.ge = mlx_xpm_file_to_image(game->mlx, ENEMY_FRONT_STAND, &s, &s);
+    game->gc.gc = mlx_xpm_file_to_image(game->mlx, GOBLIN_FRONT_STAND, &s, &s);
 }
 
 void	draw_map(t_game *game)
@@ -89,4 +120,4 @@ void	draw_map(t_game *game)
 			    mlx_put_image_to_window(game->mlx, game->win, game->ge.ge, SZ*y, SZ*x);
 		}
 	}
-}
+}*/
