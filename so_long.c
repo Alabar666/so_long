@@ -6,16 +6,16 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 16:13:44 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/06/17 19:37:22 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/06/27 20:40:25 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "so_long.h"
 
+static void	start_world(t_game *game);
+
 #define MALLOC_ERROR    1
-#define WIDTH   400
-#define HEIGHT  400
 
 int main(int ac, char **av)
 {
@@ -24,11 +24,16 @@ int main(int ac, char **av)
     if(ac == 2)
     {
         map_start(av[1], &game);
-        draw_map(&game);
-        mlx_key_hook(game.win, key_pressed, &game);
+        start_world(&game);
+        create_map(&game);
+//        draw_map(&game);
+ //       mlx_key_hook(game.win, key_pressed, &game);
+ 
+        update_frame(&game);
         mlx_loop(game.mlx);
+         mlx_loop_hook(game.mlx, update_frame, &game);
         
-        mlx_destroy_image(game.mlx, game.map.img);
+        mlx_destroy_image(game.mlx, game.world);
         mlx_destroy_window(game.mlx, game.win);
         mlx_destroy_display(game.mlx);
      free(game.mlx);     
@@ -37,7 +42,31 @@ int main(int ac, char **av)
     
 	return (write(2, "Error\nInvalid input\n", 21));
 }
+static void	start_world(t_game *game)
+{
+	t_sprite	*world;
 
+	world = (t_sprite *)ft_calloc(1, sizeof(t_sprite));
+    if (!world)
+    {
+        fprintf(stderr, "Error\nFailed to allocate memory for world\n");
+        exit(MALLOC_ERROR);
+    }
+	world->img = mlx_new_image(game->mlx,
+			game->map.lines * SZ, game->map.colun * SZ);
+	if (!world->img)
+	{
+		free_map(game->map.map);
+		exit(0);
+	}
+	world->addr = mlx_get_data_addr(world->img, &world->bits_per_pixel,
+			&world->line_length, &world->endian);
+	world->width = game->map.lines * SZ;
+	world->height = game->map.colun * SZ;
+	game->world = world;
+    
+    printf("World created with dimensions: %d x %d\n", world->width, world->height);
+}
 
 
 
