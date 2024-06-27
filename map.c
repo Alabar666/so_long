@@ -6,21 +6,12 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 21:07:19 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/06/17 20:49:13 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/06/25 20:31:18 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	init_map(t_game *game)
-{
-	game->map.map = NULL;
-	game->map.img = NULL;
-	game->map.colun = 0;
-	game->map.lines = 0;
-	game->map.width = 0;
-	game->map.height = 0;
-}
 int		count_lines(char *file)
 {
 	int		count;
@@ -70,19 +61,6 @@ void map_start(char * file, t_game *game)
     parse_map(file, game);
     game->mlx = mlx_init();
     game->win = mlx_new_window(game->mlx, SZ*game->map.colun, SZ*game->map.lines, "The Slayer");
-}
-
-void	load_images(t_game *game)
-{
-	int	s;
-
-	s = SZ;
-	game->map.floor = mlx_xpm_file_to_image(game->mlx, FLOOR, &s, &s);
-    game->map.wall = mlx_xpm_file_to_image(game->mlx, WALL, &s, &s);
-	game->plr.plr = mlx_xpm_file_to_image(game->mlx, PLAYER_FRONT_STAND, &s, &s);
-    game->map.exit = mlx_xpm_file_to_image(game->mlx, EXIT, &s, &s);
-    game->ge.ge = mlx_xpm_file_to_image(game->mlx, ENEMY_FRONT_STAND, &s, &s);
-    game->gc.gc = mlx_xpm_file_to_image(game->mlx, GOBLIN_FRONT_STAND, &s, &s);
 }
 
 void	draw_map(t_game *game)
