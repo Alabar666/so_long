@@ -1,7 +1,7 @@
 /* XPM */
 static char * blood_xpm[] = {
 "40 40 655 2",
-"  	c None",
+"  	c #FFC0CB",
 ". 	c #7E051A",
 "+ 	c #7D091B",
 "@ 	c #7A031C",

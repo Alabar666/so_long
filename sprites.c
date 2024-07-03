@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 15:25:58 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/06/27 20:37:11 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/07/03 21:51:36 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,17 @@ void    create_world(t_sprite *sprite, t_game *game, int posx, int posy)
 		}
 	}  
 }
+
+
 void	put_pixel(t_sprite *sprite, int x, int y, int color)
 {
 	char	*dst;
-
+	
+    if (x < 0 || x >= sprite->width || y < 0 || y >= sprite->height)
+    {
+        fprintf(stderr, "Erro: Tentativa de desenhar fora dos limites da imagem (%d, %d)\n", x, y);
+        return;
+    }
 	dst = sprite->addr + (y * sprite->line_length
 			+ x * (sprite->bits_per_pixel / 8));
 	*(unsigned int *)dst = color;
@@ -117,11 +124,13 @@ char	*get_sprite_path(t_game *game, char c)
 	else if (c == '0')
 		path = ft_strdup(FLOOR);
     else if (c == 'P')
-		path = ft_strdup(PLAYER_FRONT_STAND);
+		path = ft_strdup(FLOOR);
     else if (c == 'C')
-		path = ft_strdup(GOBLIN_FRONT_STAND);       
+		path = ft_strdup(FLOOR);       
 	else if (c == 'E')
-		path = ft_strdup(EXIT);
+		path = ft_strdup(FLOOR);
+	else if (c == 'B')
+		path = ft_strdup(BLOOD);		
 	if (!path)
     {
         fprintf(stderr, "Failed to allocate path for character: %c\n", c);
@@ -133,6 +142,7 @@ char	*get_sprite_path(t_game *game, char c)
 int	update_frame(t_game *game)
 {
 	create_map(game);
+	put_player(game);
 	mlx_put_image_to_window(game->mlx, game->win, game->world->img,
 		0, 0);
     return (0);    

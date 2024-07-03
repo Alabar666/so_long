@@ -1,7 +1,7 @@
 /* XPM */
 static char * GEnemyEsq2_xpm[] = {
 "40 40 18 1",
-" 	c None",
+" 	c #FFC0CB",
 ".	c #000000",
 "+	c #707070",
 "@	c #BFBFBF",

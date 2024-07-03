@@ -6,19 +6,33 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 21:07:19 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/06/27 20:35:35 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/07/03 21:50:50 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	init_map(t_game *game)
-{
-	game->map.map = NULL;
-	game->map.colun = 0;
-	game->map.lines = 0;
-	game->map.width = 0;
-	game->map.height = 0;
+void	init_map(t_game *game, int is_init)
+{   
+    if(is_init)
+    {
+      	game->map.map = NULL;
+	    game->map.colun = 0;
+	    game->map.lines = 0;
+	    game->map.width = 0;
+	    game->map.height = 0;
+        game->map.exit = 0;
+        game->map.enemy = 0;
+        game->map.goblin = 0;
+        game->map.player = 0;  
+    }
+    else
+    {
+        game->map.width = game->map.lines * SZ;
+        game->map.height = game->map.colun * SZ;        
+    }
+        
+
 }
 int		count_lines(char *file)
 {
@@ -38,35 +52,40 @@ int		count_lines(char *file)
 	close(fd);
 	return (count);
 }
-void parse_map(char *file, t_game *game)
+void read_map(char *file, t_game *game)
 {    
     int fd;
-    int i;
     char *map; 
 
-    init_map(game);
+    init_map(game, 0);
     fd = open(file, O_RDONLY);
     if(fd < 0){
         printf("Error opening map file %s\n", file);
         exit(EXIT_FAILURE);
     }
-    game->map.lines = count_lines(file);
-    game->map.map = ft_calloc(sizeof(char *), game->map.lines);
-    i = 0;
-    while((map = get_next_line(fd)) != NULL)
-    {   
-        game->map.map[i] = ft_calloc(sizeof(char *), ft_strlen(map) + 1);
-        ft_strlcpy(game->map.map[i], map, ft_strlen(map));
-        free(map);   
-        i++; 
+    if(!check_file_ext(file))
+    {
+        printf("Error map extension %s\n", file);
+        exit(EXIT_FAILURE);
     }
-    game->map.colun = ft_strlen(game->map.map[0]);
+    game->map.lines = count_lines(file);
+    map = get_next_line(fd);
+    game->map.colun = ft_strlen(map) - 1;
+    while(map)
+    {   
+        free(map);
+        map = get_next_line(fd); 
+    }
     close(fd);   
 }
+//if (ft_strlen(m.filedata) != m.grid_x * m.grid_y + m.grid_y - 1)
+//		error_game(data, ERROR_MAP_INVALID, "map is not rect.");
+//if (m.item == 0 || m.player == 0 || m.exit != 1)
+//    error_game(data, ERROR_MAP_INVALID, "map not meet minimun requirement");
 
 void map_start(char * file, t_game *game)
 {
-    parse_map(file, game);
+    read_map(file, game);
     game->mlx = mlx_init();
 	if (!game->mlx)
     {
@@ -80,44 +99,3 @@ void map_start(char * file, t_game *game)
         exit(1);
     }
 }
-/*
-void	load_images(t_game *game)
-{
-	int	s;
-
-	s = SZ;
-	game->map.floor = mlx_xpm_file_to_image(game->mlx, FLOOR, &s, &s);
-    game->map.wall = mlx_xpm_file_to_image(game->mlx, WALL, &s, &s);
-	game->plr.plr = mlx_xpm_file_to_image(game->mlx, PLAYER_FRONT_STAND, &s, &s);
-    game->map.exit = mlx_xpm_file_to_image(game->mlx, EXIT, &s, &s);
-    game->ge.ge = mlx_xpm_file_to_image(game->mlx, ENEMY_FRONT_STAND, &s, &s);
-    game->gc.gc = mlx_xpm_file_to_image(game->mlx, GOBLIN_FRONT_STAND, &s, &s);
-}
-
-void	draw_map(t_game *game)
-{
-	int	x;
-	int	y;
-
-    load_images(game);
-	x = -1;
-	while (game->map.map[++x])
-	{
-		y = -1;
-		while (game->map.map[x][++y])
-		{
-            if(game->map.map[x][y] == '0')
-			    mlx_put_image_to_window(game->mlx, game->win, game->map.floor, SZ*y, SZ*x);
-            if(game->map.map[x][y] == '1')
-			    mlx_put_image_to_window(game->mlx, game->win, game->map.wall, SZ*y, SZ*x);
-            if(game->map.map[x][y] == 'P')
-			    mlx_put_image_to_window(game->mlx, game->win, game->plr.plr, SZ*y, SZ*x);
-            if(game->map.map[x][y] == 'E')
-			    mlx_put_image_to_window(game->mlx, game->win, game->map.exit, SZ*y, SZ*x);
-            if(game->map.map[x][y] == 'C')
-			    mlx_put_image_to_window(game->mlx, game->win, game->gc.gc, SZ*y, SZ*x);
-            if(game->map.map[x][y] == 'T')
-			    mlx_put_image_to_window(game->mlx, game->win, game->ge.ge, SZ*y, SZ*x);
-		}
-	}
-}*/

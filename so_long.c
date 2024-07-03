@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 16:13:44 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/06/27 20:40:25 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/06/30 16:39:25 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,11 @@ int main(int ac, char **av)
     {
         map_start(av[1], &game);
         start_world(&game);
+        init_player(&game);
         create_map(&game);
 //        draw_map(&game);
- //       mlx_key_hook(game.win, key_pressed, &game);
- 
+//        mlx_key_hook(game.win, key_pressed, &game);
+        mlx_hook(game.win, KeyPress, KeyPressMask, key_pressed, &game);
         update_frame(&game);
         mlx_loop(game.mlx);
          mlx_loop_hook(game.mlx, update_frame, &game);
@@ -76,6 +77,9 @@ static void	start_world(t_game *game)
 
 
 /*
+
+struct do mlx tem o delta
+
 mlx_init() = inicializa a biblioteca
 mlx_new_window = abre uma janela
 mlx_hook(KeyPress) = key continuosly pressed

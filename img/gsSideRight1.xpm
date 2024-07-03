@@ -1,7 +1,7 @@
 /* XPM */
 static char * gsLadoDir1_xpm[] = {
 "40 40 19 1",
-" 	c None",
+" 	c #FFC0CB",
 ".	c #AE334A",
 "+	c #551B1B",
 "@	c #000000",

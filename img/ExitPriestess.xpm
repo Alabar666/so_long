@@ -1,7 +1,7 @@
 /* XPM */
 static char * ExitPriestess_xpm[] = {
 "40 40 25 1",
-" 	c None",
+" 	c #FFC0CB",
 ".	c #000000",
 "+	c #FFFFFF",
 "@	c #C1C1C1",

@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 16:13:48 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/06/24 18:16:29 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/07/03 20:38:47 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,16 @@
 # define KEY_D 100
 # define ESC 65307
 
+# define STAND       0
+# define DIR_LEFT    1
+# define DIR_RIGHT   2
+# define DIR_UP      3
+# define DIR_DOWN    4 
+
 #define SZ 40 //img size
 #define MALLOC_ERROR    1
+#define TRUE 1
+#define FALSE 0
 /*
 **                              IMAGES
 */
@@ -67,9 +75,9 @@
 # define PLAYER_LEFT_MV1 "./img/gsSideLeft1.xpm"
 # define PLAYER_LEFT_MV2  "./img/gsSideLeft2.xpm"
 # define PLAYER_LEFT_MV3  "./img/gsSideLeft3.xpm"
-# define PLAYER_RIGHT_MV1 "./img/gsSideLeft1.xpm"
-# define PLAYER_RIGHT_MV2  "./img/gsSideLeft2.xpm"
-# define PLAYER_RIGHT_MV3  "./img/gsSideLeft3.xpm"
+# define PLAYER_RIGHT_MV1 "./img/gsSideRight1.xpm"
+# define PLAYER_RIGHT_MV2  "./img/gsSideRight2.xpm"
+# define PLAYER_RIGHT_MV3  "./img/gsSideRight3.xpm"
 
 # define GOBLIN_FRONT_STAND "./img/GCFront2.xpm"
 # define GOBLIN_FRONT_MV1 "./img/GCFront1.xpm"
@@ -80,9 +88,9 @@
 # define GOBLIN_LEFT_MV1 "./img/GCSideLeft1.xpm"
 # define GOBLIN_LEFT_MV2  "./img/GCSideLeft2.xpm"
 # define GOBLIN_LEFT_MV3  "./img/GCSideLeft3.xpm"
-# define GOBLIN_RIGHT_MV1 "./img/GCSideLeft1.xpm"
-# define GOBLIN_RIGHT_MV2  "./img/GCSideLeft2.xpm"
-# define GOBLIN_RIGHT_MV3  "./img/GCSideLeft3.xpm"
+# define GOBLIN_RIGHT_MV1 "./img/GCSideRight1.xpm"
+# define GOBLIN_RIGHT_MV2  "./img/GCSideRight2.xpm"
+# define GOBLIN_RIGHT_MV3  "./img/GCSideRight3.xpm"
 
 # define ENEMY_FRONT_STAND "./img/GEnemyFront2.xpm"
 # define ENEMY_FRONT_MV1 "./img/GEnemyFront1.xpm"
@@ -93,12 +101,24 @@
 # define ENEMY_LEFT_MV1 "./img/GEnemyLeft1.xpm"
 # define ENEMY_LEFT_MV2  "./img/GEnemyLeft2.xpm"
 # define ENEMY_LEFT_MV3  "./img/GEnemyLeft3.xpm"
-# define ENEMY_RIGHT_MV1 "./img/GEnemyLeft1.xpm"
-# define ENEMY_RIGHT_MV2  "./img/GEnemyLeft2.xpm"
-# define ENEMY_RIGHT_MV3  "./img/GEnemyLeft3.xpm"
+# define ENEMY_RIGHT_MV1 "./img/GEnemyRight1.xpm"
+# define ENEMY_RIGHT_MV2  "./img/GEnemyRight2.xpm"
+# define ENEMY_RIGHT_MV3  "./img/GEnemyRight3.xpm"
 /*
 **                              FUNCTION PROTOTYPES
 */
+typedef struct s_pos{
+    int x;
+    int y;
+    
+} t_pos;
+
+typedef struct s_tile{
+   char type;
+   t_pos pos;
+    
+} t_tile;
+
 typedef struct s_sprite{
     void *img;
     char *addr;
@@ -111,18 +131,28 @@ typedef struct s_sprite{
 } t_sprite;
 
 typedef struct s_map{
-   char **map;
+   t_tile **map;
    int lines;
    int colun;
    int width;
    int height;
+   t_pos start_p1_p;
+   int goblin;
+   int enemy;
+   int exit;
+   int player;
+   
 }  t_map;
 
 typedef struct s_player{
-   int x;
-   int y;
+   t_pos p1_p;
    t_sprite *p1;
    int alive;
+   int mv_dir;
+   int face;
+   int moves;
+   int currect_sprite;
+   t_sprite *sprites[3];   
 } t_player;
 
 typedef struct s_game{
@@ -134,8 +164,6 @@ typedef struct s_game{
    void *e;
    
 }  t_game;
-
-
 /*
 **                              FUNCTION PROTOTYPES
 */
@@ -149,7 +177,7 @@ char	*ft_strjoin_gnl(char *s1, char *s2);
 void	*ft_calloc_gnl(size_t count, size_t size);
 void	init_map(t_game *game);
 int		count_lines(char *file);
-void parse_map(char *file, t_game *game);
+void read_map(char *file, t_game *game);
 void map_start(char * file, t_game *game);
 void	draw_map(t_game *game);
 void	load_images(t_game *game);
@@ -164,6 +192,11 @@ t_sprite *create_sprite(t_game *game, char *sprite_path);
 unsigned int	get_color_in_pixel(t_sprite *sprite, int x, int y);
 void	free_map(char **map);
 int	update_frame(t_game *game);
-
+void	put_player(t_game *game);
+void    create_player(t_sprite *sprite, t_game *game, int posx, int posy);
+char	*get_player_path(t_game *game, char c);
+void player_mov(t_game *game);
+void	move_dir(t_game *game);
+void init_player(t_game *game);
 
 #endif
