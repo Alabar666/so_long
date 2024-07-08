@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 16:13:48 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/07/03 20:38:47 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/07/08 21:01:33 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,11 @@
 **                              BUFFERS
 */
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 42
+#  define BUFFER_SIZE 1
 # endif
 
 # ifndef MAX_FDS
-#  define MAX_FDS 4242
+#  define MAX_FDS 42
 # endif
 /*
 **                              KEY CODES
@@ -132,6 +132,7 @@ typedef struct s_sprite{
 
 typedef struct s_map{
    t_tile **map;
+   char *map_data;
    int lines;
    int colun;
    int width;
@@ -167,6 +168,43 @@ typedef struct s_game{
 /*
 **                              FUNCTION PROTOTYPES
 */
+
+//MAP
+void	create_map(t_game *game);
+void	free_map(t_game *game);
+void map_start(char * file, t_game *game);
+void map_malloc(t_map *map);
+void fill_map(t_game *game);
+void	draw_map(t_game *game);
+void	init_map(t_game *game, int is_init);
+int		count_lines(char *file);
+void read_map(char *file, t_game *game);
+void    create_world(t_sprite *sprite, t_game *game, int posx, int posy);
+char *ft_strcat(char *dest, const char* src);
+
+// map checks
+int check_wall(t_map map);
+int is_map_rectangular(char **map);
+int map_max_size_check(t_game *game,t_map *map);
+int check_file_ext(char *file);
+
+
+//sprite
+void	load_images(t_game *game);
+void clean_img(t_game *game);
+char	*get_sprite_path(t_game *game, char c);
+void	put_pixel(t_sprite *sprite, int x, int y, int color);
+t_sprite *create_sprite(t_game *game, char *sprite_path);
+unsigned int	get_color_in_pixel(t_sprite *sprite, int x, int y);
+int	update_frame(t_game *game);
+void	put_player(t_game *game);
+void    create_player(t_sprite *sprite, t_game *game, int posx, int posy);
+char	*get_player_path(t_game *game, char c);
+void init_player(t_game *game);
+
+
+
+// utils
 char	*get_next_line(int fd);
 char	*read_line(int fd, char *backup);
 char	*get_line(char *backup);
@@ -175,28 +213,18 @@ size_t	ft_strlen_gnl(char *s);
 char	*ft_strchr_gnl(char *s, int c);
 char	*ft_strjoin_gnl(char *s1, char *s2);
 void	*ft_calloc_gnl(size_t count, size_t size);
-void	init_map(t_game *game);
-int		count_lines(char *file);
-void read_map(char *file, t_game *game);
-void map_start(char * file, t_game *game);
-void	draw_map(t_game *game);
-void	load_images(t_game *game);
+int check_file_ext(char *file);
+
+
+//moves
 int key_pressed(int key, t_game *game);
-void clean_img(t_game *game);
-int gameover(t_game *game);
-char	*get_sprite_path(t_game *game, char c);
-void	create_map(t_game *game);
-void	put_pixel(t_sprite *sprite, int x, int y, int color);
-void    create_world(t_sprite *sprite, t_game *game, int posx, int posy);
-t_sprite *create_sprite(t_game *game, char *sprite_path);
-unsigned int	get_color_in_pixel(t_sprite *sprite, int x, int y);
-void	free_map(char **map);
-int	update_frame(t_game *game);
-void	put_player(t_game *game);
-void    create_player(t_sprite *sprite, t_game *game, int posx, int posy);
-char	*get_player_path(t_game *game, char c);
 void player_mov(t_game *game);
 void	move_dir(t_game *game);
-void init_player(t_game *game);
+
+//free exit
+int gameover(t_game *game);
+
+
+
 
 #endif

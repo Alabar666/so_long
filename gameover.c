@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 19:49:26 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/06/24 16:23:49 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/07/05 20:39:20 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void gameover(t_game *game)
 */
 int	gameover(t_game *game)
 {
-    free_map(game->map.map);
+    free_map(game);
 	free(game->map.map);
 	mlx_destroy_image(game->mlx, game->world->img);
 	free(game->world);
@@ -49,7 +49,7 @@ int	gameover(t_game *game)
 	exit(0);
 	return (0);
 }
-void	free_map(char **map)
+/*void	free_map(char **map)
 {
 	int	i;
 
@@ -57,5 +57,5 @@ void	free_map(char **map)
 	while (map[++i])
 		free(map[i]);
 	free(map);
-} 
+} */
 

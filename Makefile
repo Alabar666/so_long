@@ -6,7 +6,7 @@
 #    By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/09 19:22:40 by hluiz-ma          #+#    #+#              #
-#    Updated: 2024/06/30 15:22:34 by hluiz-ma         ###   ########.fr        #
+#    Updated: 2024/07/04 21:11:29 by hluiz-ma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ MLX_DIR = minilibx-linux/
 MLX = $(MLX_DIR)libmlx.a
 MLXFLAGS = -L$(MLX_DIR) -lmlx -lm -lX11 -lXext
 GNL = get_next_line.c get_next_line_utils.c
-SRCS = so_long.c map.c gameover.c sprites.c player.c moves.c
+SRCS = so_long.c map.c gameover.c sprites.c player.c moves.c map_checks.c
 BONUS = 
 RM= rm -rf
 

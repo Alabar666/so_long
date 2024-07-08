@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 20:10:30 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/07/03 21:51:35 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/07/05 20:44:51 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,13 +75,13 @@ void	put_player(t_game *game)
 		x = -1;
 		while (++x < game->map.lines)
 		{
-            char *sprite_path = get_player_path(game, game->map.map[y][x]);
+            char *sprite_path = get_player_path(game, game->map.map[y][x].type);
             if (!sprite_path)
             {
-                fprintf(stderr, "Failed to get sprite path for character: %c at (%d, %d)\n", game->map.map[y][x], y, x);
+                fprintf(stderr, "Failed to get sprite path for character: %c at (%d, %d)\n", game->map.map[y][x].type, y, x);
                 gameover(game);
             }
-			sprite = create_sprite(game,get_player_path(game,game->map.map[y][x]));
+			sprite = create_sprite(game,get_player_path(game,game->map.map[y][x].type));
 			create_player(sprite, game, x, y);
 			mlx_destroy_image(game->mlx, sprite->img);
 			free(sprite);

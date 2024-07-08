@@ -6,20 +6,20 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 19:20:13 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/07/03 21:51:38 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/07/04 21:07:34 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-
+/*
 int key_pressed(int key, t_game *game){
     
     if (key == ESC)
     {
         gameover(game);
     }
-     /*if (game->p1.mv_dir != STAND)
-		return ;*/
+     if (game->p1.mv_dir != STAND)
+		return ;
     if (key == KEY_W || key == UP)
     {
         move_dir(game, DIR_UP);
@@ -39,7 +39,7 @@ int key_pressed(int key, t_game *game){
     return(0);
 }
 
-
+*/
 
 
 
@@ -80,7 +80,7 @@ int key_pressed(int key, t_game *game){
     }
     return(0);
 }
-*/
+*//*
 t_pos	move_dir(int dir, int size)
 {
     t_pos pos;
@@ -127,3 +127,4 @@ void player_mov(t_game *game, int dir)
     game->p1.moves += 1;
     printf("Steeps: %i\n", game->p1.moves);  
 }
+*/

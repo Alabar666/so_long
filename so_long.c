@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 16:13:44 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/06/30 16:39:25 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/07/05 20:37:47 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int main(int ac, char **av)
         create_map(&game);
 //        draw_map(&game);
 //        mlx_key_hook(game.win, key_pressed, &game);
-        mlx_hook(game.win, KeyPress, KeyPressMask, key_pressed, &game);
+ //       mlx_hook(game.win, KeyPress, KeyPressMask, key_pressed, &game);
         update_frame(&game);
         mlx_loop(game.mlx);
          mlx_loop_hook(game.mlx, update_frame, &game);
@@ -57,7 +57,7 @@ static void	start_world(t_game *game)
 			game->map.lines * SZ, game->map.colun * SZ);
 	if (!world->img)
 	{
-		free_map(game->map.map);
+		free_map(game);
 		exit(0);
 	}
 	world->addr = mlx_get_data_addr(world->img, &world->bits_per_pixel,
