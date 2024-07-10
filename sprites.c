@@ -6,11 +6,20 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 15:25:58 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/07/08 20:01:36 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/07/10 19:00:25 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
+
+int	update_frame(t_game *game)
+{
+	create_map(game);
+	put_player(game);
+	mlx_put_image_to_window(game->mlx, game->win, game->world->img,
+		0, 0);
+    return (0);    
+}
 
 t_sprite *create_sprite(t_game *game, char *sprite_path)
 {
@@ -139,11 +148,4 @@ char	*get_sprite_path(t_game *game, char c)
 	return (path);
 }
 
-int	update_frame(t_game *game)
-{
-	create_map(game);
-	put_player(game);
-	mlx_put_image_to_window(game->mlx, game->win, game->world->img,
-		0, 0);
-    return (0);    
-}
+

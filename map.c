@@ -6,17 +6,40 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 21:07:19 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/07/08 21:03:07 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/07/10 19:41:17 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
+void map_start(char *file, t_game *game)
+{
+    init_map(game, 1);
+    read_map(file, game);//get size
+    init_map(game, 0);
+    map_malloc(&game->map);
+    fill_map(game);
+
+    game->mlx = mlx_init();
+	if (!game->mlx)
+    {
+        fprintf(stderr, "Error\nFailed to initialize mlx\n");
+        exit(1);
+    }
+    map_max_size_check(game, &game->map);
+    game->win = mlx_new_window(game->mlx, SZ*game->map.colun, SZ*game->map.lines, "The Slayer");
+	if (!game->win)
+    {
+        fprintf(stderr, "Error\nFailed to create window\n");
+        exit(1);
+    }
+}
 void	init_map(t_game *game, int is_init)
 {   
     if(is_init)
     {
       	game->map.map = NULL;
+        game->map.map_data = NULL;
 	    game->map.colun = 0;
 	    game->map.lines = 0;
 	    game->map.width = 0;
@@ -68,7 +91,7 @@ void read_map(char *file, t_game *game)//map size rename
     char *map; 
     char *mapfile;
 
-    init_map(game, 1);
+
     fd = open(file, O_RDONLY);
     if(fd < 0){
         printf("Error opening map file %s\n", file);
@@ -83,46 +106,31 @@ void read_map(char *file, t_game *game)//map size rename
     map = get_next_line(fd);
     game->map.colun = ft_strlen(map) - 1;
     mapfile = ft_calloc(sizeof(char), 10000);
+    if (!mapfile) {
+        perror("Failed to allocate memory for mapfile");
+        exit(EXIT_FAILURE);
+    }
+    mapfile[0] = '\0';
     while(map)
     {   
         mapfile = ft_strcat(mapfile, map);
         free(map);
         map = get_next_line(fd); 
     }
-    init_map(game, 0);
-    game->map.map_data = mapfile;
+    game->map.map_data = ft_strdup(mapfile);
     free(mapfile);
     close(fd);   
 }
 
 
-void map_start(char *file, t_game *game)
-{
-    read_map(file, game);//get size
-    map_malloc(&game->map);
-    fill_map(game);
-    map_max_size_check(game, &game->map);
-    game->mlx = mlx_init();
-	if (!game->mlx)
-    {
-        fprintf(stderr, "Error\nFailed to initialize mlx\n");
-        exit(1);
-    }
-    game->win = mlx_new_window(game->mlx, SZ*game->map.colun, SZ*game->map.lines, "The Slayer");
-	if (!game->win)
-    {
-        fprintf(stderr, "Error\nFailed to create window\n");
-        exit(1);
-    }
-}
+
 void map_malloc(t_map *map)
 {
     int i;
-
+    i = 0;
     map->map = (t_tile **)ft_calloc(map->lines, sizeof(t_tile *));
     if(!map->map)
         exit(1);//fazer funcao para dar free
-    i = 0;
     while(i < map->lines)
     {
         map->map[i]= (t_tile *)ft_calloc(map->colun, sizeof(t_tile *));
@@ -143,10 +151,21 @@ void fill_map(t_game *game)
     while(mapd[i])
     {
         x = 0;
-        //printf("Debug: Read line %s\n"), mapd; 
+        //printf("Debug: Read line %s\n"), mapd;
+        if (y >= game->map.height)
+        {
+            fprintf(stderr, "Error: y index out of bounds (y: %d, height: %d)\n", y, game->map.height);
+            return;
+        } 
         while(mapd[i] && mapd[i] != '\n')
         {
+            if (x >= game->map.width)
+            {
+                fprintf(stderr, "Error: x index out of bounds (x: %d, width: %d)\n", x, game->map.width);
+                return;
+            }
             //printf("Map Y:%d X:%d line[x]:%c\n", y, x, mapd);
+            check_type(game, mapd[i]);
             game->map.map[y][x].type = mapd[i];
             x++;
             i++;
@@ -154,6 +173,20 @@ void fill_map(t_game *game)
         if (mapd[i] == '\n')
             i++;
         y++;
+    }
+}
+void check_type(t_game *game, char type)
+{
+    if(type)
+    {
+        if(type == 'P')
+            game->map.player++;   
+        else if(type == 'E')
+            game->map.exit++;  
+        else if(type == 'C')
+            game->map.goblin++;
+        else if(type == 'M')
+            game->map.enemy++;                
     }
 }
 

@@ -6,12 +6,12 @@
 #    By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/09 19:22:40 by hluiz-ma          #+#    #+#              #
-#    Updated: 2024/07/04 21:11:29 by hluiz-ma         ###   ########.fr        #
+#    Updated: 2024/07/10 19:31:47 by hluiz-ma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = so_long
-CC = cc
+CC = cc #-fsanitize=address
 CFLAGS = -Wall -Wextra -Werror -g
 OBJS = $(SRCS:.c=.o)
 OBJS_BONUS = $(BONUS:.c=.o)

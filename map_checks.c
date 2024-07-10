@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 19:06:50 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/07/05 19:22:31 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/07/10 18:57:03 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int check_file_ext(char *file)
     return(!ft_strncmp(".ber", exten, 4));
 }
 
-int map_max_size_check(t_game *game,t_map *map)
+int map_max_size_check(t_game *game, t_map *map)
 {
     int screen_width;
     int screen_height;

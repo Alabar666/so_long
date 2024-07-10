@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 16:13:48 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/07/08 21:01:33 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/07/10 19:39:44 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,8 +130,8 @@ typedef struct s_sprite{
     
 } t_sprite;
 
-typedef struct s_map{
-   t_tile **map;
+typedef struct s_map
+{
    char *map_data;
    int lines;
    int colun;
@@ -142,7 +142,7 @@ typedef struct s_map{
    int enemy;
    int exit;
    int player;
-   
+   t_tile **map;   
 }  t_map;
 
 typedef struct s_player{
@@ -181,12 +181,14 @@ int		count_lines(char *file);
 void read_map(char *file, t_game *game);
 void    create_world(t_sprite *sprite, t_game *game, int posx, int posy);
 char *ft_strcat(char *dest, const char* src);
+t_tile	new_type(char type, int x, int y);
 
 // map checks
 int check_wall(t_map map);
 int is_map_rectangular(char **map);
 int map_max_size_check(t_game *game,t_map *map);
 int check_file_ext(char *file);
+void check_type(t_game *game, char type);
 
 
 //sprite
