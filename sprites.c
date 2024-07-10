@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 15:25:58 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/07/10 19:00:25 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/07/10 20:57:16 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ t_sprite *create_sprite(t_game *game, char *sprite_path)
     sprite->addr = mlx_get_data_addr(sprite->img, &sprite->bits_per_pixel,
     &sprite->line_length, &sprite->endian);
     free(sprite_path);
-    printf("Sprite loaded successfully: %s\n", sprite_path); // Mensagem de depuração
+ //   printf("Sprite loaded successfully: %s\n", sprite_path); // Mensagem de depuração
     return(sprite);  
 }
 

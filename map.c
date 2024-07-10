@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 21:07:19 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/07/10 19:41:17 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/07/10 21:20:03 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,12 +128,12 @@ void map_malloc(t_map *map)
 {
     int i;
     i = 0;
-    map->map = (t_tile **)ft_calloc(map->lines, sizeof(t_tile *));
+    map->map = (t_tile **)ft_calloc(map->lines, sizeof(t_tile *) * SZ);
     if(!map->map)
         exit(1);//fazer funcao para dar free
     while(i < map->lines)
     {
-        map->map[i]= (t_tile *)ft_calloc(map->colun, sizeof(t_tile *));
+        map->map[i]= (t_tile *)ft_calloc(map->colun, sizeof(t_tile *) * SZ);
         if(!map->map[i++])
             exit(1);//fazer funcao para dar free
     }       
@@ -151,21 +151,10 @@ void fill_map(t_game *game)
     while(mapd[i])
     {
         x = 0;
-        //printf("Debug: Read line %s\n"), mapd;
-        if (y >= game->map.height)
-        {
-            fprintf(stderr, "Error: y index out of bounds (y: %d, height: %d)\n", y, game->map.height);
-            return;
-        } 
         while(mapd[i] && mapd[i] != '\n')
         {
-            if (x >= game->map.width)
-            {
-                fprintf(stderr, "Error: x index out of bounds (x: %d, width: %d)\n", x, game->map.width);
-                return;
-            }
-            //printf("Map Y:%d X:%d line[x]:%c\n", y, x, mapd);
-            check_type(game, mapd[i]);
+
+            check_type(game, mapd[i], x, y);
             game->map.map[y][x].type = mapd[i];
             x++;
             i++;
@@ -175,12 +164,16 @@ void fill_map(t_game *game)
         y++;
     }
 }
-void check_type(t_game *game, char type)
+void check_type(t_game *game, char type, int x, int y)
 {
     if(type)
     {
         if(type == 'P')
-            game->map.player++;   
+        {
+            game->map.player++;
+            game->map.start_p1_p.x = x;
+            game->map.start_p1_p.y = y;            
+        }   
         else if(type == 'E')
             game->map.exit++;  
         else if(type == 'C')

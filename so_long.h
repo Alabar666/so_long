@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 16:13:48 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/07/10 19:39:44 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/07/10 19:55:49 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,7 +188,7 @@ int check_wall(t_map map);
 int is_map_rectangular(char **map);
 int map_max_size_check(t_game *game,t_map *map);
 int check_file_ext(char *file);
-void check_type(t_game *game, char type);
+void check_type(t_game *game, char type, int x, int y);
 
 
 //sprite
