@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 20:10:30 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/07/05 20:44:51 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/07/10 22:01:58 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,9 @@ void	put_player(t_game *game)
 		x = -1;
 		while (++x < game->map.lines)
 		{
-            char *sprite_path = get_player_path(game, game->map.map[y][x].type);
+			if (game->map.map[y][x].type != '1' && game->map.map[y][x].type != '0')
+            {
+			char *sprite_path = get_player_path(game, game->map.map[y][x].type);
             if (!sprite_path)
             {
                 fprintf(stderr, "Failed to get sprite path for character: %c at (%d, %d)\n", game->map.map[y][x].type, y, x);
@@ -85,6 +87,7 @@ void	put_player(t_game *game)
 			create_player(sprite, game, x, y);
 			mlx_destroy_image(game->mlx, sprite->img);
 			free(sprite);
+			}
 		}
 	}
     printf("Map created successfully.\n"); // Mensagem de depuração
@@ -92,18 +95,29 @@ void	put_player(t_game *game)
 char	*get_player_path(t_game *game, char c)
 {
 	char	*path;
+	int randv;
+
+	randv = rand();
 
 	path = NULL;
-	if (c == '1')
-		path = ft_strdup(WALL);
-	else if (c == '0')
-		path = ft_strdup(FLOOR);
-    else if (c == 'P')
+	if (c == 'P')
 		path = ft_strdup(PLAYER_FRONT_STAND);
-    else if (c == 'C')
-		path = ft_strdup(BLOOD);       
 	else if (c == 'E')
-		path = ft_strdup(EXIT);
+		path = ft_strdup(EXIT);	
+	else if (c == 'B')
+		path = ft_strdup(BLOOD);
+	else if (c == 'C')
+		path = ft_strdup(BLOOD);	
+		/*	
+	else if (c == '0' || c == 'C' || c == 'E')
+	{
+		if(randv % 2 == 0)
+			path = ft_strdup(FLOOR);
+		else if(randv % 3 == 0)
+			path = ft_strdup(FLOOR2);
+		else
+			path = ft_strdup(FLOOR3);		
+	}*/
 	if (!path)
     {
         fprintf(stderr, "Failed to allocate path for character: %c\n", c);

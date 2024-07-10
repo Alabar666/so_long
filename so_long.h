@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 16:13:48 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/07/10 19:55:49 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/07/10 21:47:56 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # include <string.h>//strerror
 # include <unistd.h>//read, write
 # include <stdlib.h>//malloc,free, exit + rand
+# include <time.h>
 /*
 **                              BUFFERS
 */
@@ -61,7 +62,10 @@
 /*
 **                              IMAGES
 */
+# define START "./img/p1start.xpm"
 # define FLOOR "./img/floor.xpm"
+# define FLOOR2 "./img/floor2.xpm"
+# define FLOOR3 "./img/floor3.xpm"
 # define WALL "./img/wall.xpm"
 # define BLOOD "./img/blood.xpm"
 # define EXIT "./img/ExitPriestess.xpm"

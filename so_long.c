@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 16:13:44 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/07/09 22:13:38 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/07/10 21:42:41 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ static void	start_world(t_game *game);
 
 int main(int ac, char **av)
 {
+    srand(time(NULL));
     t_game  game;
     
     if(ac == 2)

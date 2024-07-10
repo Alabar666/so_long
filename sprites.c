@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 15:25:58 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/07/10 20:57:16 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/07/10 21:54:51 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,18 +126,23 @@ void	create_map(t_game *game)
 char	*get_sprite_path(t_game *game, char c)
 {
 	char	*path;
+	int randv;
 
+	randv = rand();
 	path = NULL;
 	if (c == '1')
 		path = ft_strdup(WALL);
-	else if (c == '0')
-		path = ft_strdup(FLOOR);
-    else if (c == 'P')
-		path = ft_strdup(FLOOR);
-    else if (c == 'C')
-		path = ft_strdup(FLOOR);       
-	else if (c == 'E')
-		path = ft_strdup(FLOOR);
+	else if (c == '0' || c == 'C' || c == 'E' || c == 'P')
+	{
+		if(randv % 2 == 0)
+			path = ft_strdup(FLOOR2);
+		else if(randv % 3 == 0)
+			path = ft_strdup(FLOOR);
+		else
+			path = ft_strdup(FLOOR3);		
+	}
+	else if (c == 'M')
+		path = ft_strdup(FLOOR);	
 	else if (c == 'B')
 		path = ft_strdup(BLOOD);		
 	if (!path)
