@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 21:07:19 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/07/10 21:20:03 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/07/11 19:45:15 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void map_start(char *file, t_game *game)
         fprintf(stderr, "Error\nFailed to initialize mlx\n");
         exit(1);
     }
-    map_max_size_check(game, &game->map);
+    map_checks(game);
     game->win = mlx_new_window(game->mlx, SZ*game->map.colun, SZ*game->map.lines, "The Slayer");
 	if (!game->win)
     {
@@ -55,7 +55,7 @@ void	init_map(t_game *game, int is_init)
         game->map.height = game->map.colun * SZ;        
     }   
 }
-
+/*
 void free_map(t_game *game)
 {
     int i;
@@ -66,7 +66,7 @@ void free_map(t_game *game)
         free(game->map.map[i++]);
     }
     free(game->map.map);
-}
+}*/
 int		count_lines(char *file)
 {
 	int		count;
@@ -100,15 +100,14 @@ void read_map(char *file, t_game *game)//map size rename
     if(!check_file_ext(file))
     {
         printf("Error map extension %s\n", file);
-        exit(EXIT_FAILURE);
+        game_error(fd, &game->map, MAP_ERROR);
     }
     game->map.lines = count_lines(file);
     map = get_next_line(fd);
     game->map.colun = ft_strlen(map) - 1;
     mapfile = ft_calloc(sizeof(char), 10000);
     if (!mapfile) {
-        perror("Failed to allocate memory for mapfile");
-        exit(EXIT_FAILURE);
+        game_error(fd, &game->map, MAP_ERROR);
     }
     mapfile[0] = '\0';
     while(map)
@@ -130,12 +129,12 @@ void map_malloc(t_map *map)
     i = 0;
     map->map = (t_tile **)ft_calloc(map->lines, sizeof(t_tile *) * SZ);
     if(!map->map)
-        exit(1);//fazer funcao para dar free
+        game_error(0, map, MAP_ERROR);
     while(i < map->lines)
     {
         map->map[i]= (t_tile *)ft_calloc(map->colun, sizeof(t_tile *) * SZ);
         if(!map->map[i++])
-            exit(1);//fazer funcao para dar free
+        game_error(0, map, MAP_ERROR);
     }       
 }
 void fill_map(t_game *game)

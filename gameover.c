@@ -6,40 +6,24 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 19:49:26 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/07/05 20:39:20 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/07/11 19:47:06 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-/*
-void clean_img(t_game *game)
-{
-    mlx_destroy_image(game->mlx, game->map.floor);
-    mlx_destroy_image(game->mlx, game->map.wall);
-    mlx_destroy_image(game->mlx, game->plr.plr);
-    mlx_destroy_image(game->mlx, game->gc.gc);
-    mlx_destroy_image(game->mlx, game->ge.ge);
-    free(game->map.img);
-}
 
-void gameover(t_game *game)
+void	game_error(int fd, t_map *map, char *error)
 {
-    size_t i;
-    
-    i = 0;
-    while(game->map.map[i])
-        free(game->map.map[i++]);
-    clean_img(game);
-    mlx_destroy_window(game->mlx, game->win);
-    mlx_destroy_display(game->mlx);
-    free(game->map.map);
-    free(game->mlx);
-    exit(0);    
+	if (fd)
+		close(fd);
+	if (map)
+		free_map(map->map);
+	printf("%s", error);
+	exit(0);
 }
-*/
 int	gameover(t_game *game)
 {
-    free_map(game);
+  //  free_map(game->map);
 	free(game->map.map);
 	mlx_destroy_image(game->mlx, game->world->img);
 	free(game->world);
@@ -49,7 +33,7 @@ int	gameover(t_game *game)
 	exit(0);
 	return (0);
 }
-/*void	free_map(char **map)
+void	free_map(t_tile **map)
 {
 	int	i;
 
@@ -57,5 +41,5 @@ int	gameover(t_game *game)
 	while (map[++i])
 		free(map[i]);
 	free(map);
-} */
+}
 

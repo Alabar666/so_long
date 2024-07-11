@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 16:13:48 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/07/10 21:47:56 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/07/11 19:59:53 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,13 +55,15 @@
 # define DIR_UP      3
 # define DIR_DOWN    4 
 
-#define SZ 40 //img size
-#define MALLOC_ERROR    1
-#define TRUE 1
-#define FALSE 0
+# define SZ 40 //img size
+# define MALLOC_ERROR    1
+# define TRUE 1
+# define FALSE 0
+# define MAP_ERROR "ERROR\n Provided map is invalid\n"
 /*
 **                              IMAGES
 */
+
 # define START "./img/p1start.xpm"
 # define FLOOR "./img/floor.xpm"
 # define FLOOR2 "./img/floor2.xpm"
@@ -175,7 +177,6 @@ typedef struct s_game{
 
 //MAP
 void	create_map(t_game *game);
-void	free_map(t_game *game);
 void map_start(char * file, t_game *game);
 void map_malloc(t_map *map);
 void fill_map(t_game *game);
@@ -186,10 +187,13 @@ void read_map(char *file, t_game *game);
 void    create_world(t_sprite *sprite, t_game *game, int posx, int posy);
 char *ft_strcat(char *dest, const char* src);
 t_tile	new_type(char type, int x, int y);
+void	free_map(t_tile **map);
+void	game_error(int fd, t_map *map, char *error);
 
 // map checks
+void map_checks(t_game *game);
 int check_wall(t_map map);
-int is_map_rectangular(char **map);
+int is_map_rectangular(t_map *map);
 int map_max_size_check(t_game *game,t_map *map);
 int check_file_ext(char *file);
 void check_type(t_game *game, char type, int x, int y);

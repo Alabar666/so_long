@@ -6,11 +6,30 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 19:06:50 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/07/10 18:57:03 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/07/11 20:06:16 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
+
+void map_checks(t_game *game)
+{
+    t_map map;
+    
+    map = game->map;
+    if (map.lines * map.colun < 4 * 4)
+        game_error(0 , &game->map, MAP_ERROR);  
+    if (map.goblin == 0 || map.player == 0 || map.exit != 1)
+        game_error(0 , &game->map, MAP_ERROR);
+    if (map_max_size_check(game, &game->map) == 0)
+        game_error(0 , &game->map, MAP_ERROR);
+    if ((int)ft_strlen(map.map_data) != map.colun * map.lines + map.lines)    
+//    if (is_map_rectangular(game->map.map) == 0)
+        game_error(0 , &game->map, MAP_ERROR);
+    if (check_wall(game->map) == 0)
+        game_error(0 , &game->map, MAP_ERROR);
+    
+}
 
 int check_file_ext(char *file)
 {
@@ -43,42 +62,36 @@ int map_max_size_check(t_game *game, t_map *map)
         printf("Error: Invalid game->mlx pointer.\n");
         return 0;
     }
-
-
     if(mlx_get_screen_size(game->mlx, &screen_width, &screen_height) != 0)
     {
         printf("Error\nFailed to get screen size.\n");
         return (0);
     }
-    printf("Debug: Screen width: %d, Screen height: %d\n", screen_width, screen_height);
-    printf("Debug: Map width: %d, Map height: %d\n", map->width, map->height);
     if(map->width > screen_height || map->height > screen_height)
     {
         printf("Error\nMap size exceeds screen dimensions.\n");
         return (0);
     }
     return (1);   
+
 }
-//if (ft_strlen(m.filedata) != m.grid_x * m.grid_y + m.grid_y - 1)
-//		error_game(data, ERROR_MAP_INVALID, "map is not rect.");
-//if (m.item == 0 || m.player == 0 || m.exit != 1)
-//    error_game(data, ERROR_MAP_INVALID, "map not meet minimun requirement");
-int is_map_rectangular(char **map)
+/*
+int is_map_rectangular(t_map *map)
 {
     int width;
     int i;
     
-    if(!map || !map[0])
+    if(!map || !map->map[0])
         return(0);
-    width = strlen(map[0]);
+    width = (int)ft_strlen(map->map[0]);
     i = -1;
-    while(map[++i])
+    while(map->map[++i])
     {
-        if((int)ft_strlen(map[i]) != width)
+        if((int)ft_strlen(map->map[i]) != width)
             return (0);
     }
     return (1);
-}
+}*/
 
 int check_wall(t_map map)
 {
