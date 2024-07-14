@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 15:25:58 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/07/10 21:54:51 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/07/14 17:35:34 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	update_frame(t_game *game)
 {
-	create_map(game);
+//	create_map(game);
 	put_player(game);
 	mlx_put_image_to_window(game->mlx, game->win, game->world->img,
 		0, 0);
@@ -115,6 +115,7 @@ void	create_map(t_game *game)
                 fprintf(stderr, "Failed to get sprite path for character: %c at (%d, %d)\n", game->map.map[y][x].type, y, x);
                 gameover(game);
             }
+//			game->map.map[y][x].sprite = ft_strdup(sprite_path);
 			sprite = create_sprite(game, sprite_path);
 			create_world(sprite, game, x, y);
 			mlx_destroy_image(game->mlx, sprite->img);
@@ -131,18 +132,21 @@ char	*get_sprite_path(t_game *game, char c)
 	randv = rand();
 	path = NULL;
 	if (c == '1')
-		path = ft_strdup(WALL);
-	else if (c == '0' || c == 'C' || c == 'E' || c == 'P')
 	{
 		if(randv % 2 == 0)
-			path = ft_strdup(FLOOR2);
-		else if(randv % 3 == 0)
+			path = ft_strdup(WALL);
+		else
+			path = ft_strdup(WALL2);
+	}	
+	else if (c == '0' || c == 'C' || c == 'E' || c == 'P' || c == 'M')
+	{
+		if(randv % 2 == 0)
 			path = ft_strdup(FLOOR);
+		else if(randv % 3 == 0)
+			path = ft_strdup(FLOOR2);
 		else
 			path = ft_strdup(FLOOR3);		
 	}
-	else if (c == 'M')
-		path = ft_strdup(FLOOR);	
 	else if (c == 'B')
 		path = ft_strdup(BLOOD);		
 	if (!path)
@@ -153,4 +157,28 @@ char	*get_sprite_path(t_game *game, char c)
 	return (path);
 }
 
-
+/*
+void	put_map(t_game *game)
+{
+	int			y;
+	int			x;
+	t_tile	**map;
+	t_sprite *sprite;
+	
+	sprite = NULL;
+	map = game->map.map;
+	y = -1;
+	while (++y < game->map.colun)
+	{
+		x = -1;
+		while (++x < game->map.lines)
+		{
+			sprite = create_sprite(game, game->map.map[y][x].sprite);
+			create_world(sprite, game, x, y);
+			mlx_destroy_image(game->mlx, sprite->img);
+			free(sprite);
+		}
+	}
+    printf("Map created successfully.\n"); // Mensagem de depuração
+}
+*/

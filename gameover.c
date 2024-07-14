@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 19:49:26 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/07/11 19:47:06 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/07/14 17:39:38 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,4 +42,28 @@ void	free_map(t_tile **map)
 		free(map[i]);
 	free(map);
 }
+/*
+void	free_map(t_map *map)
+{
+	int	i;
+	int j;
 
+	if(map->map)
+	{
+		i = -1;
+		while(++i < map->lines)
+		{
+			if(map->map[i])
+			{
+				j = -1;
+				while(++j < map->colun)
+				{
+					if(map->map[i][j].sprite)
+						free(map->map[i][j].sprite);
+				}
+				free(map->map[i]);
+			}
+			free(map->map);
+		}
+	}
+	*/

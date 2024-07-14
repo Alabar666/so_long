@@ -6,11 +6,12 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 19:20:13 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/07/04 21:07:34 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/07/14 17:40:16 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
+
 /*
 int key_pressed(int key, t_game *game){
     
@@ -18,26 +19,34 @@ int key_pressed(int key, t_game *game){
     {
         gameover(game);
     }
-     if (game->p1.mv_dir != STAND)
-		return ;
-    if (key == KEY_W || key == UP)
-    {
-        move_dir(game, DIR_UP);
-    }
-    if (key == KEY_S || key == DOWN)
-    {
-        move_dir(game, DIR_DOWN);
-    }
-    if (key == KEY_D || key == RIGHT)
-    {
-        move_dir(game, DIR_RIGHT);
-    }
-    if (key == KEY_A || key == LEFT)
-    {
-        move_dir(game, DIR_LEFT);
-    }
-    return(0);
+    else if (key == KEY_W || key == UP)
+        move_player(game, 0, -1);
+    else if (key == KEY_S || key == DOWN)
+        move_player(game, 0, 1);
+    else if (key == KEY_A || key == LEFT)
+        move_player(game, -1, 0);
+    else if (key == KEY_D || key == RIGHT)
+        move_player(game, 1, 0);
+    return (0);
 }
+
+void move_player(t_game *game, int dx, int dy)
+{
+    int steps = 4; // Número de passos para completar o movimento
+    int step_size = 10; // Tamanho de cada passo em pixels
+    int i;
+    
+    i = 0;
+    while (i < steps)
+    {
+        game->p1.p1_p.x += dx * step_size;
+        game->p1.p1_p.y += dy * step_size;
+        update_player_frame(game);
+        usleep(50000); // Atraso para criar a animação
+        i++;
+    }
+}
+
 
 */
 
@@ -48,7 +57,20 @@ int key_pressed(int key, t_game *game){
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
 /*
+
 int key_pressed(int key, t_game *game){
     
     if (key == ESC)
@@ -80,7 +102,7 @@ int key_pressed(int key, t_game *game){
     }
     return(0);
 }
-*//*
+
 t_pos	move_dir(int dir, int size)
 {
     t_pos pos;
@@ -108,6 +130,9 @@ t_pos new_pos(t_pos ps1, t_pos ps2)
 }
 
 
+
+
+
 void player_mov(t_game *game, int dir)
 {
     char c;
@@ -125,6 +150,6 @@ void player_mov(t_game *game, int dir)
         return;
     game->p1.p1_p = new_mov;    
     game->p1.moves += 1;
-    printf("Steeps: %i\n", game->p1.moves);  
+    printf("Steps: %i\n", game->p1.moves);  
 }
 */

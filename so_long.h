@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 16:13:48 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/07/11 19:59:53 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/07/14 12:25:16 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@
 # define FLOOR2 "./img/floor2.xpm"
 # define FLOOR3 "./img/floor3.xpm"
 # define WALL "./img/wall.xpm"
+# define WALL2 "./img/wall2.xpm"
 # define BLOOD "./img/blood.xpm"
 # define EXIT "./img/ExitPriestess.xpm"
 
@@ -109,7 +110,7 @@
 # define ENEMY_LEFT_MV3  "./img/GEnemyLeft3.xpm"
 # define ENEMY_RIGHT_MV1 "./img/GEnemyRight1.xpm"
 # define ENEMY_RIGHT_MV2  "./img/GEnemyRight2.xpm"
-# define ENEMY_RIGHT_MV3  "./img/GEnemyRight3.xpm"
+# define ENEMY_RIGHT_MV3  "./FLOORimg/GEnemyRight3.xpm"
 /*
 **                              FUNCTION PROTOTYPES
 */
@@ -159,7 +160,10 @@ typedef struct s_player{
    int face;
    int moves;
    int currect_sprite;
-   t_sprite *sprites[3];   
+   t_sprite *front_sprites[3];
+   t_sprite *back_sprites[3];  
+   t_sprite *left_sprites[3];  
+   t_sprite *right_sprites[3];     
 } t_player;
 
 typedef struct s_game{

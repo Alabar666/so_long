@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 21:07:19 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/07/11 19:45:15 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/07/14 17:38:58 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,16 @@ void map_malloc(t_map *map)
         map->map[i]= (t_tile *)ft_calloc(map->colun, sizeof(t_tile *) * SZ);
         if(!map->map[i++])
         game_error(0, map, MAP_ERROR);
+        /*
+            while(j < map->colun)
+        {
+            map->map[i][j].sprite = NULL;
+            map->map[i][j].sprite = (char *)ft_calloc(1, sizeof(char));
+            if (!map->map[i][j].sprite)
+                game_error(0, map, MAP_ERROR);
+            j++;
+        }
+        */
     }       
 }
 void fill_map(t_game *game)
