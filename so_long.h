@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 16:13:48 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/07/14 12:25:16 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/07/15 21:09:16 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,7 @@ typedef struct s_pos{
 
 typedef struct s_tile{
    char type;
+   char *sprt_path;
    t_pos pos;
     
 } t_tile;
@@ -193,6 +194,7 @@ char *ft_strcat(char *dest, const char* src);
 t_tile	new_type(char type, int x, int y);
 void	free_map(t_tile **map);
 void	game_error(int fd, t_map *map, char *error);
+void	put_map(t_game *game);
 
 // map checks
 void map_checks(t_game *game);
@@ -232,8 +234,11 @@ int check_file_ext(char *file);
 
 //moves
 int key_pressed(int key, t_game *game);
+void move_player(t_game *game, int dx, int dy);
 void player_mov(t_game *game);
 void	move_dir(t_game *game);
+int	update_player_frame(t_game *game);
+void	put_player_mov(t_game *game);
 
 //free exit
 int gameover(t_game *game);

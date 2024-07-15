@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 15:25:58 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/07/14 17:35:34 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/07/15 22:03:58 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,10 @@
 
 int	update_frame(t_game *game)
 {
+	
 //	create_map(game);
-	put_player(game);
+	put_map(game);
+	put_player_mov(game);
 	mlx_put_image_to_window(game->mlx, game->win, game->world->img,
 		0, 0);
     return (0);    
@@ -115,7 +117,7 @@ void	create_map(t_game *game)
                 fprintf(stderr, "Failed to get sprite path for character: %c at (%d, %d)\n", game->map.map[y][x].type, y, x);
                 gameover(game);
             }
-//			game->map.map[y][x].sprite = ft_strdup(sprite_path);
+			game->map.map[y][x].sprt_path = ft_strdup(sprite_path);
 			sprite = create_sprite(game, sprite_path);
 			create_world(sprite, game, x, y);
 			mlx_destroy_image(game->mlx, sprite->img);
@@ -157,7 +159,7 @@ char	*get_sprite_path(t_game *game, char c)
 	return (path);
 }
 
-/*
+
 void	put_map(t_game *game)
 {
 	int			y;
@@ -173,7 +175,7 @@ void	put_map(t_game *game)
 		x = -1;
 		while (++x < game->map.lines)
 		{
-			sprite = create_sprite(game, game->map.map[y][x].sprite);
+			sprite = create_sprite(game, game->map.map[y][x].sprt_path);
 			create_world(sprite, game, x, y);
 			mlx_destroy_image(game->mlx, sprite->img);
 			free(sprite);
@@ -181,4 +183,3 @@ void	put_map(t_game *game)
 	}
     printf("Map created successfully.\n"); // Mensagem de depuração
 }
-*/

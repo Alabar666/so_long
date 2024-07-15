@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 21:07:19 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/07/14 17:38:58 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/07/15 21:56:29 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,18 +135,18 @@ void map_malloc(t_map *map)
         map->map[i]= (t_tile *)ft_calloc(map->colun, sizeof(t_tile *) * SZ);
         if(!map->map[i++])
         game_error(0, map, MAP_ERROR);
-        /*
-            while(j < map->colun)
-        {
-            map->map[i][j].sprite = NULL;
-            map->map[i][j].sprite = (char *)ft_calloc(1, sizeof(char));
-            if (!map->map[i][j].sprite)
-                game_error(0, map, MAP_ERROR);
-            j++;
-        }
-        */
     }       
 }
+t_tile	new_tile(char type, int x, int y)
+{
+	t_tile	tile;
+
+	tile.type = type;
+	tile.pos.x = x;
+	tile.pos.y = y;
+	return (tile);
+}
+
 void fill_map(t_game *game)
 {
     int x;
@@ -164,7 +164,8 @@ void fill_map(t_game *game)
         {
 
             check_type(game, mapd[i], x, y);
-            game->map.map[y][x].type = mapd[i];
+            game->map.map[y][x] = new_tile(mapd[i], x * SZ, y * SZ);
+            game->map.map[y][x].sprt_path = NULL;   
             x++;
             i++;
         }

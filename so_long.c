@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 16:13:44 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/07/14 17:36:19 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/07/15 22:07:09 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,15 @@ int main(int ac, char **av)
         start_world(&game);
         init_player(&game);
         create_map(&game);
-        put_player(&game);
-//        draw_map(&game);
+        update_frame(&game);        
+ //       put_player_mov(&game);
+
 //        mlx_key_hook(game.win, key_pressed, &game);
- //       mlx_hook(game.win, KeyPress, KeyPressMask, key_pressed, &game);
-        update_frame(&game);
+ //       mlx_loop_hook(game.mlx, update_frame, &game);
+        mlx_hook(game.win, KeyPress, KeyPressMask, key_pressed, &game);
         mlx_loop(game.mlx);
-         mlx_loop_hook(game.mlx, update_frame, &game);
-         
+        mlx_loop_hook(game.mlx, update_frame, &game);
+    
         /*mlx_hook(game.win, KeyPress, KeyPressMask, key_pressed, &game);
         mlx_loop_hook(game.mlx, update_frame, &game);
         mlx_loop(game.mlx);*/  
@@ -43,7 +44,7 @@ int main(int ac, char **av)
         mlx_destroy_image(game.mlx, game.world);
         mlx_destroy_window(game.mlx, game.win);
         mlx_destroy_display(game.mlx);
-     free(game.mlx);     
+        free(game.mlx);     
     }
     
     

@@ -6,13 +6,13 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 19:20:13 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/07/14 17:40:16 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/07/15 22:20:10 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-/*
+
 int key_pressed(int key, t_game *game){
     
     if (key == ESC)
@@ -45,11 +45,21 @@ void move_player(t_game *game, int dx, int dy)
         usleep(50000); // Atraso para criar a animação
         i++;
     }
+
 }
-
-
+/*
+    if (game->map.map[dy][dx].type == 'C')
+	{
+		game->map.goblin -= 1;
+		game->map.map[dy][dx].type = 'B';
+        game->map.map[dy][dx].sprt_path = BLOOD;
+	}
+    else if (game->map.map[dy][dx].type == 'E' && game->map.goblin == 0)
+	{
+		printf("Ganhou");
+		gameover(game);
+	}
 */
-
 
 
 

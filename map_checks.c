@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 19:06:50 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/07/11 20:06:16 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/07/15 20:29:58 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,26 +95,22 @@ int is_map_rectangular(t_map *map)
 
 int check_wall(t_map map)
 {
-    int i;
     int x;
     int y;
     
-    i = 0;
-    y = 0;
-    while(map.map[i])
+    x = 0;
+    while(x < map.colun)
     {
-        x = 0;
-        while(map.map[i])
-        {
-            if((x == 0 || x == map.lines - 1) && map.map[y][x].type != '1')
-                return(0);
-            if((y == 0 || y == map.colun - 1) && map.map[y][x].type != '1')
-                return(0);
-            i++;
-            x++;        
-        }
-        i++;
-        y++;     
+        if (map.map[0][x].type != '1' || map.map[map.lines - 1][x].type != '1')
+            return(0);
+        x++;    
+    }
+    y = 0;
+    while(y < map.lines)
+    {
+        if (map.map[y][0].type != '1' || map.map[y][map.colun - 1].type != '1')
+            return(0);
+        y++;    
     }
     return (1);    
 }
