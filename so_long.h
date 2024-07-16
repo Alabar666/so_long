@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 16:13:48 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/07/15 21:09:16 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/07/16 22:15:31 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -238,7 +238,7 @@ void move_player(t_game *game, int dx, int dy);
 void player_mov(t_game *game);
 void	move_dir(t_game *game);
 int	update_player_frame(t_game *game);
-void	put_player_mov(t_game *game);
+void	put_player(t_game *game);
 
 //free exit
 int gameover(t_game *game);

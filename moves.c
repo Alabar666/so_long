@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 19:20:13 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/07/15 22:20:10 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/07/16 22:32:06 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,25 @@ int key_pressed(int key, t_game *game){
         gameover(game);
     }
     else if (key == KEY_W || key == UP)
+    {
+        game->p1.mv_dir = DIR_UP;
         move_player(game, 0, -1);
+    }
     else if (key == KEY_S || key == DOWN)
+    {
+        game->p1.mv_dir = DIR_DOWN;
         move_player(game, 0, 1);
+    }
     else if (key == KEY_A || key == LEFT)
+    {
+          game->p1.mv_dir = DIR_LEFT;      
         move_player(game, -1, 0);
+    }
     else if (key == KEY_D || key == RIGHT)
+    {
+        game->p1.mv_dir = DIR_RIGHT; 
         move_player(game, 1, 0);
+    }
     return (0);
 }
 

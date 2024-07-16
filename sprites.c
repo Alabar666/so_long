@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 15:25:58 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/07/15 22:03:58 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/07/16 22:15:39 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	update_frame(t_game *game)
 	
 //	create_map(game);
 	put_map(game);
-	put_player_mov(game);
+	put_player(game);
 	mlx_put_image_to_window(game->mlx, game->win, game->world->img,
 		0, 0);
     return (0);    
