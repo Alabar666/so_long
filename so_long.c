@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 16:13:44 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/07/15 22:07:09 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/07/18 21:18:41 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int main(int ac, char **av)
         start_world(&game);
         init_player(&game);
         create_map(&game);
-        update_frame(&game);        
+        update_frame(&game, 0);        
  //       put_player_mov(&game);
 
 //        mlx_key_hook(game.win, key_pressed, &game);

@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 20:10:30 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/07/16 22:31:45 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/07/18 21:14:30 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,38 +20,23 @@ void init_player(t_game *game)
     game->p1.mv_dir = STAND;
     game->p1.face = STAND;
     game->p1.moves = 0;
-    game->p1.currect_sprite = 0;
+    game->p1.current_sprite = 0;
 
-	game->p1.front_sprites[0] = create_sprite(game, ft_strdup(PLAYER_FRONT_STAND));
-    game->p1.front_sprites[1] = create_sprite(game, ft_strdup(PLAYER_FRONT_MV1));
-    game->p1.front_sprites[2] = create_sprite(game, ft_strdup(PLAYER_FRONT_MV2));
+	game->p1.front_sprites[0] = ft_strdup(PLAYER_FRONT_STAND);
+    game->p1.front_sprites[1] = ft_strdup(PLAYER_FRONT_MV1);
+    game->p1.front_sprites[2] = ft_strdup(PLAYER_FRONT_MV2);
 
-    game->p1.back_sprites[0] = create_sprite(game, ft_strdup(PLAYER_BACK_MV1));
-    game->p1.back_sprites[1] = create_sprite(game, ft_strdup(PLAYER_BACK_MV2));
-    game->p1.back_sprites[2] = create_sprite(game, ft_strdup(PLAYER_BACK_MV3));
+    game->p1.back_sprites[0] = ft_strdup(PLAYER_BACK_MV1);
+    game->p1.back_sprites[1] = ft_strdup(PLAYER_BACK_MV2);
+    game->p1.back_sprites[2] = ft_strdup(PLAYER_BACK_MV3);
 
-    game->p1.left_sprites[0] = create_sprite(game, ft_strdup(PLAYER_LEFT_MV1));
-    game->p1.left_sprites[1] = create_sprite(game, ft_strdup(PLAYER_LEFT_MV2));
-    game->p1.left_sprites[2] = create_sprite(game, ft_strdup(PLAYER_LEFT_MV3));
+    game->p1.left_sprites[0] = ft_strdup(PLAYER_LEFT_MV1);
+    game->p1.left_sprites[1] = ft_strdup(PLAYER_LEFT_MV2);
+    game->p1.left_sprites[2] = ft_strdup(PLAYER_LEFT_MV3);
 
-    game->p1.right_sprites[0] = create_sprite(game, ft_strdup(PLAYER_RIGHT_MV1));
-    game->p1.right_sprites[1] = create_sprite(game, ft_strdup(PLAYER_RIGHT_MV2));
-    game->p1.right_sprites[2] = create_sprite(game, ft_strdup(PLAYER_RIGHT_MV3));  
-}
-
-int	update_player_frame(t_game *game)
-{
-	static int frame_counter = 0;
-	
-	game->p1.currect_sprite = (frame_counter / 10) % 3;
-	put_player(game);
-	
-    printf("p1 \n");
-	mlx_put_image_to_window(game->mlx, game->win, game->world->img,
-		0, 0);
- 
-	frame_counter++;	
-    return (0);    
+    game->p1.right_sprites[0] = ft_strdup(PLAYER_RIGHT_MV1);
+    game->p1.right_sprites[1] = ft_strdup(PLAYER_RIGHT_MV2);
+    game->p1.right_sprites[2] = ft_strdup(PLAYER_RIGHT_MV3);  
 }
 
 void    create_player(t_sprite *sprite, t_game *game, int posx, int posy)
@@ -79,7 +64,7 @@ void    create_player(t_sprite *sprite, t_game *game, int posx, int posy)
 	}  
 }
 
-void	put_player(t_game *game)
+void	put_player(t_game *game, int sprite_index)
 {
     char *current_sprite;
     int x = game->p1.p1_p.x;
@@ -87,25 +72,40 @@ void	put_player(t_game *game)
 
 	x = game->p1.p1_p.x;
 	y = game->p1.p1_p.y;
-    printf("Put player on map...\n");
 
     if (game->p1.mv_dir == DIR_UP)
-        current_sprite = ft_strdup(PLAYER_BACK_MV1);
+    {
+        if(sprite_index < 3)
+            current_sprite = game->p1.back_sprites[sprite_index];
+        else
+            current_sprite = game->p1.back_sprites[0];
+    }    
     else if (game->p1.mv_dir == DIR_DOWN)
-        current_sprite = ft_strdup(PLAYER_FRONT_MV1);
+    {
+        if(sprite_index < 3)
+            current_sprite = game->p1.front_sprites[sprite_index];
+        else
+            current_sprite = game->p1.front_sprites[0];
+    } 
     else if (game->p1.mv_dir == DIR_LEFT)
-        current_sprite = ft_strdup(PLAYER_LEFT_MV1);
+    {
+        if(sprite_index < 3)
+            current_sprite = game->p1.left_sprites[sprite_index];
+        else
+            current_sprite = game->p1.left_sprites[0];
+    } 
     else if (game->p1.mv_dir == DIR_RIGHT)
-        current_sprite = ft_strdup(PLAYER_RIGHT_MV1);
+    {
+        if(sprite_index < 3)
+            current_sprite = game->p1.right_sprites[sprite_index];
+        else
+            current_sprite = game->p1.right_sprites[0];
+    } 
     else
         current_sprite = ft_strdup(PLAYER_FRONT_STAND);
 
     game->p1.p1 = create_sprite(game, current_sprite);
-    create_player( game->p1.p1, game, x, y);
-
-    mlx_destroy_image(game->mlx, game->p1.p1->img);
-  
-    printf("Player placed successfully.\n"); // Mensagem de depuração
+    create_player(game->p1.p1, game, x, y);
 }
 char	*get_player_path(t_game *game, char c)
 {

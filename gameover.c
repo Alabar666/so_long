@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 19:49:26 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/07/14 17:39:38 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/07/18 20:22:02 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,11 @@ int	gameover(t_game *game)
   //  free_map(game->map);
 	free(game->map.map);
 	mlx_destroy_image(game->mlx, game->world->img);
-	free(game->world);
+	free(game->world);	
+	mlx_clear_window(game->mlx, game->win);
 	mlx_destroy_window(game->mlx, game->win);
 	mlx_destroy_display(game->mlx);
 	free(game->mlx);
-	exit(0);
 	return (0);
 }
 void	free_map(t_tile **map)

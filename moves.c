@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 19:20:13 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/07/16 22:32:06 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/07/18 20:54:06 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,15 +49,15 @@ void move_player(t_game *game, int dx, int dy)
     int i;
     
     i = 0;
+
     while (i < steps)
     {
         game->p1.p1_p.x += dx * step_size;
         game->p1.p1_p.y += dy * step_size;
-        update_player_frame(game);
+        update_frame(game, i);
         usleep(50000); // Atraso para criar a animação
         i++;
     }
-
 }
 /*
     if (game->map.map[dy][dx].type == 'C')

@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 16:13:48 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/07/16 22:15:31 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/07/18 21:04:13 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,11 +160,11 @@ typedef struct s_player{
    int mv_dir;
    int face;
    int moves;
-   int currect_sprite;
-   t_sprite *front_sprites[3];
-   t_sprite *back_sprites[3];  
-   t_sprite *left_sprites[3];  
-   t_sprite *right_sprites[3];     
+   int current_sprite;
+   char *front_sprites[3];
+   char *back_sprites[3];  
+   char *left_sprites[3];  
+   char *right_sprites[3];     
 } t_player;
 
 typedef struct s_game{
@@ -212,8 +212,8 @@ char	*get_sprite_path(t_game *game, char c);
 void	put_pixel(t_sprite *sprite, int x, int y, int color);
 t_sprite *create_sprite(t_game *game, char *sprite_path);
 unsigned int	get_color_in_pixel(t_sprite *sprite, int x, int y);
-int	update_frame(t_game *game);
-void	put_player(t_game *game);
+int	update_frame(t_game *game, int sprite_index);
+void	put_player(t_game *game, int sprite_index);
 void    create_player(t_sprite *sprite, t_game *game, int posx, int posy);
 char	*get_player_path(t_game *game, char c);
 void init_player(t_game *game);
@@ -238,7 +238,7 @@ void move_player(t_game *game, int dx, int dy);
 void player_mov(t_game *game);
 void	move_dir(t_game *game);
 int	update_player_frame(t_game *game);
-void	put_player(t_game *game);
+
 
 //free exit
 int gameover(t_game *game);

@@ -6,18 +6,18 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 15:25:58 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/07/16 22:15:39 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/07/18 20:55:48 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-int	update_frame(t_game *game)
+int	update_frame(t_game *game, int index)
 {
 	
 //	create_map(game);
 	put_map(game);
-	put_player(game);
+	put_player(game, index);
 	mlx_put_image_to_window(game->mlx, game->win, game->world->img,
 		0, 0);
     return (0);    
@@ -30,21 +30,23 @@ t_sprite *create_sprite(t_game *game, char *sprite_path)
     sprite = (t_sprite *)ft_calloc(1, sizeof(t_sprite));
     if(!sprite)
     {
-        free(sprite_path);
-        gameover(game);
+		return NULL;
+ //       free(sprite_path);
+ //       gameover(game);
     }
-    printf("Loading sprite from path: %s\n", sprite_path); // Mensagem de depuração
+  //  printf("Loading sprite from path: %s\n", sprite_path); // Mensagem de depuração
     sprite->img = mlx_xpm_file_to_image(game->mlx, sprite_path, &sprite->width,&sprite->height);
     if(!sprite->img)
     {
         fprintf(stderr, "Failed to load image: %s\n", sprite_path); // Mensagem de erro
-        free(sprite);
-        free(sprite_path);
-        gameover(game);
+//        free(sprite);
+ //       free(sprite_path);
+//        gameover(game);
+	return NULL;
     } 
     sprite->addr = mlx_get_data_addr(sprite->img, &sprite->bits_per_pixel,
     &sprite->line_length, &sprite->endian);
-    free(sprite_path);
+//    free(sprite_path);
  //   printf("Sprite loaded successfully: %s\n", sprite_path); // Mensagem de depuração
     return(sprite);  
 }
@@ -63,14 +65,14 @@ void    create_world(t_sprite *sprite, t_game *game, int posx, int posy)
 		{
 			color = get_color_in_pixel(sprite, x, y);
 			if (color){
-                printf("Drawing pixel at (%d, %d) with color %x\n",
-                       posx * SZ + x, posy * SZ + y, color);
+               // printf("Drawing pixel at (%d, %d) with color %x\n",
+               //        posx * SZ + x, posy * SZ + y, color);
 				put_pixel(game->world,
 					posx * SZ + x,
 					posy * SZ + y, color);
 			}
 		}
-	}  
+	}
 }
 
 
