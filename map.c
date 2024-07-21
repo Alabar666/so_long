@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 21:07:19 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/07/18 19:20:52 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/07/21 16:11:27 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,8 @@ void	init_map(t_game *game, int is_init)
     }
     else
     {
-        game->map.width = game->map.lines * SZ;
-        game->map.height = game->map.colun * SZ;        
+        game->map.width = game->map.colun * SZ;
+        game->map.height = game->map.lines * SZ;        
     }   
 }
 /*
@@ -127,12 +127,12 @@ void map_malloc(t_map *map)
 {
     int i;
     i = 0;
-    map->map = (t_tile **)ft_calloc(map->lines, sizeof(t_tile *) * SZ);
+    map->map = (t_tile **)ft_calloc(map->lines + 1, sizeof(t_tile *) * SZ);
     if(!map->map)
         game_error(0, map, MAP_ERROR);
     while(i < map->lines)
     {
-        map->map[i]= (t_tile *)ft_calloc(map->colun, sizeof(t_tile *) * SZ);
+        map->map[i]= (t_tile *)ft_calloc(map->colun + 1, sizeof(t_tile *) * SZ);
         if(!map->map[i++])
         game_error(0, map, MAP_ERROR);
     }       
@@ -185,7 +185,11 @@ void check_type(t_game *game, char type, int x, int y)
             game->map.start_p1_p.y = y * SZ;            
         }   
         else if(type == 'E')
-            game->map.exit++;  
+        {
+            game->map.exit++;
+            game->ext.ex_p.x = x * SZ;
+            game->ext.ex_p.y = y * SZ;
+        }           
         else if(type == 'C')
             game->map.goblin++;
         else if(type == 'M')

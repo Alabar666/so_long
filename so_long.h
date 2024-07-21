@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 16:13:48 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/07/18 21:04:13 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/07/21 17:10:37 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,16 @@
 # define WALL "./img/wall.xpm"
 # define WALL2 "./img/wall2.xpm"
 # define BLOOD "./img/blood.xpm"
-# define EXIT "./img/ExitPriestess.xpm"
+
+# define EXIT_FRONT "./img/prissfront.xpm"
+# define EXIT_BACK "./img/prissback.xpm"
+# define EXIT_LEFT "./img/prissleft.xpm"
+# define EXIT_RIGHT "./img/prissright.xpm"
+
+# define EXIT_BSAD "./img/sad.xpm"
+# define EXIT_BFEAR "./img/fear.xpm"
+# define EXIT_BCRY "./img/cry.xpm"
+# define EXIT_BHELP "./img/help.xpm"
 
 # define PLAYER_FRONT_STAND "./img/gsFront2.xpm"
 # define PLAYER_FRONT_MV1 "./img/gsFront1.xpm"
@@ -167,12 +176,36 @@ typedef struct s_player{
    char *right_sprites[3];     
 } t_player;
 
+typedef struct s_goblin{
+   t_pos gbl_p;
+   t_sprite *gbl;
+   int mv_dir;
+   int current_sprite;
+   char *front_sprites[3];
+   char *back_sprites[3];  
+   char *left_sprites[3];  
+   char *right_sprites[3];
+   struct s_goblin *next;     
+} t_goblin;
+
+typedef struct s_exit{
+   t_pos ex_p;
+   t_sprite *ex1;
+   t_sprite *bl;
+   int current_sprite;
+   char *exit_sprites[4];
+   char *exit_ballom[4];
+} t_exit;
+
+
+
 typedef struct s_game{
    void *mlx;
    void *win;
    t_map map;
    t_sprite *world;
    t_player p1;
+   t_exit ext;
    void *e;
    
 }  t_game;
@@ -195,6 +228,11 @@ t_tile	new_type(char type, int x, int y);
 void	free_map(t_tile **map);
 void	game_error(int fd, t_map *map, char *error);
 void	put_map(t_game *game);
+
+// exit
+void init_exit(t_game *game);
+void create_exit(t_sprite *sprite, t_game *game, int posx, int posy);
+void	put_exit(t_game *game, int sprite_index);
 
 // map checks
 void map_checks(t_game *game);

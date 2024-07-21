@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 19:06:50 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/07/15 20:29:58 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/07/21 12:56:58 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int map_max_size_check(t_game *game, t_map *map)
         printf("Error\nFailed to get screen size.\n");
         return (0);
     }
-    if(map->width > screen_height || map->height > screen_height)
+    if(map->width > screen_width || map->height > screen_height)
     {
         printf("Error\nMap size exceeds screen dimensions.\n");
         return (0);

@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 20:10:30 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/07/18 21:14:30 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/07/21 14:44:55 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ void	put_player(t_game *game, int sprite_index)
     game->p1.p1 = create_sprite(game, current_sprite);
     create_player(game->p1.p1, game, x, y);
 }
+/*
 char	*get_player_path(t_game *game, char c)
 {
 	char	*path;
@@ -120,7 +121,7 @@ char	*get_player_path(t_game *game, char c)
 		path = ft_strdup(EXIT);	
 	else if (c == 'C')
 		path = ft_strdup(GOBLIN_FRONT_STAND);	
-/*	else if (c == '0' || c == 'C' || c == 'E')
+	else if (c == '0' || c == 'C' || c == 'E')
 	{
 		if(randv % 2 == 0)
 			path = ft_strdup(FLOOR);
@@ -128,11 +129,11 @@ char	*get_player_path(t_game *game, char c)
 			path = ft_strdup(FLOOR2);
 		else
 			path = ft_strdup(FLOOR3);		
-	}*/
+	}
 	if (!path)
     {
         fprintf(stderr, "Failed to allocate path for character: %c\n", c);
 		gameover(game);
     }
 	return (path);
-}
+}*/

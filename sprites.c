@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 15:25:58 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/07/18 20:55:48 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/07/21 16:56:05 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int	update_frame(t_game *game, int index)
 //	create_map(game);
 	put_map(game);
 	put_player(game, index);
+	put_exit(game, game->p1.moves);
 	mlx_put_image_to_window(game->mlx, game->win, game->world->img,
 		0, 0);
     return (0);    
@@ -56,6 +57,7 @@ void    create_world(t_sprite *sprite, t_game *game, int posx, int posy)
     int x;
     int y;
     unsigned int color;
+	unsigned int trans_color = 0xFFC0CB;
 
     y = -1;
 	while (++y < sprite->height)
@@ -64,7 +66,7 @@ void    create_world(t_sprite *sprite, t_game *game, int posx, int posy)
 		while (++x < sprite->width)
 		{
 			color = get_color_in_pixel(sprite, x, y);
-			if (color){
+			if (color != trans_color){
                // printf("Drawing pixel at (%d, %d) with color %x\n",
                //        posx * SZ + x, posy * SZ + y, color);
 				put_pixel(game->world,
@@ -108,10 +110,10 @@ void	create_map(t_game *game)
 
     printf("Creating map...\n");
 	y = -1;
-	while (++y < game->map.colun)
+	while (++y < game->map.lines)
 	{
 		x = -1;
-		while (++x < game->map.lines)
+		while (++x < game->map.colun)
 		{
             char *sprite_path = get_sprite_path(game, game->map.map[y][x].type);
             if (!sprite_path)
@@ -142,7 +144,7 @@ char	*get_sprite_path(t_game *game, char c)
 		else
 			path = ft_strdup(WALL2);
 	}	
-	else if (c == '0' || c == 'C' || c == 'E' || c == 'P' || c == 'M')
+	else if (c == '0' || c == 'C' || c == 'E' || c == 'P' || c == 'M' || c == 'B')
 	{
 		if(randv % 2 == 0)
 			path = ft_strdup(FLOOR);
@@ -151,8 +153,6 @@ char	*get_sprite_path(t_game *game, char c)
 		else
 			path = ft_strdup(FLOOR3);		
 	}
-	else if (c == 'B')
-		path = ft_strdup(BLOOD);		
 	if (!path)
     {
         fprintf(stderr, "Failed to allocate path for character: %c\n", c);
@@ -172,10 +172,10 @@ void	put_map(t_game *game)
 	sprite = NULL;
 	map = game->map.map;
 	y = -1;
-	while (++y < game->map.colun)
+	while (++y < game->map.lines)
 	{
 		x = -1;
-		while (++x < game->map.lines)
+		while (++x < game->map.colun)
 		{
 			sprite = create_sprite(game, game->map.map[y][x].sprt_path);
 			create_world(sprite, game, x, y);

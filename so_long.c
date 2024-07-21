@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 16:13:44 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/07/18 21:18:41 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/07/21 16:12:13 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int main(int ac, char **av)
         map_start(av[1], &game);
         start_world(&game);
         init_player(&game);
+        init_exit(&game);
         create_map(&game);
         update_frame(&game, 0);        
  //       put_player_mov(&game);
@@ -61,7 +62,7 @@ static void	start_world(t_game *game)
         exit(MALLOC_ERROR);
     }
 	world->img = mlx_new_image(game->mlx,
-			game->map.lines * SZ, game->map.colun * SZ);
+			game->map.colun * SZ, game->map.lines * SZ);
 	if (!world->img)
 	{
 		free_map(game->map.map);
@@ -69,8 +70,8 @@ static void	start_world(t_game *game)
 	}
 	world->addr = mlx_get_data_addr(world->img, &world->bits_per_pixel,
 			&world->line_length, &world->endian);
-	world->width = game->map.lines * SZ;
-	world->height = game->map.colun * SZ;
+	world->width = game->map.colun * SZ;
+	world->height = game->map.lines * SZ;
 	game->world = world;
     
     printf("World created with dimensions: %d x %d\n", world->width, world->height);

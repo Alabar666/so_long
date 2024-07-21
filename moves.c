@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 19:20:13 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/07/18 20:54:06 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/07/21 16:57:32 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,23 +21,23 @@ int key_pressed(int key, t_game *game){
     }
     else if (key == KEY_W || key == UP)
     {
-        game->p1.mv_dir = DIR_UP;
-        move_player(game, 0, -1);
+        if(game->map.map[(game->p1.p1_p.y / 40) - 1][game->p1.p1_p.x / 40].type != '1') 
+            return(game->p1.mv_dir = DIR_UP, move_player(game, 0, -1), 0);
     }
     else if (key == KEY_S || key == DOWN)
     {
-        game->p1.mv_dir = DIR_DOWN;
-        move_player(game, 0, 1);
+        if(game->map.map[(game->p1.p1_p.y / 40) + 1][game->p1.p1_p.x / 40].type != '1') 
+            return(game->p1.mv_dir = DIR_DOWN, move_player(game, 0, +1), 0);
     }
     else if (key == KEY_A || key == LEFT)
     {
-          game->p1.mv_dir = DIR_LEFT;      
-        move_player(game, -1, 0);
+        if(game->map.map[game->p1.p1_p.y / 40][(game->p1.p1_p.x / 40) -1].type != '1') 
+            return(game->p1.mv_dir = DIR_LEFT, move_player(game, -1, 0), 0);
     }
     else if (key == KEY_D || key == RIGHT)
     {
-        game->p1.mv_dir = DIR_RIGHT; 
-        move_player(game, 1, 0);
+        if(game->map.map[game->p1.p1_p.y / 40][(game->p1.p1_p.x / 40) +1].type != '1') 
+            return(game->p1.mv_dir = DIR_RIGHT, move_player(game, 1, 0), 0);
     }
     return (0);
 }
@@ -47,6 +47,8 @@ void move_player(t_game *game, int dx, int dy)
     int steps = 4; // Número de passos para completar o movimento
     int step_size = 10; // Tamanho de cada passo em pixels
     int i;
+    int x;
+    int y;
     
     i = 0;
 
@@ -58,6 +60,23 @@ void move_player(t_game *game, int dx, int dy)
         usleep(50000); // Atraso para criar a animação
         i++;
     }
+    game->p1.moves++;
+    
+    x = game->p1.p1_p.x / 40;
+    y = game->p1.p1_p.y / 40;
+    if (game->map.map[y][x].type == 'C')
+	{
+		game->map.goblin -= 1;
+		game->map.map[y][x].type = 'B';
+  //      game->map.map[y][x].sprt_path = BLOOD;
+        
+	}
+    else if (game->map.map[y][x].type == 'E' && game->map.goblin == 0)
+	{
+		printf("Ganhou");
+		gameover(game);
+	}
+    
 }
 /*
     if (game->map.map[dy][dx].type == 'C')
