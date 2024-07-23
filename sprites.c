@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 15:25:58 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/07/21 16:56:05 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/07/23 19:14:53 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,10 @@ int	update_frame(t_game *game, int index)
 	
 //	create_map(game);
 	put_map(game);
-	put_player(game, index);
+
 	put_exit(game, game->p1.moves);
+	update_all_goblins(game);
+	put_player(game, index);
 	mlx_put_image_to_window(game->mlx, game->win, game->world->img,
 		0, 0);
     return (0);    

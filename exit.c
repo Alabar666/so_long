@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 15:42:29 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/07/21 17:30:27 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/07/22 21:29:35 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 void init_exit(t_game *game)
 {
-//    game->ext.ex_p.x = 0;   
-//    game->ext.ex_p.y = 0; 
     game->ext.current_sprite = 0;
 	game->ext.exit_sprites[0] = ft_strdup(EXIT_FRONT);
 	game->ext.exit_sprites[1] = ft_strdup(EXIT_BACK);

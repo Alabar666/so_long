@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 21:07:19 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/07/21 16:11:27 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/07/23 20:51:48 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,7 +191,10 @@ void check_type(t_game *game, char type, int x, int y)
             game->ext.ex_p.y = y * SZ;
         }           
         else if(type == 'C')
-            game->map.goblin++;
+        {
+            game->map.goblin++;            
+            add_goblin_to_list(game, x * SZ, y * SZ);
+        }
         else if(type == 'M')
             game->map.enemy++;                
     }

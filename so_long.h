@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 16:13:48 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/07/21 17:10:37 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/07/23 20:50:15 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,13 +198,13 @@ typedef struct s_exit{
 } t_exit;
 
 
-
 typedef struct s_game{
    void *mlx;
    void *win;
    t_map map;
    t_sprite *world;
    t_player p1;
+   t_goblin *gbl;   
    t_exit ext;
    void *e;
    
@@ -256,7 +256,15 @@ void    create_player(t_sprite *sprite, t_game *game, int posx, int posy);
 char	*get_player_path(t_game *game, char c);
 void init_player(t_game *game);
 
-
+//goblins
+void init_goblin(t_goblin *goblin);
+void add_goblin_to_list(t_game *game, int x, int y);
+void    create_goblin(t_sprite *sprite, t_game *game, int posx, int posy);
+void	put_goblin(t_game *game, t_goblin *goblin, int sprite_index);
+void update_all_goblins(t_game *game);
+void free_goblins(t_goblin *head);
+t_goblin *new_goblin(void);
+void init_list_goblin(t_game *game);
 
 // utils
 char	*get_next_line(int fd);
