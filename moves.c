@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 19:20:13 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/07/21 16:57:32 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/07/25 19:38:47 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,22 +21,22 @@ int key_pressed(int key, t_game *game){
     }
     else if (key == KEY_W || key == UP)
     {
-        if(game->map.map[(game->p1.p1_p.y / 40) - 1][game->p1.p1_p.x / 40].type != '1') 
+        if(game->map.map[(game->p1.p1_p.y / SZ) - 1][game->p1.p1_p.x / SZ].type != '1') 
             return(game->p1.mv_dir = DIR_UP, move_player(game, 0, -1), 0);
     }
     else if (key == KEY_S || key == DOWN)
     {
-        if(game->map.map[(game->p1.p1_p.y / 40) + 1][game->p1.p1_p.x / 40].type != '1') 
+        if(game->map.map[(game->p1.p1_p.y / SZ) + 1][game->p1.p1_p.x / SZ].type != '1') 
             return(game->p1.mv_dir = DIR_DOWN, move_player(game, 0, +1), 0);
     }
     else if (key == KEY_A || key == LEFT)
     {
-        if(game->map.map[game->p1.p1_p.y / 40][(game->p1.p1_p.x / 40) -1].type != '1') 
+        if(game->map.map[game->p1.p1_p.y / SZ][(game->p1.p1_p.x / SZ) -1].type != '1') 
             return(game->p1.mv_dir = DIR_LEFT, move_player(game, -1, 0), 0);
     }
     else if (key == KEY_D || key == RIGHT)
     {
-        if(game->map.map[game->p1.p1_p.y / 40][(game->p1.p1_p.x / 40) +1].type != '1') 
+        if(game->map.map[game->p1.p1_p.y / SZ][(game->p1.p1_p.x / SZ) +1].type != '1') 
             return(game->p1.mv_dir = DIR_RIGHT, move_player(game, 1, 0), 0);
     }
     return (0);

@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 16:13:48 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/07/23 20:50:15 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/07/25 20:17:33 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,6 +185,8 @@ typedef struct s_goblin{
    char *back_sprites[3];  
    char *left_sprites[3];  
    char *right_sprites[3];
+   char *dead;
+   int is_alive;
    struct s_goblin *next;     
 } t_goblin;
 
@@ -252,7 +254,7 @@ t_sprite *create_sprite(t_game *game, char *sprite_path);
 unsigned int	get_color_in_pixel(t_sprite *sprite, int x, int y);
 int	update_frame(t_game *game, int sprite_index);
 void	put_player(t_game *game, int sprite_index);
-void    create_player(t_sprite *sprite, t_game *game, int posx, int posy);
+void    create_character(t_sprite *sprite, t_game *game, int posx, int posy);
 char	*get_player_path(t_game *game, char c);
 void init_player(t_game *game);
 

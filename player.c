@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 20:10:30 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/07/21 14:44:55 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/07/25 20:16:33 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void init_player(t_game *game)
     game->p1.right_sprites[1] = ft_strdup(PLAYER_RIGHT_MV2);
     game->p1.right_sprites[2] = ft_strdup(PLAYER_RIGHT_MV3);  
 }
-
+/*
 void    create_player(t_sprite *sprite, t_game *game, int posx, int posy)
 {
     int x;
@@ -53,16 +53,15 @@ void    create_player(t_sprite *sprite, t_game *game, int posx, int posy)
 		while (++x < sprite->width)
 		{
 			color = get_color_in_pixel(sprite, x, y);
-			if (color != trans_color){
-//                printf("Drawing pixel at (%d, %d) with color %x\n",
-//                       posx + x, posy + y, color);
+			if (color != trans_color)
+            {
 				put_pixel(game->world,
 					posx + x,
 					posy + y, color);
 			}
 		}
 	}  
-}
+}*/
 
 void	put_player(t_game *game, int sprite_index)
 {
@@ -105,35 +104,5 @@ void	put_player(t_game *game, int sprite_index)
         current_sprite = ft_strdup(PLAYER_FRONT_STAND);
 
     game->p1.p1 = create_sprite(game, current_sprite);
-    create_player(game->p1.p1, game, x, y);
+    create_character(game->p1.p1, game, x, y);
 }
-/*
-char	*get_player_path(t_game *game, char c)
-{
-	char	*path;
-	int randv;
-
-	randv = rand();
-	path = NULL;
-	if (c == 'P')
-		path = ft_strdup(PLAYER_FRONT_STAND);		
-	else if (c == 'E')
-		path = ft_strdup(EXIT);	
-	else if (c == 'C')
-		path = ft_strdup(GOBLIN_FRONT_STAND);	
-	else if (c == '0' || c == 'C' || c == 'E')
-	{
-		if(randv % 2 == 0)
-			path = ft_strdup(FLOOR);
-		else if(randv % 3 == 0)
-			path = ft_strdup(FLOOR2);
-		else
-			path = ft_strdup(FLOOR3);		
-	}
-	if (!path)
-    {
-        fprintf(stderr, "Failed to allocate path for character: %c\n", c);
-		gameover(game);
-    }
-	return (path);
-}*/

@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 15:25:58 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/07/23 19:14:53 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/07/25 20:14:30 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,4 +186,27 @@ void	put_map(t_game *game)
 		}
 	}
     printf("Map created successfully.\n"); // Mensagem de depuração
+}
+void    create_character(t_sprite *sprite, t_game *game, int posx, int posy)
+{
+    int x;
+    int y;
+    unsigned int color;
+	unsigned int trans_color = 0xFFC0CB;
+
+    y = -1;
+	while (++y < sprite->height)
+	{
+		x = -1;
+		while (++x < sprite->width)
+		{
+			color = get_color_in_pixel(sprite, x, y);
+			if (color != trans_color)
+            {
+				put_pixel(game->world,
+					posx + x,
+					posy + y, color);
+			}
+		}
+	}  
 }

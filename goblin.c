@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 19:41:27 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/07/23 20:49:47 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/07/25 22:18:10 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ void init_goblin(t_goblin *goblin)
 {
     goblin->mv_dir = STAND;
     goblin->current_sprite = 0;
+    goblin->is_alive = 1;
+    goblin->dead = ft_strdup(BLOOD);
 
 	goblin->front_sprites[0] = ft_strdup(GOBLIN_FRONT_STAND);
     goblin->front_sprites[1] = ft_strdup(GOBLIN_FRONT_MV1);
@@ -121,7 +123,7 @@ void free_goblins(t_goblin *head) {
     }
 }
 
-
+/*
 void    create_goblin(t_sprite *sprite, t_game *game, int posx, int posy)
 {
     int x;
@@ -145,7 +147,7 @@ void    create_goblin(t_sprite *sprite, t_game *game, int posx, int posy)
 			}
 		}
 	}  
-}
+}*/
 
 void	put_goblin(t_game *game, t_goblin *goblin, int sprite_index)
 {
@@ -188,8 +190,99 @@ void	put_goblin(t_game *game, t_goblin *goblin, int sprite_index)
         current_sprite = goblin->front_sprites[0];
 
     goblin->gbl = create_sprite(game, current_sprite);
-    create_goblin(goblin->gbl, game, x, y);
+    create_character(goblin->gbl, game, x, y);
 }
+
+void move_goblins_check(t_game *game, t_goblin *gbl)
+{
+    if(!gbl->is_alive)
+        return;
+
+        UP;
+        if(game->map.map[(gbl->gbl_p.y / SZ) - 1][gbl->gbl_p.x / SZ].type != '1' ||
+            game->map.map[(gbl->gbl_p.y / SZ) - 1][gbl->gbl_p.x / SZ].type != 'C' ||
+             game->map.map[(gbl->gbl_p.y / SZ) - 1][gbl->gbl_p.x / SZ].type != 'E') 
+            return(gbl->mv_dir = DIR_UP, move_player(game, 0, -1), 0);
+
+        DOWN;
+        if(game->map.map[(gbl->gbl_p.y / SZ) + 1][gbl->gbl_p.x / SZ].type != '1' ||
+            game->map.map[(gbl->gbl_p.y / SZ) + 1][gbl->gbl_p.x / SZ].type != 'C' ||
+             game->map.map[(gbl->gbl_p.y / SZ) + 1][gbl->gbl_p.x / SZ].type != 'E') 
+            return(gbl->mv_dir = DIR_DOWN, move_player(game, 0, +1), 0);
+
+        LEFT;
+        if(game->map.map[gbl->gbl_p.y / SZ][(gbl->gbl_p.x / SZ) -1].type != '1' ||
+            game->map.map[gbl->gbl_p.y / SZ][(gbl->gbl_p.x / SZ) -1].type != 'C' ||
+             game->map.map[gbl->gbl_p.y / SZ][(gbl->gbl_p.x / SZ) -1].type != 'E') 
+            return(gbl->mv_dir = DIR_LEFT, move_player(game, -1, 0), 0);
+
+        RIGHT;
+        if(game->map.map[gbl->gbl_p.y / SZ][(gbl->gbl_p.x / SZ) +1].type != '1' ||
+            game->map.map[gbl->gbl_p.y / SZ][(gbl->gbl_p.x / SZ) +1].type != 'C' ||
+             game->map.map[gbl->gbl_p.y / SZ][(gbl->gbl_p.x / SZ) +1].type != 'E')
+            return(gbl->mv_dir = DIR_RIGHT, move_player(game, 1, 0), 0);
+        
+        
+}
+
+void move_goblin(t_game *game, t_goblin *gbl, int dx, int dy)
+{
+    int steps = 4;
+    int step_size = 10;
+    int i;
+    
+    i = 0;
+    while (i < steps)
+    {
+        gbl->gbl_p.x += dx * step_size;
+        gbl->gbl_p.y += dy * step_size;
+        update_frame(game, i);
+        usleep(50000); // Atraso para criar a animação
+        i++;
+    }
+}
+
+void move_rand_goblins(t_game *game)
+{
+    t_goblin *cur_gbl;
+    int move_count;
+    int max_moves;
+    int directions[4][2];
+    int dir_index;
+    int dx;
+    int dy;
+
+    cur_gbl = game->gbl;
+    move_count = 0;
+    max_moves = game->map.goblin / 2;
+    if(max_moves == 0)
+        max_moves = 1;
+    init_directions(directions);
+    while (cur_gbl != NULL)
+    {
+        if(cur_gbl->is_alive && move_count < max_moves && rand() % 2 == 0)
+        {
+            dir_index = rand() % 4;
+            dx = directions[dir_index][0];
+            dy = directions[dir_index][1];
+            move_goblin(game, cur_gbl, dx, dy);
+            move_count++;
+        } 
+        cur_gbl = cur_gbl->next;  
+    }     
+}
+void init_directions(int directions[4][2])
+{
+    directions[0][0] = 0;  // Movimento para cima
+    directions[0][1] = -1;
+    directions[1][0] = 0;  // Movimento para baixo
+    directions[1][1] = 1;
+    directions[2][0] = -1; // Movimento para a esquerda
+    directions[2][1] = 0;
+    directions[3][0] = 1;  // Movimento para a direita
+    directions[3][1] = 0;
+}
+
 
 void update_all_goblins(t_game *game)
 {

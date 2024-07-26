@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 15:42:29 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/07/22 21:29:35 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/07/25 20:16:04 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void init_exit(t_game *game)
     game->ext.exit_ballom[2] = ft_strdup(EXIT_BFEAR);
     game->ext.exit_ballom[3] = ft_strdup(EXIT_BSAD);
 }
-
+/*
 void    create_exit(t_sprite *sprite, t_game *game, int posx, int posy)
 {
     int x;
@@ -48,8 +48,8 @@ void    create_exit(t_sprite *sprite, t_game *game, int posx, int posy)
 			}
 		}
 	}  
-}
-
+}*/
+/*
 void    create_ballom(t_sprite *sprite, t_game *game, int posx, int posy)
 {
     int x;
@@ -73,7 +73,7 @@ void    create_ballom(t_sprite *sprite, t_game *game, int posx, int posy)
 			}
 		}
 	}  
-}
+}*/
 
 void	put_exit(t_game *game, int moves)
 {
@@ -93,10 +93,10 @@ void	put_exit(t_game *game, int moves)
         current_ballom = NULL;
 
     game->ext.ex1 = create_sprite(game, current_exit);
-    create_exit(game->ext.ex1, game, game->ext.ex_p.x, game->ext.ex_p.y);
+    create_character(game->ext.ex1, game, game->ext.ex_p.x, game->ext.ex_p.y);
     if(current_ballom)
     {
         game->ext.bl = create_sprite(game, current_ballom);
-        create_ballom(game->ext.bl, game, game->ext.ex_p.x, game->ext.ex_p.y - 40);
+        create_character(game->ext.bl, game, game->ext.ex_p.x, game->ext.ex_p.y - 40);
     }
 }
