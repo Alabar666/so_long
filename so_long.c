@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 16:13:44 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/07/23 20:56:02 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/07/29 21:48:43 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@ int main(int ac, char **av)
 //        mlx_key_hook(game.win, key_pressed, &game);
  //       mlx_loop_hook(game.mlx, update_frame, &game);
         mlx_hook(game.win, KeyPress, KeyPressMask, key_pressed, &game);
-        mlx_loop(game.mlx);
+
         mlx_loop_hook(game.mlx, update_frame, &game);
-    
+        mlx_loop(game.mlx);
         /*mlx_hook(game.win, KeyPress, KeyPressMask, key_pressed, &game);
         mlx_loop_hook(game.mlx, update_frame, &game);
         mlx_loop(game.mlx);*/  
@@ -58,6 +58,8 @@ static void	start_world(t_game *game)
 {
 	t_sprite	*world;
 
+    game->lst_gbl_upt = time(NULL);
+    game->global_timer = 0;
 	world = (t_sprite *)ft_calloc(1, sizeof(t_sprite));
     if (!world)
     {

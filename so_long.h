@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 16:13:48 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/07/25 20:17:33 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/07/29 21:21:18 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,10 @@
 # ifndef MAX_FDS
 #  define MAX_FDS 42
 # endif
+
+#define FRAME_DURATION  (CLOCKS_PER_SEC / 60)
+#define INTEVAL (1.0 / FPS)
+#define FPS 60
 /*
 **                              KEY CODES
 */
@@ -180,7 +184,7 @@ typedef struct s_goblin{
    t_pos gbl_p;
    t_sprite *gbl;
    int mv_dir;
-   int current_sprite;
+   char *current_sprite;
    char *front_sprites[3];
    char *back_sprites[3];  
    char *left_sprites[3];  
@@ -208,6 +212,8 @@ typedef struct s_game{
    t_player p1;
    t_goblin *gbl;   
    t_exit ext;
+   time_t lst_gbl_upt;
+   unsigned long global_timer;
    void *e;
    
 }  t_game;
@@ -267,6 +273,15 @@ void update_all_goblins(t_game *game);
 void free_goblins(t_goblin *head);
 t_goblin *new_goblin(void);
 void init_list_goblin(t_game *game);
+void init_rand_dir_goblin(t_goblin *goblin, int random_dir);
+void move_rand_goblins(t_game *game, t_goblin *gbl);
+void init_directions(int directions[4][2]);
+void update_goblin_sprite_randomly(t_goblin *gbl);
+void select_horizontal_sprite(t_goblin *gbl, int random_dir);
+void select_vertical_sprite(t_goblin *gbl, int random_dir);
+int move_goblins_check(t_game *game, t_goblin *gbl, int dx, int dy);
+void move_goblin(t_game *game, t_goblin *gbl, int dx, int dy);
+
 
 // utils
 char	*get_next_line(int fd);

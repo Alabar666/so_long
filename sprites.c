@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 15:25:58 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/07/25 20:14:30 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/07/29 22:07:50 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,38 @@
 
 int	update_frame(t_game *game, int index)
 {
-	
-//	create_map(game);
-	put_map(game);
+    clock_t start, end;
+	time_t current_time;
+    long sleep_time;
+	t_goblin *current_goblin = game->gbl;
 
+    start = clock();	
+	current_time = time(NULL);
+	put_map(game);
 	put_exit(game, game->p1.moves);
+	if (difftime(current_time, game->lst_gbl_upt) >= 1.5)
+    {
+		while (current_goblin != NULL)
+   		{
+       		move_rand_goblins(game, current_goblin);
+			update_goblin_sprite_randomly(current_goblin);
+	        current_goblin = current_goblin->next;
+		}
+        game->lst_gbl_upt = current_time; // Atualize o tempo da última atualização
+    }
 	update_all_goblins(game);
 	put_player(game, index);
 	mlx_put_image_to_window(game->mlx, game->win, game->world->img,
 		0, 0);
+	end = clock();
+	sleep_time = FRAME_DURATION - ((end - start) * 1000000 / CLOCKS_PER_SEC);
+    if (sleep_time > 0)
+    {
+        usleep(sleep_time);
+    }
     return (0);    
 }
+
 
 t_sprite *create_sprite(t_game *game, char *sprite_path)
 {
@@ -110,7 +131,7 @@ void	create_map(t_game *game)
 	int			x;
 	t_sprite	*sprite;
 
-    printf("Creating map...\n");
+ //   printf("Creating map...\n");
 	y = -1;
 	while (++y < game->map.lines)
 	{
@@ -130,7 +151,7 @@ void	create_map(t_game *game)
 			free(sprite);
 		}
 	}
-    printf("Map created successfully.\n"); // Mensagem de depuração
+ //   printf("Map created successfully.\n"); // Mensagem de depuração
 }
 char	*get_sprite_path(t_game *game, char c)
 {
@@ -185,7 +206,7 @@ void	put_map(t_game *game)
 			free(sprite);
 		}
 	}
-    printf("Map created successfully.\n"); // Mensagem de depuração
+ //   printf("Map created successfully.\n"); // Mensagem de depuração
 }
 void    create_character(t_sprite *sprite, t_game *game, int posx, int posy)
 {
