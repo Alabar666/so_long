@@ -384,7 +384,7 @@ if (frame_counter >= 180)
     current_goblin = game->gbl;
     while (current_goblin != NULL)
     {
-        if(rand() % 10)
+        if(rand() % 20)
         {
         current_goblin->mv_dir = rand() % 4;
         put_goblin(game, current_goblin, 0);
