@@ -177,7 +177,18 @@ typedef struct s_player{
    char *front_sprites[3];
    char *back_sprites[3];  
    char *left_sprites[3];  
-   char *right_sprites[3];     
+   char *right_sprites[3];
+
+    t_pos dest_p;
+    int dx;
+    int dy;
+    int steps_remaining;
+    int step_size;
+    int update_interval; // Intervalo de atualização em milissegundos
+        int accumulated_time;
+    clock_t last_update_time; 
+
+
 } t_player;
 
 typedef struct s_goblin{
@@ -213,8 +224,11 @@ typedef struct s_game{
    t_goblin *gbl;   
    t_exit ext;
    time_t lst_gbl_upt;
+   time_t lst_exit_upt;
    unsigned long global_timer;
    void *e;
+   int sprite_index;
+   int is_moving;
    
 }  t_game;
 /*
@@ -236,11 +250,15 @@ t_tile	new_type(char type, int x, int y);
 void	free_map(t_tile **map);
 void	game_error(int fd, t_map *map, char *error);
 void	put_map(t_game *game);
+void	put_tile(t_game *game, int x, int y);
+
+void render_game(t_game *game);
+
 
 // exit
 void init_exit(t_game *game);
 void create_exit(t_sprite *sprite, t_game *game, int posx, int posy);
-void	put_exit(t_game *game, int sprite_index);
+void	put_exit(t_game *game);
 
 // map checks
 void map_checks(t_game *game);
@@ -258,7 +276,7 @@ char	*get_sprite_path(t_game *game, char c);
 void	put_pixel(t_sprite *sprite, int x, int y, int color);
 t_sprite *create_sprite(t_game *game, char *sprite_path);
 unsigned int	get_color_in_pixel(t_sprite *sprite, int x, int y);
-int	update_frame(t_game *game, int sprite_index);
+int	update_frame(void *param);
 void	put_player(t_game *game, int sprite_index);
 void    create_character(t_sprite *sprite, t_game *game, int posx, int posy);
 char	*get_player_path(t_game *game, char c);
@@ -276,11 +294,9 @@ void init_list_goblin(t_game *game);
 void init_rand_dir_goblin(t_goblin *goblin, int random_dir);
 void move_rand_goblins(t_game *game, t_goblin *gbl);
 void init_directions(int directions[4][2]);
-void update_goblin_sprite_randomly(t_goblin *gbl);
-void select_horizontal_sprite(t_goblin *gbl, int random_dir);
-void select_vertical_sprite(t_goblin *gbl, int random_dir);
+void update_goblin_sprite_randomly(t_game *game);
 int move_goblins_check(t_game *game, t_goblin *gbl, int dx, int dy);
-void move_goblin(t_game *game, t_goblin *gbl, int dx, int dy);
+
 
 
 // utils
@@ -301,7 +317,8 @@ void move_player(t_game *game, int dx, int dy);
 void player_mov(t_game *game);
 void	move_dir(t_game *game);
 int	update_player_frame(t_game *game);
-
+void move_goblin(t_game *game, t_goblin *gbl, int dx, int dy);
+void update_player_position(t_game *game);
 
 //free exit
 int gameover(t_game *game);
