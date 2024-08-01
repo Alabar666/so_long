@@ -12,6 +12,57 @@
 
 #include "so_long.h"
 
+
+int update_frame(void *param)
+{
+    t_game *game = (t_game *)param;
+    static clock_t last_time = 0;
+    clock_t current_time = clock();
+    float delta_time = (float)(current_time - last_time) / CLOCKS_PER_SEC;
+    
+    if (delta_time < 1.0f / 60.0f) // Se o tempo desde o último frame for menor que 1/60 segundos, pular este frame
+        return 0;
+
+    game->global_timer += delta_time;
+
+	update_player_position(game);
+
+    // Atualizar os goblins aleatoriamente
+    if (difftime(time(NULL), game->lst_gbl_upt) >= 1.0)
+    {
+        move_rand_goblins(game, game->gbl);
+        game->lst_gbl_upt = time(NULL);
+    }
+
+    // Renderizar o jogo
+    render_game(game);
+	last_time = current_time;
+
+    return 0;
+} 
+
+void render_game(t_game *game)
+{
+    // Renderizar o mapa
+    put_map(game);
+    put_exit(game);
+
+    // Renderizar os goblins
+    t_goblin *current_goblin = game->gbl;
+    while (current_goblin != NULL)
+    {
+        put_goblin(game, current_goblin, 0);
+        current_goblin = current_goblin->next;
+    }
+	update_goblin_sprite_randomly(game);
+    // Renderizar o jogador
+    put_player(game, game->p1.current_sprite);
+
+    // Atualizar a janela
+    mlx_put_image_to_window(game->mlx, game->win, game->world->img, 0, 0);
+}
+
+/*
 int	update_frame(t_game *game, int index)
 {
     clock_t start, end;
@@ -23,17 +74,18 @@ int	update_frame(t_game *game, int index)
 	current_time = time(NULL);
 	put_map(game);
 	put_exit(game, game->p1.moves);
-	if (difftime(current_time, game->lst_gbl_upt) >= 1.5)
+
+	if (difftime(current_time, game->lst_gbl_upt) >= 2.0)
     {
 		while (current_goblin != NULL)
    		{
        		move_rand_goblins(game, current_goblin);
-			update_goblin_sprite_randomly(current_goblin);
+	//		update_goblin_sprite_randomly(current_goblin);
 	        current_goblin = current_goblin->next;
 		}
         game->lst_gbl_upt = current_time; // Atualize o tempo da última atualização
     }
-	update_all_goblins(game);
+//	update_all_goblins(game);
 	put_player(game, index);
 	mlx_put_image_to_window(game->mlx, game->win, game->world->img,
 		0, 0);
@@ -44,7 +96,7 @@ int	update_frame(t_game *game, int index)
         usleep(sleep_time);
     }
     return (0);    
-}
+}*/
 
 
 t_sprite *create_sprite(t_game *game, char *sprite_path)
@@ -189,11 +241,11 @@ void	put_map(t_game *game)
 {
 	int			y;
 	int			x;
-	t_tile	**map;
+//	t_tile	**map;
 	t_sprite *sprite;
 	
 	sprite = NULL;
-	map = game->map.map;
+//	map = game->map.map;
 	y = -1;
 	while (++y < game->map.lines)
 	{
@@ -230,4 +282,19 @@ void    create_character(t_sprite *sprite, t_game *game, int posx, int posy)
 			}
 		}
 	}  
+}
+
+void	put_tile(t_game *game, int x, int y)
+{
+    char *sprite_path;
+	t_sprite *sprite;
+	
+	sprite_path = game->map.map[y][x].sprt_path;
+	sprite = NULL;
+    sprite = create_sprite(game, sprite_path);
+    create_world(sprite, game, x, y);
+    mlx_destroy_image(game->mlx, sprite->img);
+    free(sprite_path);
+    free(sprite);
+
 }
