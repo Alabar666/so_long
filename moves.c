@@ -19,6 +19,8 @@ int key_pressed(int key, t_game *game){
     {
         gameover(game);
     }
+    else if (game->is_moving)
+        return 0;
     else if (key == KEY_W || key == UP)
     {
         if(game->map.map[(game->p1.p1_p.y / SZ) - 1][game->p1.p1_p.x / SZ].type != '1') 
@@ -41,7 +43,47 @@ int key_pressed(int key, t_game *game){
     }
     return (0);
 }
-
+/*
+void key_pressed(int key, t_game *game)
+{
+    if (key == ESC)
+    {
+        gameover(game);
+    }
+    if (key == KEY_W || key == UP)
+    {
+        if (game->map.map[(game->p1.p1_p.y / SZ) - 1][game->p1.p1_p.x / SZ].type != '1')
+        {
+            game->p1.mv_dir = DIR_UP;
+            // Não mova o jogador aqui
+        }
+    }
+    else if (key == KEY_S || key == DOWN)
+    {
+        if (game->map.map[(game->p1.p1_p.y / SZ) + 1][game->p1.p1_p.x / SZ].type != '1')
+        {
+            game->p1.mv_dir = DIR_DOWN;
+            // Não mova o jogador aqui
+        }
+    }
+    else if (key == KEY_A || key == LEFT)
+    {
+        if (game->map.map[game->p1.p1_p.y / SZ][(game->p1.p1_p.x / SZ) - 1].type != '1')
+        {
+            game->p1.mv_dir = DIR_LEFT;
+            // Não mova o jogador aqui
+        }
+    }
+    else if (key == KEY_D || key == RIGHT)
+    {
+        if (game->map.map[game->p1.p1_p.y / SZ][(game->p1.p1_p.x / SZ) + 1].type != '1')
+        {
+            game->p1.mv_dir = DIR_RIGHT;
+            // Não mova o jogador aqui
+        }
+    }
+}*/
+/*
 void move_player(t_game *game, int dx, int dy)
 {
     int steps = 4; // Número de passos para completar o movimento
@@ -49,15 +91,18 @@ void move_player(t_game *game, int dx, int dy)
     int i;
     int x;
     int y;
+
     
     i = 0;
-
     while (i < steps)
     {
+
         game->p1.p1_p.x += dx * step_size;
         game->p1.p1_p.y += dy * step_size;
-        update_frame(game, i);
-        usleep(50000); // Atraso para criar a animação
+        put_player(game, i);
+
+        //render_game(game);
+     //   usleep(50000); // Delay para suavizar o movimento
         i++;
     }
     game->p1.moves++;
@@ -78,22 +123,77 @@ void move_player(t_game *game, int dx, int dy)
 	}
     
 }
-/*
-    if (game->map.map[dy][dx].type == 'C')
-	{
-		game->map.goblin -= 1;
-		game->map.map[dy][dx].type = 'B';
-        game->map.map[dy][dx].sprt_path = BLOOD;
-	}
-    else if (game->map.map[dy][dx].type == 'E' && game->map.goblin == 0)
-	{
-		printf("Ganhou");
-		gameover(game);
-	}
-*/
+*//*
+void move_player(t_game *game, int dx, int dy)
+{
+    game->p1.dx = dx;
+    game->p1.dy = dy;
+    game->p1.steps_remaining = 20; // Número de passos para completar o movimento
+    game->p1.step_size = 2;        // Tamanho de cada passo em pixels
+    game->p1.update_interval = 1000 / 30; // Atualizar 60 vezes por segundo
+    game->p1.last_update_time = clock(); 
+}*/
+
+void move_player(t_game *game, int dx, int dy)
+{
+    if (game->is_moving)
+        return;
 
 
+    game->p1.dx = dx;                            // Define a direção do movimento no eixo x
+    game->p1.dy = dy;                            // Define a direção do movimento no eixo y
+    game->p1.steps_remaining = 10;               // Define o número de passos para completar o movimento
+    game->p1.step_size = 4;                      // Define o tamanho de cada passo em pixels
+    game->p1.update_interval = 1000 / 60;        // Define o intervalo de atualização
+    game->p1.dest_p.x = game->p1.p1_p.x + dx * 20 * 2;  // Calcula a posição de destino no eixo x
+    game->p1.dest_p.y = game->p1.p1_p.y + dy * 20 * 2;  // Calcula a posição de destino no eixo y
+    game->p1.last_update_time = clock();         // Define o tempo do último movimento
+    game->p1.accumulated_time = 0;               // Inicializa o tempo acumulado
+    game->p1.current_sprite = 0;
+        game->is_moving = 1;                  // Inicializa o índice do sprite (para animação)
+}
 
+void update_player_position(t_game *game)
+{
+    if (!game) {
+        printf("Erro: game é NULL\n");
+        return;
+    }
+
+    clock_t current_time = clock();
+    int elapsed_time = (current_time - game->p1.last_update_time) * 1000 / CLOCKS_PER_SEC;
+    game->p1.accumulated_time += elapsed_time;
+
+    // Define a quantidade de tempo que deve acumular para mover um passo
+    int time_per_step = game->p1.update_interval;
+
+    // Enquanto tivermos acumulado tempo suficiente para pelo menos um passo
+    while (game->p1.accumulated_time >= time_per_step && game->p1.steps_remaining > 0)
+    {
+        printf("Atualizando posição do jogador: x=%d, y=%d\n", game->p1.p1_p.x, game->p1.p1_p.y);
+
+        // Atualiza a posição do jogador
+        game->p1.p1_p.x += game->p1.dx * game->p1.step_size;
+        game->p1.p1_p.y += game->p1.dy * game->p1.step_size;
+        game->p1.steps_remaining--;
+
+        printf("Nova posição do jogador: x=%d, y=%d\n", game->p1.p1_p.x, game->p1.p1_p.y);
+        printf("%d\n", game->p1.current_sprite);
+        // Atualiza o índice do sprite
+        game->p1.current_sprite = (game->p1.current_sprite + 1) % 3; // Cicla entre 0, 1 e 2
+
+        // Reduz a quantidade de tempo acumulado
+        game->p1.accumulated_time -= time_per_step;
+    }
+        if (game->p1.steps_remaining == 0)
+    {
+        game->is_moving = 0;
+        game->p1.current_sprite = 0;
+    }
+
+    // Atualiza o tempo do último movimento
+    game->p1.last_update_time = current_time;
+}
 
 
 
