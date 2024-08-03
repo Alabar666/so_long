@@ -16,6 +16,7 @@
 int update_frame(void *param)
 {
     t_game *game = (t_game *)param;
+	t_goblin *cur_gbl;
     static clock_t last_time = 0;
     clock_t current_time = clock();
     float delta_time = (float)(current_time - last_time) / CLOCKS_PER_SEC;
@@ -25,10 +26,15 @@ int update_frame(void *param)
 
     game->global_timer += delta_time;
 	update_player_position(game);
-	update_goblin_position(game->gbl);
-    if (difftime(time(NULL), game->lst_gbl_upt) >= 1.0)
+    cur_gbl = game->gbl;
+    while (cur_gbl != NULL)
     {
-        move_rand_goblins(game, game->gbl);
+        update_goblin_position(cur_gbl);
+        cur_gbl = cur_gbl->next;
+    }
+    if (difftime(time(NULL), game->lst_gbl_upt) >= 2.0)
+    {
+        move_rand_goblins(game);
         game->lst_gbl_upt = time(NULL);
     }
     render_game(game);
@@ -40,6 +46,16 @@ void render_game(t_game *game)
 {
     put_map(game);
     put_exit(game);
+
+
+    int x, y;
+    for (y = 0; y < game->map.lines; y++) // MAP_HEIGHT deve ser a altura do seu mapa
+    {
+        for (x = 0; x < game->map.colun; x++) // MAP_WIDTH deve ser a largura do seu mapa
+        {
+            printf("Tile at (%d, %d): '%c'\n", x, y, game->map.map[y][x].type);
+        }
+    }
 
     t_goblin *current_goblin = game->gbl;
     while (current_goblin != NULL)
