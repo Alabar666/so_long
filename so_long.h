@@ -207,6 +207,29 @@ typedef struct s_goblin{
    struct s_goblin *next;     
 } t_goblin;
 
+typedef struct s_enemy{
+   t_pos eny_p;
+   t_sprite *eny;
+   int mv_dir;
+   int current_sprite;
+   char *front_sprites[3];
+   char *back_sprites[3];  
+   char *left_sprites[3];  
+   char *right_sprites[3];
+   char *dead;
+   int is_alive;
+   int is_moving;
+   t_pos dest_p;
+   int dx;
+   int dy;
+   int steps_remaining;
+   int step_size;
+   int update_interval;
+   int accumulated_time;
+   clock_t last_update_time; 
+   struct s_enemy *next;     
+} t_enemy;
+
 typedef struct s_exit{
    t_pos ex_p;
    t_sprite *ex1;
@@ -223,7 +246,8 @@ typedef struct s_game{
    t_map map;
    t_sprite *world;
    t_player p1;
-   t_goblin *gbl;   
+   t_goblin *gbl;
+   t_enemy *eny;      
    t_exit ext;
    time_t lst_gbl_upt;
    time_t lst_exit_upt;
