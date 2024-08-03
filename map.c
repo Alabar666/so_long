@@ -55,18 +55,7 @@ void	init_map(t_game *game, int is_init)
         game->map.height = game->map.lines * SZ;        
     }   
 }
-/*
-void free_map(t_game *game)
-{
-    int i;
-    
-    i = 0;
-    while(i < game->map.height) 
-    {
-        free(game->map.map[i++]);
-    }
-    free(game->map.map);
-}*/
+
 int		count_lines(char *file)
 {
 	int		count;
@@ -85,7 +74,7 @@ int		count_lines(char *file)
 	close(fd);
 	return (count);
 }
-void read_map(char *file, t_game *game)//map size rename
+void read_map(char *file, t_game *game)
 {    
     int fd;
     char *map; 
@@ -120,8 +109,6 @@ void read_map(char *file, t_game *game)//map size rename
     free(mapfile);
     close(fd);   
 }
-
-
 
 void map_malloc(t_map *map)
 {
