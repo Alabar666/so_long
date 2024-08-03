@@ -48,6 +48,9 @@ void move_player(t_game *game, int dx, int dy)
 {
     if (game->p1.is_moving)
         return;
+    int old_x = game->p1.p1_p.x;
+    int old_y = game->p1.p1_p.y;
+
     game->p1.dx = dx;                           
     game->p1.dy = dy;                        
     game->p1.steps_remaining = 10;               
@@ -61,7 +64,9 @@ void move_player(t_game *game, int dx, int dy)
     game->p1.is_moving = 1;
     game->p1.moves++;
     ft_printf("Moves amount: %i\n", game->p1.moves); 
-    put_moves(game);   
+    put_moves(game);
+    check_position(game, game->p1.dest_p.x, game->p1.dest_p.y); 
+    update_map_tiles(game, old_x, old_y, game->p1.dest_p.x, game->p1.dest_p.y, 'P');  
 }
 
 void update_player_position(t_game *game)
@@ -116,99 +121,46 @@ void put_moves(t_game *game)
     free(move_str);
 }
 
+void update_map_tiles(t_game *game, int old_x, int old_y, int new_x, int new_y, char type)
+{
+    int map_old_x;
+    int map_old_y;
+    int map_new_x;
+    int map_new_y;
 
-
-
-
-
-
-
-
-
-
-
-
-/*
-
-int key_pressed(int key, t_game *game){
-    
-    if (key == ESC)
+    map_old_x = old_x / SZ;
+    map_old_y = old_y / SZ;
+    map_new_x = new_x / SZ;
+    map_new_y = new_y / SZ;
+    if(game->map.map[map_new_y][map_new_x].type == '0')
     {
+        game->map.map[map_old_y][map_old_x].type = '0';
+       game->map.map[map_new_y][map_new_x].type = type;
+    }
+}
+
+void check_position(t_game *game, int dx, int dy) 
+{
+    t_goblin *cur_gbl = game->gbl;
+
+    if (dx < 0 || dx >= game->map.width || dy < 0 || dy >= game->map.height) 
+        return;
+ 
+    if (game->map.map[dy / 40][dx/ 40].type == 'C' || game->map.map[dy/40][dx/40].type == 'M') 
+    {
+        while (cur_gbl != NULL) {
+            if (cur_gbl->gbl_p.x == dx && cur_gbl->gbl_p.y == dy && cur_gbl->is_alive) {
+                cur_gbl->is_alive = 0;
+                game->map.map[dy/ 40][dx/ 40].type = 'B';
+                game->map.goblin--;
+                break;
+            }
+            cur_gbl = cur_gbl->next;
+        }
+    }
+    if(game->map.goblin == 0 && game->map.map[dy / 40][dx/ 40].type == 'E')
+    {
+        ft_printf("You saved the priestess/n");
         gameover(game);
     }
-    else if (game->p1.mv_dir != STAND)
-		return ;
-    else if (key == KEY_W || key == UP)
-    {
-        if(game->map.map[game->p1.p1_p.y - 1][game->p1.p1_p.x] != 1)    
-           return(game->p1.p1_p.y = UP, move_dir(game), 0);
- //       game->map.map[game->p1.x][game->p1.y] = '0';
-    }
-    else if (key == KEY_S || key == DOWN)
-    {
-        if(game->map.map[game->p1.p1_p.y + 1][game->p1.p1_p.x] != 1)    
-        return(game->p1.p1_p.y = DOWN, move_dir(game), 0);
-    }
-    else if (key == KEY_D || key == RIGHT)
-    {
-        if(game->map.map[game->p1.p1_p.y][game->p1.p1_p.x + 1] != 1)    
-        return(game->p1.p1_p.x = RIGHT, move_dir(game), 0);
-    }
-    else if (key == KEY_A || key == LEFT)
-    {
-        if(game->map.map[game->p1.p1_p.y][game->p1.p1_p.x - 1] != 1)    
-        return(game->p1.p1_p.x = LEFT, move_dir(game), 0);
-    }
-    return(0);
 }
-
-t_pos	move_dir(int dir, int size)
-{
-    t_pos pos;
-
-    pos.x = 0;
-    pos.y = 0;
-        
-	if (dir == DIR_LEFT)
-		pos.x = SZ * -1;
-	else if (dir == DIR_RIGHT)
-		pos.x = SZ;
-	else if (dir == DIR_UP)
-		pos.y = SZ;
-	else if (dir == DIR_DOWN)
-		pos.y = SZ * -1;
-    return(pos);    
-}
-t_pos new_pos(t_pos ps1, t_pos ps2)
-{
-    t_pos ps3;
-    
-    ps3.x = ps1.x + ps2.x;
-    ps3.y = ps1.y + ps2.y;
-    return(ps3);
-}
-
-
-
-
-
-void player_mov(t_game *game, int dir)
-{
-    char c;
-    t_pos mov;
-    t_pos new_mov;
-
-    if(game->p1.face != STAND)
-        return;
-    
-    game->p1.face = dir;    
-    mov = move_dir(game->p1.face, SZ);
-    new_mov = new_pos(game->p1.p1_p, mov);
-    c = game->map.map[y][x];
-    if(c == '1')
-        return;
-    game->p1.p1_p = new_mov;    
-    game->p1.moves += 1;
-    printf("Steps: %i\n", game->p1.moves);  
-}
-*/
