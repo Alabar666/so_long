@@ -146,25 +146,41 @@ void free_goblins(t_goblin *head) {
 void put_goblin(t_game *game, t_goblin *goblin, int sprite_index)
 {
     char *current_sprite;
-    int x = 0;
-    int y = 0;
+    int x = goblin->gbl_p.x;
+    int y = goblin->gbl_p.y;
 
-    x = goblin->gbl_p.x;
-    y = goblin->gbl_p.y;
-    if (sprite_index < 0 || sprite_index >= 3) {
-        sprite_index = 0;
+    if (goblin->is_alive)
+    {
+        if (sprite_index < 0 || sprite_index >= 3)
+        {
+            sprite_index = 0;
+        }
+        if (goblin->mv_dir == DIR_UP)
+        {
+            current_sprite = goblin->back_sprites[sprite_index];
+        }
+        else if (goblin->mv_dir == DIR_DOWN)
+        {
+            current_sprite = goblin->front_sprites[sprite_index];
+        }
+        else if (goblin->mv_dir == DIR_LEFT)
+        {
+            current_sprite = goblin->left_sprites[sprite_index];
+        }
+        else if (goblin->mv_dir == DIR_RIGHT)
+        {
+            current_sprite = goblin->right_sprites[sprite_index];
+        }
+        else
+        {
+            current_sprite = goblin->front_sprites[0];
+        }
     }
-    if (goblin->mv_dir == DIR_UP) {
-        current_sprite = goblin->back_sprites[sprite_index];
-    } else if (goblin->mv_dir == DIR_DOWN) {
-        current_sprite = goblin->front_sprites[sprite_index];
-    } else if (goblin->mv_dir == DIR_LEFT) {
-        current_sprite = goblin->left_sprites[sprite_index];
-    } else if (goblin->mv_dir == DIR_RIGHT) {
-        current_sprite = goblin->right_sprites[sprite_index];
-    } else {
-        current_sprite = goblin->front_sprites[0];
+    else
+    {
+        current_sprite = goblin->dead;
     }
+    
     goblin->gbl = create_sprite(game, current_sprite);
     create_character(goblin->gbl, game, x, y);
 }
@@ -191,15 +207,16 @@ int move_goblins_check(t_game *game, t_goblin *gbl, int dx, int dy)
         gbl->mv_dir = DIR_LEFT;
     else if (dx == 1 && dy == 0)
         gbl->mv_dir = DIR_RIGHT;
-
-    move_goblin(gbl, dx, dy);
     return(1); 
 }
 
-void move_goblin(t_goblin *gbl, int dx, int dy)
+void move_goblin(t_game *game, t_goblin *gbl, int dx, int dy)
 {
     if (gbl->is_moving)
         return;
+    int old_x = gbl->gbl_p.x;
+    int old_y = gbl->gbl_p.y;
+
     gbl->dx = dx;                   
     gbl->dy = dy;                           
     gbl->steps_remaining = 10;              
@@ -210,7 +227,8 @@ void move_goblin(t_goblin *gbl, int dx, int dy)
     gbl->last_update_time = clock();         
     gbl->accumulated_time = 0;            
     gbl->current_sprite = 0;
-    gbl->is_moving = 1;                 
+    gbl->is_moving = 1;
+    update_map_tiles(game, old_x, old_y, gbl->dest_p.x, gbl->dest_p.y, 'C');                 
 }
 
 void update_goblin_position(t_goblin *gbl)
@@ -235,8 +253,7 @@ void update_goblin_position(t_goblin *gbl)
     gbl->last_update_time = current_time;
 }
 
-
-void move_rand_goblins(t_game *game, t_goblin *gbl)
+void move_rand_goblins(t_game *game)
 {
     t_goblin *cur_gbl;
     int move_count;
@@ -246,7 +263,7 @@ void move_rand_goblins(t_game *game, t_goblin *gbl)
     int dx;
     int dy;
 
-    cur_gbl = gbl;
+    cur_gbl = game->gbl;
     move_count = 0;
     max_moves = game->map.goblin / 3;
     if(max_moves == 0)
@@ -260,11 +277,15 @@ void move_rand_goblins(t_game *game, t_goblin *gbl)
             dx = directions[dir_index][0];
             dy = directions[dir_index][1];
             if (move_goblins_check(game, cur_gbl, dx, dy))
-                move_count++;            
+            {
+                move_goblin(game, cur_gbl, dx, dy);
+                move_count++; 
+            }           
         } 
         cur_gbl = cur_gbl->next;  
     }     
 }
+
 void init_directions(int directions[4][2])
 {
     directions[0][0] = 0;
