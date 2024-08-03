@@ -20,83 +20,37 @@ int update_frame(void *param)
     clock_t current_time = clock();
     float delta_time = (float)(current_time - last_time) / CLOCKS_PER_SEC;
     
-    if (delta_time < 1.0f / 60.0f) // Se o tempo desde o último frame for menor que 1/60 segundos, pular este frame
+    if (delta_time < 1.0f / 60.0f)
         return 0;
 
     game->global_timer += delta_time;
-
 	update_player_position(game);
-
-    // Atualizar os goblins aleatoriamente
+	update_goblin_position(game->gbl);
     if (difftime(time(NULL), game->lst_gbl_upt) >= 1.0)
     {
         move_rand_goblins(game, game->gbl);
         game->lst_gbl_upt = time(NULL);
     }
-
-    // Renderizar o jogo
     render_game(game);
 	last_time = current_time;
-
     return 0;
 } 
 
 void render_game(t_game *game)
 {
-    // Renderizar o mapa
     put_map(game);
     put_exit(game);
 
-    // Renderizar os goblins
     t_goblin *current_goblin = game->gbl;
     while (current_goblin != NULL)
     {
-        put_goblin(game, current_goblin, 0);
+        put_goblin(game, current_goblin, current_goblin->current_sprite);
         current_goblin = current_goblin->next;
     }
 	update_goblin_sprite_randomly(game);
-    // Renderizar o jogador
     put_player(game, game->p1.current_sprite);
-
-    // Atualizar a janela
     mlx_put_image_to_window(game->mlx, game->win, game->world->img, 0, 0);
 }
-
-/*
-int	update_frame(t_game *game, int index)
-{
-    clock_t start, end;
-	time_t current_time;
-    long sleep_time;
-	t_goblin *current_goblin = game->gbl;
-
-    start = clock();	
-	current_time = time(NULL);
-	put_map(game);
-	put_exit(game, game->p1.moves);
-
-	if (difftime(current_time, game->lst_gbl_upt) >= 2.0)
-    {
-		while (current_goblin != NULL)
-   		{
-       		move_rand_goblins(game, current_goblin);
-	//		update_goblin_sprite_randomly(current_goblin);
-	        current_goblin = current_goblin->next;
-		}
-        game->lst_gbl_upt = current_time; // Atualize o tempo da última atualização
-    }
-//	update_all_goblins(game);
-	put_player(game, index);
-	mlx_put_image_to_window(game->mlx, game->win, game->world->img,
-		0, 0);
-	end = clock();
-	sleep_time = FRAME_DURATION - ((end - start) * 1000000 / CLOCKS_PER_SEC);
-    if (sleep_time > 0)
-    {
-        usleep(sleep_time);
-    }
-    return (0);    
-}*/
 
 
 t_sprite *create_sprite(t_game *game, char *sprite_path)
@@ -107,23 +61,21 @@ t_sprite *create_sprite(t_game *game, char *sprite_path)
     if(!sprite)
     {
 		return NULL;
- //       free(sprite_path);
- //       gameover(game);
+        free(sprite_path);
+        gameover(game);
     }
-  //  printf("Loading sprite from path: %s\n", sprite_path); // Mensagem de depuração
     sprite->img = mlx_xpm_file_to_image(game->mlx, sprite_path, &sprite->width,&sprite->height);
     if(!sprite->img)
     {
-        fprintf(stderr, "Failed to load image: %s\n", sprite_path); // Mensagem de erro
-//        free(sprite);
- //       free(sprite_path);
-//        gameover(game);
+        fprintf(stderr, "Failed to load image: %s\n", sprite_path);
+        free(sprite);
+        free(sprite_path);
+        gameover(game);
 	return NULL;
     } 
     sprite->addr = mlx_get_data_addr(sprite->img, &sprite->bits_per_pixel,
     &sprite->line_length, &sprite->endian);
 //    free(sprite_path);
- //   printf("Sprite loaded successfully: %s\n", sprite_path); // Mensagem de depuração
     return(sprite);  
 }
 
@@ -142,8 +94,6 @@ void    create_world(t_sprite *sprite, t_game *game, int posx, int posy)
 		{
 			color = get_color_in_pixel(sprite, x, y);
 			if (color != trans_color){
-               // printf("Drawing pixel at (%d, %d) with color %x\n",
-               //        posx * SZ + x, posy * SZ + y, color);
 				put_pixel(game->world,
 					posx * SZ + x,
 					posy * SZ + y, color);
@@ -183,7 +133,6 @@ void	create_map(t_game *game)
 	int			x;
 	t_sprite	*sprite;
 
- //   printf("Creating map...\n");
 	y = -1;
 	while (++y < game->map.lines)
 	{
@@ -203,7 +152,6 @@ void	create_map(t_game *game)
 			free(sprite);
 		}
 	}
- //   printf("Map created successfully.\n"); // Mensagem de depuração
 }
 char	*get_sprite_path(t_game *game, char c)
 {
@@ -241,11 +189,9 @@ void	put_map(t_game *game)
 {
 	int			y;
 	int			x;
-//	t_tile	**map;
 	t_sprite *sprite;
 	
 	sprite = NULL;
-//	map = game->map.map;
 	y = -1;
 	while (++y < game->map.lines)
 	{
@@ -258,8 +204,8 @@ void	put_map(t_game *game)
 			free(sprite);
 		}
 	}
- //   printf("Map created successfully.\n"); // Mensagem de depuração
 }
+
 void    create_character(t_sprite *sprite, t_game *game, int posx, int posy)
 {
     int x;
