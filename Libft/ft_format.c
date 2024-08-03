@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
 static unsigned int	ft_print_decimal(long int nb, int base, char flag)
 {

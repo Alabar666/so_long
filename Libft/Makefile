@@ -21,7 +21,8 @@ ft_putchar_fd.c ft_memcpy.c ft_isascii.c ft_isprint.c ft_putendl_fd.c \
 ft_putstr_fd.c ft_strncmp.c ft_strrchr.c ft_memset.c ft_strlcat.c \
 ft_strjoin.c ft_strlcpy.c ft_calloc.c ft_bzero.c ft_memchr.c ft_memcmp.c \
 ft_memmove.c ft_strnstr.c ft_substr.c ft_striteri.c ft_strmapi.c \
-ft_strtrim.c ft_itoa.c ft_split.c
+ft_strtrim.c ft_itoa.c ft_split.c get_next_line.c get_next_line_utils.c ft_format.c \
+ft_printf.c ft_putchar.c ft_putstr.c
 
 RM= rm -rf  
 
