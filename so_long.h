@@ -318,6 +318,7 @@ int	update_player_frame(t_game *game);
 void move_goblin(t_goblin *gbl, int dx, int dy);
 void update_player_position(t_game *game);
 void update_goblin_position(t_goblin *gbl);
+void put_moves(t_game *game);
 
 //free exit
 int gameover(t_game *game);
