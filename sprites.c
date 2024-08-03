@@ -49,7 +49,10 @@ void render_game(t_game *game)
     }
 	update_goblin_sprite_randomly(game);
     put_player(game, game->p1.current_sprite);
+	put_moves(game);	
     mlx_put_image_to_window(game->mlx, game->win, game->world->img, 0, 0);
+	if(game->p1.moves != 0)
+		put_moves(game);
 }
 
 
