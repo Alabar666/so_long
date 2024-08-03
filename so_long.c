@@ -29,21 +29,13 @@ int main(int ac, char **av)
         start_world(&game);
         init_player(&game);
         init_exit(&game);
-
-  //      init_goblin(&game);
         create_map(&game);
-        update_frame(&game, 0);        
- //       put_player_mov(&game);
+        update_frame(&game);        
 
-//        mlx_key_hook(game.win, key_pressed, &game);
- //       mlx_loop_hook(game.mlx, update_frame, &game);
         mlx_hook(game.win, KeyPress, KeyPressMask, key_pressed, &game);
-
         mlx_loop_hook(game.mlx, update_frame, &game);
         mlx_loop(game.mlx);
-        /*mlx_hook(game.win, KeyPress, KeyPressMask, key_pressed, &game);
-        mlx_loop_hook(game.mlx, update_frame, &game);
-        mlx_loop(game.mlx);*/  
+
         
         mlx_destroy_image(game.mlx, game.world);
         mlx_destroy_window(game.mlx, game.win);
@@ -59,6 +51,7 @@ static void	start_world(t_game *game)
 	t_sprite	*world;
 
     game->lst_gbl_upt = time(NULL);
+    game->lst_exit_upt = time(NULL);
     game->global_timer = 0;
 	world = (t_sprite *)ft_calloc(1, sizeof(t_sprite));
     if (!world)
@@ -77,9 +70,7 @@ static void	start_world(t_game *game)
 			&world->line_length, &world->endian);
 	world->width = game->map.colun * SZ;
 	world->height = game->map.lines * SZ;
-	game->world = world;
-    
-    printf("World created with dimensions: %d x %d\n", world->width, world->height);
+	game->world = world;    
 }
 
 
