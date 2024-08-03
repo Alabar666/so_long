@@ -20,7 +20,6 @@ LIBFT = $(LIBFT_DIR)/libft.a
 MLX_DIR = minilibx-linux/
 MLX = $(MLX_DIR)libmlx.a
 MLXFLAGS = -L$(MLX_DIR) -lmlx -lm -lX11 -lXext
-GNL = get_next_line.c get_next_line_utils.c
 SRCS = so_long.c map.c gameover.c sprites.c player.c moves.c map_checks.c exit.c goblin.c
 BONUS = 
 RM= rm -rf
@@ -28,7 +27,7 @@ RM= rm -rf
 all: $(NAME)
 
 $(NAME):	$(SRCS) $(LIBFT) $(MLX) $(OBJS)
-			@$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(MLXFLAGS) $(GNL) -o $(NAME)  
+			@$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(MLXFLAGS) -o $(NAME)  
 			@echo "\033[1;32m[ ✔ ] $(NAME) ready!\033[0m"
 			@echo "\033[0;31m𓄿 𓅓  Made by Alabar 𓄿 𓅓"
 			
