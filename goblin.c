@@ -25,7 +25,7 @@ void add_goblin_to_list(t_game *game, int x, int y)
     nw_goblin = new_goblin();
     if (!nw_goblin)
     {
-        printf("Erro ao criar goblin.\n");
+        printf("Error creating goblin.\n");
         free_goblins(game->gbl);
         exit(1);
     }
@@ -53,6 +53,15 @@ void init_goblin(t_goblin *goblin)
     int random_dir;
 
     goblin->is_alive = 1;
+    goblin->current_sprite = 0;
+    goblin->is_moving = 0;
+    goblin->dx = 0;
+    goblin->dy = 0;
+    goblin->steps_remaining = 0;
+    goblin->step_size = 0;
+    goblin->update_interval = 1000 / 60;
+    goblin->last_update_time = clock();
+    goblin->accumulated_time = 0;
     goblin->dead = ft_strdup(BLOOD);
     goblin->front_sprites[0] = ft_strdup(GOBLIN_FRONT_STAND);
     goblin->front_sprites[1] = ft_strdup(GOBLIN_FRONT_MV1);
@@ -72,25 +81,13 @@ void init_goblin(t_goblin *goblin)
 void init_rand_dir_goblin(t_goblin *goblin, int random_dir)
 {
     if (random_dir == 0)
-    {
         goblin->mv_dir = DIR_UP;
-        goblin->current_sprite = goblin->back_sprites[0];
-    }
     else if (random_dir == 1)
-    {
         goblin->mv_dir = DIR_DOWN;
-        goblin->current_sprite = goblin->front_sprites[0];
-    }
     else if (random_dir == 2)
-    {
         goblin->mv_dir = DIR_LEFT;
-        goblin->current_sprite = goblin->left_sprites[0];
-    }
     else
-    {
         goblin->mv_dir = DIR_RIGHT;
-        goblin->current_sprite = goblin->right_sprites[0];
-    }
 }
 
 t_goblin *new_goblin(void)
@@ -98,10 +95,11 @@ t_goblin *new_goblin(void)
     t_goblin *new_goblin = (t_goblin *)ft_calloc(1, sizeof(t_goblin));
     if(!new_goblin)
     {
-        printf("Erro ao alocar memória para um novo goblin.\n");
+        printf("Error allocating memory for a new goblin.\n");
         return(0);      
     }
     new_goblin->next = NULL;
+    
     return new_goblin; 
 }
 void add_goblin(t_goblin **head, t_goblin *new_goblin) 
@@ -139,107 +137,52 @@ void free_goblins(t_goblin *head) {
             free(current->right_sprites[i]);
             i++;
         }
-        free(current->gbl);  // Libera o sprite do goblin
+        free(current->gbl);
         free(current);        
         current = next;
     }
 }
 
-void	put_goblin(t_game *game, t_goblin *goblin, int sprite_index)
-{
-    char *current_sprite;
-    int x;
-    int y;
-
-	x = goblin->gbl_p.x;
-	y = goblin->gbl_p.y;
-    
-    if (goblin->mv_dir == DIR_UP)
-    {
-        if (sprite_index < 3)
-            current_sprite = goblin->back_sprites[sprite_index];
-        else
-            current_sprite = goblin->back_sprites[0];
-    }    
-    else if (goblin->mv_dir == DIR_DOWN)
-    {
-        if (sprite_index < 3)
-            current_sprite = goblin->front_sprites[sprite_index];
-        else
-            current_sprite = goblin->front_sprites[0];
-    } 
-    else if (goblin->mv_dir == DIR_LEFT)
-    {
-        if (sprite_index < 3)
-            current_sprite = goblin->left_sprites[sprite_index];
-        else
-            current_sprite = goblin->left_sprites[0];
-    } 
-    else if (goblin->mv_dir == DIR_RIGHT)
-    {
-        if (sprite_index < 3)
-            current_sprite = goblin->right_sprites[sprite_index];
-        else
-            current_sprite = goblin->right_sprites[0];
-    } 
-    else
-        current_sprite = goblin->front_sprites[0];
-
-    goblin->gbl = create_sprite(game, current_sprite);
-    create_character(goblin->gbl, game, x, y);
-  //  printf("Gbl X: %d, Gbl Y: %d\n", goblin->gbl_p.x, goblin->gbl_p.y);
-}/*
 void put_goblin(t_game *game, t_goblin *goblin, int sprite_index)
 {
     char *current_sprite;
-    int x = goblin->gbl_p.x;
-    int y = goblin->gbl_p.y;
+    int x = 0;
+    int y = 0;
 
-    if (goblin->mv_dir == DIR_UP)
-    {
-        current_sprite = goblin->back_sprites[sprite_index % 4];
-    }    
-    else if (goblin->mv_dir == DIR_DOWN)
-    {
-        current_sprite = goblin->front_sprites[sprite_index % 4];
-    } 
-    else if (goblin->mv_dir == DIR_LEFT)
-    {
-        current_sprite = goblin->left_sprites[sprite_index % 4];
-    } 
-    else if (goblin->mv_dir == DIR_RIGHT)
-    {
-        current_sprite = goblin->right_sprites[sprite_index % 4];
-    } 
-    else
-    {
+    x = goblin->gbl_p.x;
+    y = goblin->gbl_p.y;
+    if (sprite_index < 0 || sprite_index >= 3) {
+        sprite_index = 0;
+    }
+    if (goblin->mv_dir == DIR_UP) {
+        current_sprite = goblin->back_sprites[sprite_index];
+    } else if (goblin->mv_dir == DIR_DOWN) {
+        current_sprite = goblin->front_sprites[sprite_index];
+    } else if (goblin->mv_dir == DIR_LEFT) {
+        current_sprite = goblin->left_sprites[sprite_index];
+    } else if (goblin->mv_dir == DIR_RIGHT) {
+        current_sprite = goblin->right_sprites[sprite_index];
+    } else {
         current_sprite = goblin->front_sprites[0];
     }
-
     goblin->gbl = create_sprite(game, current_sprite);
     create_character(goblin->gbl, game, x, y);
-}*/
+}
+
 
 int move_goblins_check(t_game *game, t_goblin *gbl, int dx, int dy)
 {
-
-
-   //  if(!gbl->is_alive)
-   //         return (0);
-
-            
-    int new_x = gbl->gbl_p.x + dx * SZ;
-    int new_y = gbl->gbl_p.y + dy * SZ;
-
-    // Verificação de colisão com paredes, colecionáveis e saídas
+   if(!gbl->is_alive)
+          return (0);            
+    int new_x;
+    int new_y;
+    new_x = gbl->gbl_p.x + dx * SZ;
+    new_y = gbl->gbl_p.y + dy * SZ;
     if (game->map.map[new_y / SZ][new_x / SZ].type == '1' ||
         game->map.map[new_y / SZ][new_x / SZ].type == 'C' ||
         game->map.map[new_y / SZ][new_x / SZ].type == 'E' ||
         game->map.map[new_y / SZ][new_x / SZ].type == 'M')
-    {
         return 0;
-    }
-    // Atualizar a direção do goblin
     if (dx == 0 && dy == -1)
         gbl->mv_dir = DIR_UP;
     else if (dx == 0 && dy == 1)
@@ -249,88 +192,49 @@ int move_goblins_check(t_game *game, t_goblin *gbl, int dx, int dy)
     else if (dx == 1 && dy == 0)
         gbl->mv_dir = DIR_RIGHT;
 
-    move_goblin(game, gbl, dx, dy);
-    return 1;
-
-
-/*
-      //  UP;
-        if(game->map.map[(gbl->gbl_p.y / SZ) - 1][gbl->gbl_p.x / SZ].type != '1' ||
-            game->map.map[(gbl->gbl_p.y / SZ) - 1][gbl->gbl_p.x / SZ].type != 'C' ||
-             game->map.map[(gbl->gbl_p.y / SZ) - 1][gbl->gbl_p.x / SZ].type != 'E') 
-            return(gbl->mv_dir = DIR_UP, move_goblin(game, gbl, 0, -1), 1);
-
-      //  DOWN;
-        if(game->map.map[(gbl->gbl_p.y / SZ) + 1][gbl->gbl_p.x / SZ].type != '1' ||
-            game->map.map[(gbl->gbl_p.y / SZ) + 1][gbl->gbl_p.x / SZ].type != 'C' ||
-             game->map.map[(gbl->gbl_p.y / SZ) + 1][gbl->gbl_p.x / SZ].type != 'E') 
-            return(gbl->mv_dir = DIR_DOWN, move_goblin(game, gbl, 0, +1), 1);
-
-     //   LEFT;
-        if(game->map.map[gbl->gbl_p.y / SZ][(gbl->gbl_p.x / SZ) -1].type != '1' ||
-            game->map.map[gbl->gbl_p.y / SZ][(gbl->gbl_p.x / SZ) -1].type != 'C' ||
-             game->map.map[gbl->gbl_p.y / SZ][(gbl->gbl_p.x / SZ) -1].type != 'E') 
-            return(gbl->mv_dir = DIR_LEFT, move_goblin(game, gbl, -1, 0), 1);
-
-     //   RIGHT;
-        if(game->map.map[gbl->gbl_p.y / SZ][(gbl->gbl_p.x / SZ) +1].type != '1' ||
-            game->map.map[gbl->gbl_p.y / SZ][(gbl->gbl_p.x / SZ) +1].type != 'C' ||
-             game->map.map[gbl->gbl_p.y / SZ][(gbl->gbl_p.x / SZ) +1].type != 'E')
-            return(gbl->mv_dir = DIR_RIGHT, move_goblin(game, gbl, 1, 0), 1);
-            */
+    move_goblin(gbl, dx, dy);
     return(1); 
 }
-/*
-void move_goblin(t_game *game, t_goblin *gbl, int dx, int dy)
+
+void move_goblin(t_goblin *gbl, int dx, int dy)
 {
-    int steps = 4;
-    int step_size = 10;
-    int i;
-    
-    i = 0;
-    while (i < steps)
+    if (gbl->is_moving)
+        return;
+    gbl->dx = dx;                   
+    gbl->dy = dy;                           
+    gbl->steps_remaining = 10;              
+    gbl->step_size = 4;                      
+    gbl->update_interval = 1000 / 60;        
+    gbl->dest_p.x = gbl->gbl_p.x + dx * 20 * 2; 
+    gbl->dest_p.y = gbl->gbl_p.y + dy * 20 * 2;
+    gbl->last_update_time = clock();         
+    gbl->accumulated_time = 0;            
+    gbl->current_sprite = 0;
+    gbl->is_moving = 1;                 
+}
+
+void update_goblin_position(t_goblin *gbl)
+{
+    clock_t current_time = clock();
+    int elapsed_time = (current_time - gbl->last_update_time) * 1000 / CLOCKS_PER_SEC;
+    gbl->accumulated_time += elapsed_time;
+    int time_per_step = gbl->update_interval;
+    while (gbl->accumulated_time >= time_per_step && gbl->steps_remaining > 0)
     {
-        gbl->gbl_p.x += dx * step_size;
-        gbl->gbl_p.y += dy * step_size;
- //       update_all_goblins(game);
-        put_goblin(game, gbl, i);
-        usleep(50000); // Atraso para criar a animação
-        render_game(game);
-        i++;
-        printf("Gbl X: %d, Gbl Y: %d\n", gbl->gbl_p.x, gbl->gbl_p.y);
+        gbl->gbl_p.x += gbl->dx * gbl->step_size;
+        gbl->gbl_p.y += gbl->dy * gbl->step_size;
+        gbl->steps_remaining--;
+        gbl->current_sprite = (gbl->current_sprite + 1) % 3;
+        gbl->accumulated_time -= time_per_step;
     }
-}*//*
-void move_goblin(t_game *game, t_goblin *gbl, int dx, int dy, float delta_time)
-{
-    static double last_update = 0;
-    double current_time = game->global_timer;
-    int step_size = 10; // Tamanho de cada passo em pixels
-    double update_interval = 0.05; // Intervalo de atualização em segundos
-
-    // Atualize a posição e animação do goblin
-    if (current_time - last_update >= update_interval) {
-        gbl->gbl_p.x += dx * step_size * delta_time;
-        gbl->gbl_p.y += dy * step_size * delta_time;
-        put_goblin(game, gbl, (int)((current_time - last_update) / update_interval) % 4);
-        last_update = current_time;
-
-        // Atualize o jogo e renderize o estado atual
-        render_game(game);
+    if(gbl->steps_remaining == 0)
+    {
+        gbl->is_moving = 0;
+        gbl->current_sprite = 0;
     }
+    gbl->last_update_time = current_time;
 }
-*/
-void move_goblin(t_game *game, t_goblin *gbl, int dx, int dy)
-{
-    // Atualize a posição do goblin com base na direção e tamanho do passo
-    gbl->gbl_p.x += dx * SZ;
-    gbl->gbl_p.y += dy * SZ;
 
-    // Atualize o sprite do goblin com base na nova posição
-    put_goblin(game, gbl, (game->global_timer / 100) % 4);
-
-    // Renderize o jogo após atualizar os goblins
-    render_game(game);
-}
 
 void move_rand_goblins(t_game *game, t_goblin *gbl)
 {
@@ -375,7 +279,7 @@ void init_directions(int directions[4][2])
 
 void update_goblin_sprite_randomly(t_game *game)
 {
-    t_goblin *current_goblin; // Começa com o primeiro goblin na lista
+    t_goblin *current_goblin;
     static int frame_counter = 0;
     frame_counter++;
 
@@ -387,30 +291,11 @@ if (frame_counter >= 180)
         if(rand() % 20)
         {
         current_goblin->mv_dir = rand() % 4;
-        put_goblin(game, current_goblin, 0);
+        put_goblin(game, current_goblin, current_goblin->current_sprite);
         }
         current_goblin = current_goblin->next;
     }
     frame_counter = 0;
 }
-
+ 
 }
-
-
-/*
-void update_all_goblins(t_game *game)
-{
-    t_goblin *current_goblin = game->gbl; // Começa com o primeiro goblin na lista
-
-    while (current_goblin != NULL)
-    {
-
-        // Atualiza o goblin atual
-        put_goblin(game, current_goblin, 0);
-    //    printf("Gbl X: %d, Gbl Y: %d\n", game->gbl->gbl_p.x, game->gbl->gbl_p.y);
-        update_goblin_sprite_randomly(current_goblin);
-        // Passa para o próximo goblin na lista
-        current_goblin = current_goblin->next;
-    }
-}
-*/
