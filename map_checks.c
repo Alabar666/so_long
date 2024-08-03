@@ -24,7 +24,6 @@ void map_checks(t_game *game)
     if (map_max_size_check(game, &game->map) == 0)
         game_error(0 , &game->map, MAP_ERROR);
     if ((int)ft_strlen(map.map_data) != map.colun * map.lines + map.lines)    
-//    if (is_map_rectangular(game->map.map) == 0)
         game_error(0 , &game->map, MAP_ERROR);
     if (check_wall(game->map) == 0)
         game_error(0 , &game->map, MAP_ERROR);
@@ -75,23 +74,6 @@ int map_max_size_check(t_game *game, t_map *map)
     return (1);   
 
 }
-/*
-int is_map_rectangular(t_map *map)
-{
-    int width;
-    int i;
-    
-    if(!map || !map->map[0])
-        return(0);
-    width = (int)ft_strlen(map->map[0]);
-    i = -1;
-    while(map->map[++i])
-    {
-        if((int)ft_strlen(map->map[i]) != width)
-            return (0);
-    }
-    return (1);
-}*/
 
 int check_wall(t_map map)
 {
