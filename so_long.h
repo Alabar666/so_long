@@ -159,13 +159,13 @@ typedef struct s_map
    t_tile **map;   
 }  t_map;
 
-typedef struct s_player{
+typedef struct s_player
+{
    t_pos p1_p;
    t_sprite *p1;
    t_sprite *bl;
    int alive;
    int mv_dir;
-
    int moves;
    int is_moving;
    int current_sprite;
@@ -174,18 +174,14 @@ typedef struct s_player{
    char *back_sprites[3];  
    char *left_sprites[3];  
    char *right_sprites[3];
-
-    t_pos dest_p;
-    int dx;
-    int dy;
-    int steps_remaining;
-    int step_size;
-    int update_interval; // Intervalo de atualização em milissegundos
-        int accumulated_time;
-
-    clock_t last_update_time; 
-
-
+   t_pos dest_p;
+   int dx;
+   int dy;
+   int steps_remaining;
+   int step_size;
+   int update_interval; 
+   int accumulated_time;
+   clock_t last_update_time; 
 } t_player;
 
 typedef struct s_goblin{
@@ -200,14 +196,14 @@ typedef struct s_goblin{
    char *dead;
    int is_alive;
    int is_moving;
-       t_pos dest_p;
-    int dx;
-    int dy;
-    int steps_remaining;
-    int step_size;
-    int update_interval; // Intervalo de atualização em milissegundos
-        int accumulated_time;
-    clock_t last_update_time; 
+   t_pos dest_p;
+   int dx;
+   int dy;
+   int steps_remaining;
+   int step_size;
+   int update_interval;
+   int accumulated_time;
+   clock_t last_update_time; 
    struct s_goblin *next;     
 } t_goblin;
 
@@ -298,7 +294,7 @@ void free_goblins(t_goblin *head);
 t_goblin *new_goblin(void);
 void init_list_goblin(t_game *game);
 void init_rand_dir_goblin(t_goblin *goblin, int random_dir);
-void move_rand_goblins(t_game *game, t_goblin *gbl);
+void move_rand_goblins(t_game *game);
 void init_directions(int directions[4][2]);
 void update_goblin_sprite_randomly(t_game *game);
 int move_goblins_check(t_game *game, t_goblin *gbl, int dx, int dy);
@@ -315,10 +311,12 @@ void move_player(t_game *game, int dx, int dy);
 void player_mov(t_game *game);
 void	move_dir(t_game *game);
 int	update_player_frame(t_game *game);
-void move_goblin(t_goblin *gbl, int dx, int dy);
+void move_goblin(t_game *game, t_goblin *gbl, int dx, int dy);
 void update_player_position(t_game *game);
 void update_goblin_position(t_goblin *gbl);
 void put_moves(t_game *game);
+void update_map_tiles(t_game *game, int old_x, int old_y, int new_x, int new_y, char type);
+void check_position(t_game *game, int dx, int dy);
 
 //free exit
 int gameover(t_game *game);
