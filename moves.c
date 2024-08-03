@@ -59,7 +59,9 @@ void move_player(t_game *game, int dx, int dy)
     game->p1.accumulated_time = 0;              
     game->p1.current_sprite = 0;
     game->p1.is_moving = 1;
-    game->p1.moves++;           
+    game->p1.moves++;
+    ft_printf("Moves amount: %i\n", game->p1.moves); 
+    put_moves(game);   
 }
 
 void update_player_position(t_game *game)
@@ -91,9 +93,28 @@ void update_player_position(t_game *game)
     game->p1.last_update_time = current_time;    
 }
 
+void put_moves(t_game *game)
+{
+    char *move_str;
+    int balloon_x;
+    int balloon_y;
+    int text_x;
+    int text_y; 
 
+    move_str = ft_itoa(game->p1.moves);
 
-
+    balloon_x = game->p1.p1_p.x + 40;
+    balloon_y = game->p1.p1_p.y - 40;
+    text_x = balloon_x + 16;
+    text_y = balloon_y + 19;
+    if(game->p1.moves != 0)
+    {
+        game->p1.bl = create_sprite(game, game->p1.pl_ballom);
+        create_character(game->p1.bl, game, balloon_x, balloon_y);
+    }
+    mlx_string_put(game->mlx, game->win, text_x, text_y, 0xFFFFFF, move_str);
+    free(move_str);
+}
 
 
 
