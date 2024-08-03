@@ -29,14 +29,6 @@
 /*
 **                              BUFFERS
 */
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 1
-# endif
-
-# ifndef MAX_FDS
-#  define MAX_FDS 42
-# endif
-
 #define FRAME_DURATION  (CLOCKS_PER_SEC / 60)
 #define INTEVAL (1.0 / FPS)
 #define FPS 60
@@ -98,6 +90,7 @@
 # define PLAYER_RIGHT_MV1 "./img/gsSideRight1.xpm"
 # define PLAYER_RIGHT_MV2  "./img/gsSideRight2.xpm"
 # define PLAYER_RIGHT_MV3  "./img/gsSideRight3.xpm"
+# define PLAYER_BALLOM  "./img/ballom.xpm"
 
 # define GOBLIN_FRONT_STAND "./img/GCFront2.xpm"
 # define GOBLIN_FRONT_MV1 "./img/GCFront1.xpm"
@@ -169,11 +162,14 @@ typedef struct s_map
 typedef struct s_player{
    t_pos p1_p;
    t_sprite *p1;
+   t_sprite *bl;
    int alive;
    int mv_dir;
-   int face;
+
    int moves;
+   int is_moving;
    int current_sprite;
+   char *pl_ballom;
    char *front_sprites[3];
    char *back_sprites[3];  
    char *left_sprites[3];  
@@ -186,6 +182,7 @@ typedef struct s_player{
     int step_size;
     int update_interval; // Intervalo de atualização em milissegundos
         int accumulated_time;
+
     clock_t last_update_time; 
 
 
@@ -195,13 +192,22 @@ typedef struct s_goblin{
    t_pos gbl_p;
    t_sprite *gbl;
    int mv_dir;
-   char *current_sprite;
+   int current_sprite;
    char *front_sprites[3];
    char *back_sprites[3];  
    char *left_sprites[3];  
    char *right_sprites[3];
    char *dead;
    int is_alive;
+   int is_moving;
+       t_pos dest_p;
+    int dx;
+    int dy;
+    int steps_remaining;
+    int step_size;
+    int update_interval; // Intervalo de atualização em milissegundos
+        int accumulated_time;
+    clock_t last_update_time; 
    struct s_goblin *next;     
 } t_goblin;
 
@@ -228,7 +234,7 @@ typedef struct s_game{
    unsigned long global_timer;
    void *e;
    int sprite_index;
-   int is_moving;
+
    
 }  t_game;
 /*
@@ -300,14 +306,6 @@ int move_goblins_check(t_game *game, t_goblin *gbl, int dx, int dy);
 
 
 // utils
-char	*get_next_line(int fd);
-char	*read_line(int fd, char *backup);
-char	*get_line(char *backup);
-char	*get_next(char *backup);
-size_t	ft_strlen_gnl(char *s);
-char	*ft_strchr_gnl(char *s, int c);
-char	*ft_strjoin_gnl(char *s1, char *s2);
-void	*ft_calloc_gnl(size_t count, size_t size);
 int check_file_ext(char *file);
 
 
@@ -317,8 +315,9 @@ void move_player(t_game *game, int dx, int dy);
 void player_mov(t_game *game);
 void	move_dir(t_game *game);
 int	update_player_frame(t_game *game);
-void move_goblin(t_game *game, t_goblin *gbl, int dx, int dy);
+void move_goblin(t_goblin *gbl, int dx, int dy);
 void update_player_position(t_game *game);
+void update_goblin_position(t_goblin *gbl);
 
 //free exit
 int gameover(t_game *game);
