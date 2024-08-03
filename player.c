@@ -73,9 +73,4 @@ void	put_player(t_game *game, int sprite_index)
 
     game->p1.p1 = create_sprite(game, current_sprite);
     create_character(game->p1.p1, game, x, y);
-    if(game->p1.moves != 0)
-    {
-    game->p1.bl = create_sprite(game, game->p1.pl_ballom);
-    create_character(game->p1.bl, game, x + 40, y - 40);
-    }
 }
