@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 16:13:48 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/07/29 21:21:18 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/08/05 19:24:48 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@
 # define KEY_S 115
 # define KEY_D 100
 # define ESC 65307
+# define ENTER 65293
 
 # define STAND       0
 # define DIR_LEFT    1
@@ -67,6 +68,7 @@
 # define WALL "./img/wall.xpm"
 # define WALL2 "./img/wall2.xpm"
 # define BLOOD "./img/blood.xpm"
+# define COMBAT "./img/combatscrenn630x500.xpm"
 
 # define EXIT_FRONT "./img/prissfront.xpm"
 # define EXIT_BACK "./img/prissback.xpm"
@@ -116,7 +118,7 @@
 # define ENEMY_LEFT_MV3  "./img/GEnemyLeft3.xpm"
 # define ENEMY_RIGHT_MV1 "./img/GEnemyRight1.xpm"
 # define ENEMY_RIGHT_MV2  "./img/GEnemyRight2.xpm"
-# define ENEMY_RIGHT_MV3  "./FLOORimg/GEnemyRight3.xpm"
+# define ENEMY_RIGHT_MV3  "./img/GEnemyRight3.xpm"
 /*
 **                              FUNCTION PROTOTYPES
 */
@@ -240,6 +242,12 @@ typedef struct s_exit{
 } t_exit;
 
 
+typedef struct s_battle{
+   void *battle_win;
+   t_sprite *battle_img;
+   int is_running;
+}  t_battle;
+
 typedef struct s_game{
    void *mlx;
    void *win;
@@ -249,14 +257,16 @@ typedef struct s_game{
    t_goblin *gbl;
    t_enemy *eny;      
    t_exit ext;
+   t_battle battle;
    time_t lst_gbl_upt;
+   time_t lst_eny_upt;
    time_t lst_exit_upt;
    unsigned long global_timer;
    void *e;
    int sprite_index;
-
-   
+   int is_paused;   
 }  t_game;
+
 /*
 **                              FUNCTION PROTOTYPES
 */
@@ -321,9 +331,22 @@ void init_rand_dir_goblin(t_goblin *goblin, int random_dir);
 void move_rand_goblins(t_game *game);
 void init_directions(int directions[4][2]);
 void update_goblin_sprite_randomly(t_game *game);
-int move_goblins_check(t_game *game, t_goblin *gbl, int dx, int dy);
+int move_goblins_check(t_game *game, t_goblin *eny, int dx, int dy);
 
-
+//enemys
+void init_enemy(t_enemy *enemy);
+void add_enemy_to_list(t_game *game, int x, int y);
+void    create_enemy(t_sprite *sprite, t_game *game, int posx, int posy);
+void	put_enemy(t_game *game, t_enemy *enemy, int sprite_index);
+void update_all_enemys(t_game *game);
+void free_enemys(t_enemy *head);
+t_enemy *new_enemy(void);
+void init_list_enemy(t_game *game);
+void init_rand_dir_enemy(t_enemy *enemy, int random_dir);
+void move_rand_enemys(t_game *game);
+void init_directions(int directions[4][2]);
+void update_enemy_sprite_randomly(t_game *game);
+int move_enemys_check(t_game *game, t_enemy *gbl, int dx, int dy);
 
 // utils
 int check_file_ext(char *file);
@@ -336,11 +359,17 @@ void player_mov(t_game *game);
 void	move_dir(t_game *game);
 int	update_player_frame(t_game *game);
 void move_goblin(t_game *game, t_goblin *gbl, int dx, int dy);
+void move_enemy(t_game *game, t_enemy *eny, int dx, int dy);
 void update_player_position(t_game *game);
 void update_goblin_position(t_goblin *gbl);
+void update_enemy_position(t_enemy *eny);
 void put_moves(t_game *game);
 void update_map_tiles(t_game *game, int old_x, int old_y, int new_x, int new_y, char type);
 void check_position(t_game *game, int dx, int dy);
+
+//battle
+//void start_battle(t_game *game);
+
 
 //free exit
 int gameover(t_game *game);
