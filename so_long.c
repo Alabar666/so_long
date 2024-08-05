@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 16:13:44 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/07/29 21:48:43 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/08/05 20:19:29 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,7 @@ int main(int ac, char **av)
         mlx_destroy_display(game.mlx);
         free(game.mlx);     
     }
-    
-    
+        
 	return (write(2, "Error\nInvalid input\n", 21));
 }
 static void	start_world(t_game *game)
@@ -51,8 +50,10 @@ static void	start_world(t_game *game)
 	t_sprite	*world;
 
     game->lst_gbl_upt = time(NULL);
+    game->lst_eny_upt = time(NULL);
     game->lst_exit_upt = time(NULL);
     game->global_timer = 0;
+    game->is_paused = 0;
 	world = (t_sprite *)ft_calloc(1, sizeof(t_sprite));
     if (!world)
     {
