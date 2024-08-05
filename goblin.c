@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 19:41:27 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/07/29 22:08:02 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/08/05 20:17:28 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,35 +152,20 @@ void put_goblin(t_game *game, t_goblin *goblin, int sprite_index)
     if (goblin->is_alive)
     {
         if (sprite_index < 0 || sprite_index >= 3)
-        {
             sprite_index = 0;
-        }
         if (goblin->mv_dir == DIR_UP)
-        {
             current_sprite = goblin->back_sprites[sprite_index];
-        }
         else if (goblin->mv_dir == DIR_DOWN)
-        {
             current_sprite = goblin->front_sprites[sprite_index];
-        }
         else if (goblin->mv_dir == DIR_LEFT)
-        {
             current_sprite = goblin->left_sprites[sprite_index];
-        }
         else if (goblin->mv_dir == DIR_RIGHT)
-        {
             current_sprite = goblin->right_sprites[sprite_index];
-        }
         else
-        {
             current_sprite = goblin->front_sprites[0];
-        }
     }
     else
-    {
         current_sprite = goblin->dead;
-    }
-    
     goblin->gbl = create_sprite(game, current_sprite);
     create_character(goblin->gbl, game, x, y);
 }
@@ -256,22 +241,16 @@ void update_goblin_position(t_goblin *gbl)
 void move_rand_goblins(t_game *game)
 {
     t_goblin *cur_gbl;
-    int move_count;
-    int max_moves;
     int directions[4][2];
     int dir_index;
     int dx;
     int dy;
-
+    
     cur_gbl = game->gbl;
-    move_count = 0;
-    max_moves = game->map.goblin / 3;
-    if(max_moves == 0)
-        max_moves = 1;
     init_directions(directions);
     while (cur_gbl != NULL)
     {
-        if(cur_gbl->is_alive && move_count < max_moves && rand() % 2 == 0)
+        if(cur_gbl->is_alive && rand() % 6 == 0)
         {
             dir_index = rand() % 4;
             dx = directions[dir_index][0];
@@ -279,7 +258,6 @@ void move_rand_goblins(t_game *game)
             if (move_goblins_check(game, cur_gbl, dx, dy))
             {
                 move_goblin(game, cur_gbl, dx, dy);
-                move_count++; 
             }           
         } 
         cur_gbl = cur_gbl->next;  
