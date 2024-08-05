@@ -6,7 +6,7 @@
 #    By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/09 19:22:40 by hluiz-ma          #+#    #+#              #
-#    Updated: 2024/07/22 19:55:30 by hluiz-ma         ###   ########.fr        #
+#    Updated: 2024/08/05 19:25:15 by hluiz-ma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ LIBFT = $(LIBFT_DIR)/libft.a
 MLX_DIR = minilibx-linux/
 MLX = $(MLX_DIR)libmlx.a
 MLXFLAGS = -L$(MLX_DIR) -lmlx -lm -lX11 -lXext
-SRCS = so_long.c map.c gameover.c sprites.c player.c moves.c map_checks.c exit.c goblin.c
+SRCS = so_long.c map.c gameover.c sprites.c player.c moves.c map_checks.c exit.c goblin.c enemy.c
 BONUS = 
 RM= rm -rf
 
