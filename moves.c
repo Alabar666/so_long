@@ -15,7 +15,7 @@
 
 int key_pressed(int key, t_game *game){
     
-    if (key == ESC)
+    if (key == ESC && !game->is_paused)
     {
         gameover(game);
     }
@@ -153,14 +153,22 @@ void check_position(t_game *game, int dx, int dy)
                 cur_gbl->is_alive = 0;
                 game->map.map[dy/ 40][dx/ 40].type = 'B';
                 game->map.goblin--;
+                //start_battle(game);
                 break;
             }
             cur_gbl = cur_gbl->next;
         }
     }
+    if(game->map.map[dy / 40][dx/ 40].type == 'M')
+    {
+        ft_printf("You are dead!\n");
+        usleep(900000);
+        gameover(game);
+    }
     if(game->map.goblin == 0 && game->map.map[dy / 40][dx/ 40].type == 'E')
     {
-        ft_printf("You saved the priestess/n");
+        ft_printf("You saved the priestess!\n");
+        usleep(900000);
         gameover(game);
     }
 }
