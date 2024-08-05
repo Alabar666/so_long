@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 15:25:58 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/07/29 22:07:50 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/08/05 19:52:56 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,12 @@ int update_frame(void *param)
 {
     t_game *game = (t_game *)param;
 	t_goblin *cur_gbl;
+	t_enemy *cur_eny;
     static clock_t last_time = 0;
     clock_t current_time = clock();
     float delta_time = (float)(current_time - last_time) / CLOCKS_PER_SEC;
     
-    if (delta_time < 1.0f / 60.0f)
+    if (delta_time < 1.0f / 60.0f || game->is_paused)
         return 0;
 
     game->global_timer += delta_time;
@@ -32,11 +33,25 @@ int update_frame(void *param)
         update_goblin_position(cur_gbl);
         cur_gbl = cur_gbl->next;
     }
-    if (difftime(time(NULL), game->lst_gbl_upt) >= 2.0)
+   	if (difftime(time(NULL), game->lst_gbl_upt) >= 2.0)
     {
         move_rand_goblins(game);
         game->lst_gbl_upt = time(NULL);
     }
+///////
+    cur_eny = game->eny;
+    while (cur_eny != NULL)
+    {
+        update_enemy_position(cur_eny);
+        cur_eny = cur_eny->next;
+    }
+    if (difftime(time(NULL), game->lst_eny_upt) >= 1.5)
+    {
+        move_rand_enemys(game);
+        game->lst_eny_upt = time(NULL);
+    } 
+////////
+
     render_game(game);
 	last_time = current_time;
     return 0;
@@ -45,9 +60,7 @@ int update_frame(void *param)
 void render_game(t_game *game)
 {
     put_map(game);
-    put_exit(game);
-
-
+/*
     int x, y;
     for (y = 0; y < game->map.lines; y++) // MAP_HEIGHT deve ser a altura do seu mapa
     {
@@ -55,7 +68,7 @@ void render_game(t_game *game)
         {
             printf("Tile at (%d, %d): '%c'\n", x, y, game->map.map[y][x].type);
         }
-    }
+    }*/
 
     t_goblin *current_goblin = game->gbl;
     while (current_goblin != NULL)
@@ -63,7 +76,15 @@ void render_game(t_game *game)
         put_goblin(game, current_goblin, current_goblin->current_sprite);
         current_goblin = current_goblin->next;
     }
+	t_enemy *current_enemy = game->eny;
+    while (current_enemy != NULL)
+    {
+        put_enemy(game, current_enemy, current_enemy->current_sprite);
+        current_enemy= current_enemy->next;
+    }
 	update_goblin_sprite_randomly(game);
+	update_enemy_sprite_randomly(game);
+	put_exit(game);
     put_player(game, game->p1.current_sprite);
 	put_moves(game);	
     mlx_put_image_to_window(game->mlx, game->win, game->world->img, 0, 0);
@@ -86,7 +107,7 @@ t_sprite *create_sprite(t_game *game, char *sprite_path)
     sprite->img = mlx_xpm_file_to_image(game->mlx, sprite_path, &sprite->width,&sprite->height);
     if(!sprite->img)
     {
-        fprintf(stderr, "Failed to load image: %s\n", sprite_path);
+        ft_printf("Failed to load image: %s\n", sprite_path);
         free(sprite);
         free(sprite_path);
         gameover(game);
@@ -94,7 +115,6 @@ t_sprite *create_sprite(t_game *game, char *sprite_path)
     } 
     sprite->addr = mlx_get_data_addr(sprite->img, &sprite->bits_per_pixel,
     &sprite->line_length, &sprite->endian);
-//    free(sprite_path);
     return(sprite);  
 }
 
@@ -128,7 +148,8 @@ void	put_pixel(t_sprite *sprite, int x, int y, int color)
 	
     if (x < 0 || x >= sprite->width || y < 0 || y >= sprite->height)
     {
-        fprintf(stderr, "Erro: Tentativa de desenhar fora dos limites da imagem (%d, %d)\n", x, y);
+		ft_printf("Sprite: %p\n", sprite);
+        ft_printf("Error: Attempt to draw outside the image bounds (%d, %d)\n", x, y);
         return;
     }
 	dst = sprite->addr + (y * sprite->line_length
@@ -175,22 +196,20 @@ void	create_map(t_game *game)
 char	*get_sprite_path(t_game *game, char c)
 {
 	char	*path;
-	int randv;
 
-	randv = rand();
 	path = NULL;
 	if (c == '1')
 	{
-		if(randv % 2 == 0)
+		if(rand() % 2 == 0)
 			path = ft_strdup(WALL);
 		else
 			path = ft_strdup(WALL2);
 	}	
 	else if (c == '0' || c == 'C' || c == 'E' || c == 'P' || c == 'M' || c == 'B')
 	{
-		if(randv % 2 == 0)
+		if(rand() % 2 == 0)
 			path = ft_strdup(FLOOR);
-		else if(randv % 3 == 0)
+		else if(rand() % 3 == 0)
 			path = ft_strdup(FLOOR2);
 		else
 			path = ft_strdup(FLOOR3);		
