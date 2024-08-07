@@ -49,6 +49,7 @@ static void	start_world(t_game *game)
 {
 	t_sprite	*world;
 
+
     game->lst_gbl_upt = time(NULL);
     game->lst_eny_upt = time(NULL);
     game->lst_exit_upt = time(NULL);
