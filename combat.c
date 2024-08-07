@@ -12,69 +12,138 @@
 
 #include "so_long.h"
 
-/*
-double lerp(double a, double b, double t)
+void init_battle(t_game *game)
 {
-    return a + t * (b - a);
+   game->battle.p1_sprt = ft_strdup(CPLAYER);
+   game->battle.gbl_sprt = ft_strdup(CGOBLIN);
+   game->battle.eny_sprt = ft_strdup(CENEMY);
+   game->battle.atk_sprt = ft_strdup(CATACK);
+   game->battle.run_sprt = ft_strdup(CRUN);
+   game->battle.is_running = 0;
+
+//    goblin->update_interval = 1000 / 60;
+  //  goblin->last_update_time = clock();
+  //  goblin->accumulated_time = 0;
+}
+void start_battle(t_game *game)
+{
+
+  //  init_battle(game);
+
+
+
+    game->is_paused = 1;
+  //  game->battle.is_running = 1;
+ //   load_combat_screen(game);
+    render_battle(game);
+ //   load_and_animate_sprites(game);
+
 }
 
-void load_combat_screen(t_game *game)
+/*
+int update_battle_frame(void *param)
 {
-
-    int screen_width = game->map.width; // Usar as dimensões da tela
-    int screen_height = game->map.height;
-    t_sprite *combat = create_sprite(game, COMBAT);
-
-    t_sprite *combat_resized = (t_sprite *)ft_calloc(1, sizeof(t_sprite));
-    if (!combat_resized)
-    {
-        ft_printf("Memory allocation failed for resized sprite.\n");
-        gameover(game);
-        return;
-    }
-    resize_sprite(combat, combat_resized, screen_width, screen_height);
-
-          mlx_put_image_to_window(game->mlx, game->win, combat_resized->img, 0, 0);
-        usleep(5000); // Adjust the delay for smoother transition
+    t_game *game = (t_game *)param;
+    static clock_t last_time = 0;
+    clock_t current_time = clock();
+    float delta_time = (float)(current_time - last_time) / CLOCKS_PER_SEC;
     
-    mlx_destroy_image(game->mlx, combat->img);
-    free(combat);
-    mlx_destroy_image(game->mlx, combat_resized->img);
-    free(combat_resized);
-    }
+    if (delta_time < 1.0f / 60.0f || game->is_paused)
+        return 0;
 
-void resize_sprite(t_sprite *source, t_sprite *destination, int dest_width, int dest_height)
+    game->global_timer += delta_time;
+	update_player_position(game);
+
+	last_time = current_time;
+    return 0;
+} */
+
+void render_battle(t_game *game)
 {
-    int x, y;
-    double src_x, src_y;
-    unsigned int color;
 
-    // Crie uma nova imagem para o destino com as novas dimensões
-    destination->img = mlx_new_image(source->img, dest_width, dest_height);
-    destination->addr = mlx_get_data_addr(destination->img, &destination->bits_per_pixel,
-                                          &destination->line_length, &destination->endian);
-    destination->width = dest_width;
-    destination->height = dest_height;
-    for (y = 0; y < destination->height; y++)
-    {
-        for (x = 0; x < destination->width; x++)
-        {
-            // Calcular as coordenadas da imagem de origem
-            src_x = (double)x * source->width / dest_width;
-            src_y = (double)y * source->height / dest_height;
+    create_battle_screen(game);
+    mlx_put_image_to_window(game->mlx, game->win, game->battle.btl_img->img, 0, 0);
 
-            // Obter a cor do pixel da imagem de origem
-            color = get_color_in_pixel(source, (int)src_x, (int)src_y);
-            
-            // Colocar o pixel na imagem de destino
-            put_pixel(destination, x, y, color);
-        }
-    }
+}
+
+/*
+void	put_player_combat(t_game *game, int sprite_index)
+{
+    char *current_sprite;
+    int x;
+    int y;
+
+	x = game->p1.p1_p.x;
+	y = game->p1.p1_p.y;
+
+    current_sprite = ft_strdup(CPLAYER);
+
+    game->p1.p1 = create_sprite(game, current_sprite);
+    create_character(game->p1.p1, game, x, y);
 }*/
+
+
+void    create_battle(t_sprite *sprite, t_game *game)
+{
+    int x;
+    int y;
+    unsigned int color;
+	unsigned int trans_color = 0xFFC0CB;
+
+    y = -1;
+	while (++y < sprite->height)
+	{
+		x = -1;
+		while (++x < sprite->width)
+		{
+			color = get_color_in_pixel(sprite, x, y);
+			if (color != trans_color){
+				put_pixel(game->battle.btl_img, x,	y, color);
+			}
+		}
+	}
+}
+
+void	create_battle_screen(t_game *game)
+{
+	t_sprite	*sprite;
+
+	sprite = create_sprite(game, COMBAT);
+	create_battle(sprite, game);
+	mlx_destroy_image(game->mlx, sprite->img);
+	free(sprite);
+}
+    /*
+void    create_character(t_sprite *sprite, t_game *game, int posx, int posy)
+{
+    int x;
+    int y;
+    unsigned int color;
+	unsigned int trans_color = 0xFFC0CB;
+
+    y = -1;
+	while (++y < sprite->height)
+	{
+		x = -1;
+		while (++x < sprite->width)
+		{
+			color = get_color_in_pixel(sprite, x, y);
+			if (color != trans_color)
+            {
+				put_pixel(game->world,
+					posx + x,
+					posy + y, color);
+			}
+		}
+	}  
+}
+
+
+
 void load_combat_screen(t_game *game)
 {
     // Carregar o sprite de combate
-    t_sprite *combat = create_sprite(game, COMBAT2);
+    t_sprite *combat = create_sprite(game, COMBAT);
 
     // Criar uma nova imagem para o tamanho da tela
     t_sprite *resized_combat = (t_sprite *)malloc(sizeof(t_sprite));
@@ -113,19 +182,6 @@ void load_combat_screen(t_game *game)
  //   free(combat);
  //   mlx_destroy_image(game->mlx, resized_combat->img);
   //  free(resized_combat);
-}
-void start_battle(t_game *game)
-{
-    game->is_paused = 1;
-    load_combat_screen(game);
-
-    load_and_animate_sprites(game);
-
-}
-
-void draw_sprite(t_game *game, t_sprite *sprite, int x, int y)
-{
-    mlx_put_image_to_window(game->mlx, game->win, sprite->img, x, y);
 }
 
 void move_sprite(int *x, int *y, int target_x, int target_y, int speed)
@@ -213,6 +269,6 @@ void resize_image(t_sprite *source, t_sprite *destination)
     }
 }
 
-
+*/
 
 
