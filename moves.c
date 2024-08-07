@@ -117,7 +117,7 @@ void put_moves(t_game *game)
         game->p1.bl = create_sprite(game, game->p1.pl_ballom);
         create_character(game->p1.bl, game, balloon_x, balloon_y);
     }
-    mlx_string_put(game->mlx, game->win, text_x, text_y, 0xFFFFFF, move_str);
+    mlx_string_put(game->mlx, game->win, text_x, text_y, 0xFFFF00, move_str);
     free(move_str);
 }
 
@@ -153,7 +153,7 @@ void check_position(t_game *game, int dx, int dy)
                 cur_gbl->is_alive = 0;
                 game->map.map[dy/ 40][dx/ 40].type = 'B';
                 game->map.goblin--;
-                //start_battle(game);
+                start_battle(game);
                 break;
             }
             cur_gbl = cur_gbl->next;
