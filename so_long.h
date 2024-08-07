@@ -68,7 +68,16 @@
 # define WALL "./img/wall.xpm"
 # define WALL2 "./img/wall2.xpm"
 # define BLOOD "./img/blood.xpm"
+# define BLOOD2 "./img/blood2.xpm"
+
 # define COMBAT "./img/combatscrenn630x500.xpm"
+# define CPLAYER "./img/player150.xpm"
+# define CGOBLIN "./img/goblin150.xpm"
+# define CENEMY "./img/enemy150.xpm"
+# define CSATACK "./img/atack.xpm"
+# define CSRUN "./img/run75.xpm"
+# define CATACK "./img/atack1.xpm"
+# define CRUN "./img/run1.xpm"
 
 # define EXIT_FRONT "./img/prissfront.xpm"
 # define EXIT_BACK "./img/prissback.xpm"
@@ -243,8 +252,17 @@ typedef struct s_exit{
 
 
 typedef struct s_battle{
-   void *battle_win;
-   t_sprite *battle_img;
+   t_sprite *btl_img;
+   t_sprite *btl_p1;
+   t_sprite *btl_gbl;
+   t_sprite *btl_eny;
+   t_sprite *batk;
+   t_sprite *brun;
+   char *p1_sprt;
+   char *gbl_sprt;
+   char *eny_sprt;
+   char *atk_sprt;
+   char *run_sprt;
    int is_running;
 }  t_battle;
 
@@ -368,8 +386,11 @@ void update_map_tiles(t_game *game, int old_x, int old_y, int new_x, int new_y, 
 void check_position(t_game *game, int dx, int dy);
 
 //battle
-//void start_battle(t_game *game);
-
+void init_battle(t_game *game);
+void start_battle(t_game *game);
+void    create_battle(t_sprite *sprite, t_game *game);
+void	create_battle_screen(t_game *game);
+void render_battle(t_game *game);
 
 //free exit
 int gameover(t_game *game);
