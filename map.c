@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 21:07:19 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/07/25 19:29:33 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/08/05 21:13:24 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,14 @@ void map_start(char *file, t_game *game)
     game->mlx = mlx_init();
 	if (!game->mlx)
     {
-        fprintf(stderr, "Error\nFailed to initialize mlx\n");
+        ft_printf("Error\nFailed to initialize mlx\n");
         exit(1);
     }
     map_checks(game);
     game->win = mlx_new_window(game->mlx, SZ*game->map.colun, SZ*game->map.lines, "The Slayer");
 	if (!game->win)
     {
-        fprintf(stderr, "Error\nFailed to create window\n");
+        ft_printf("Error\nFailed to create window\n");
         exit(1);
     }
 }
@@ -183,7 +183,10 @@ void check_type(t_game *game, char type, int x, int y)
             add_goblin_to_list(game, x * SZ, y * SZ);
         }
         else if(type == 'M')
-            game->map.enemy++;                
+        {
+            game->map.enemy++; 
+            add_enemy_to_list(game, x * SZ, y * SZ);
+        }               
     }
 }
 
