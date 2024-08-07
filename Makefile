@@ -58,6 +58,7 @@ clean:
 
 fclean:		clean
 			@$(RM) $(NAME) $(MLX_DIR)
+			@make fclean -C $(LIBFT_DIR)
 			@echo "\033[90m[\033[91mDeleting\033[90m]\033[31m Executable and Minilibx deleted.\033[0m"
 
 re: 		fclean all
