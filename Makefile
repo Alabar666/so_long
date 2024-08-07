@@ -20,7 +20,7 @@ LIBFT = $(LIBFT_DIR)/libft.a
 MLX_DIR = minilibx-linux/
 MLX = $(MLX_DIR)libmlx.a
 MLXFLAGS = -L$(MLX_DIR) -lmlx -lm -lX11 -lXext
-SRCS = so_long.c map.c gameover.c sprites.c player.c moves.c map_checks.c exit.c goblin.c enemy.c
+SRCS = so_long.c map.c gameover.c sprites.c player.c moves.c map_checks.c exit.c goblin.c enemy.c combat.c
 BONUS = 
 RM= rm -rf
 
