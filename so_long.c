@@ -27,13 +27,14 @@ int main(int ac, char **av)
         init_list_goblin(&game);
         map_start(av[1], &game);
         start_world(&game);
+        battle_load(&game);
         init_player(&game);
         init_exit(&game);
         create_map(&game);
-        update_frame(&game);        
+        update_frame(&game);
 
         mlx_hook(game.win, KeyPress, KeyPressMask, key_pressed, &game);
-        mlx_loop_hook(game.mlx, update_frame, &game);
+        mlx_loop_hook(game.mlx, game_loop_hook, &game);
         mlx_loop(game.mlx);
 
         
@@ -55,10 +56,14 @@ static void	start_world(t_game *game)
     game->lst_exit_upt = time(NULL);
     game->global_timer = 0;
     game->is_paused = 0;
+    game->wait_input = 0;
+        game->run_selected = 0;
+ 
+    init_battle(game);
 	world = (t_sprite *)ft_calloc(1, sizeof(t_sprite));
     if (!world)
     {
-        fprintf(stderr, "Error\nFailed to allocate memory for world\n");
+        ft_printf("Error\nFailed to allocate memory for world\n");
         exit(MALLOC_ERROR);
     }
 	world->img = mlx_new_image(game->mlx,
@@ -75,9 +80,42 @@ static void	start_world(t_game *game)
 	game->world = world;    
 }
 
+void	battle_load(t_game *game)
+{
+	t_sprite	*battle;
+
+    init_battle(game);
+	battle = (t_sprite *)ft_calloc(1, sizeof(t_sprite));
+    if (!battle)
+    {
+        ft_printf("Error\nFailed to allocate memory for battle\n");
+        exit(MALLOC_ERROR);
+    }
+	battle->img = mlx_new_image(game->mlx,
+			630, 500);
+	if (!battle->img)
+	{
+        ft_printf("Error\nFailed to allocate memory for battle\n");
+        exit(MALLOC_ERROR);
+	}
+	battle->addr = mlx_get_data_addr(battle->img, &battle->bits_per_pixel,
+			&battle->line_length, &battle->endian);
+	game->battle.btl_img = battle;  
+}
 
 
+int game_loop_hook(void *param)
+{
+    t_game *game = (t_game *)param;
 
+    if (!game->is_paused)
+        update_frame(game);
+    
+    if (game->battle.is_running) 
+       create_battle_screen(game);
+    
+ return 0;
+}
 
 
 
