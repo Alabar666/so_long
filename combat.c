@@ -62,7 +62,7 @@ void battle_keys(int key, t_game *game)
         {
             game->battle.btl_img = create_sprite(game, CENYATK);
         }
-        game->run_selected = 1;   
+        game->run_selected = 0;
     }
     else if (key == KEY_D || key == RIGHT)
     {
@@ -74,7 +74,7 @@ void battle_keys(int key, t_game *game)
         {
             game->battle.btl_img = create_sprite(game, CENYRUN);
         }
-        game->run_selected = 0; 
+        game->run_selected = 1; 
     }
 }
 
