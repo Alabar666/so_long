@@ -29,7 +29,7 @@ void	put_exit(t_game *game)
 {
     char *current_exit;
     char *current_ballom;
-    static int frame_counter = 0; 
+    static int frame_counter; 
 
     current_exit = NULL;
     current_ballom = NULL;
