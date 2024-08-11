@@ -29,7 +29,6 @@
 /*
 **                              BUFFERS
 */
-#define FRAME_DURATION  (CLOCKS_PER_SEC / 60)
 #define INTEVAL (1.0 / FPS)
 #define FPS 60
 /*
@@ -61,7 +60,6 @@
 **                              IMAGES
 */
 
-# define START "./img/p1start.xpm"
 # define FLOOR "./img/floor.xpm"
 # define FLOOR2 "./img/floor2.xpm"
 # define FLOOR3 "./img/floor3.xpm"
@@ -69,15 +67,13 @@
 # define WALL2 "./img/wall2.xpm"
 # define BLOOD "./img/blood.xpm"
 # define BLOOD2 "./img/blood2.xpm"
+# define PDEAD "./img/pdead.xpm"
 
-# define COMBAT "./img/combatscrenn630x500.xpm"
-# define CPLAYER "./img/player150.xpm"
-# define CGOBLIN "./img/goblin150.xpm"
-# define CENEMY "./img/enemy150.xpm"
-# define CSATACK "./img/atack.xpm"
-# define CSRUN "./img/run75.xpm"
-# define CATACK "./img/atack1.xpm"
-# define CRUN "./img/run1.xpm"
+# define CGBLATK "./img/cavernbgatk.xpm"
+# define CGBLRUN "./img/cavernbgrun.xpm"
+# define CENYATK "./img/cavernbgatkeny.xpm"
+# define CENYRUN "./img/cavernbgruneny.xpm"
+
 
 # define EXIT_FRONT "./img/prissfront.xpm"
 # define EXIT_BACK "./img/prissback.xpm"
@@ -253,18 +249,14 @@ typedef struct s_exit{
 
 typedef struct s_battle{
    t_sprite *btl_img;
-   t_sprite *btl_p1;
-   t_sprite *btl_gbl;
-   t_sprite *btl_eny;
-   t_sprite *batk;
-   t_sprite *brun;
-   char *p1_sprt;
-   char *gbl_sprt;
-   char *eny_sprt;
-   char *atk_sprt;
-   char *run_sprt;
+   char *gatk_path;
+   char *grun_path;
+   char *eatk_path;
+   char *erun_path;
    int is_running;
+   char enemy_type;
 }  t_battle;
+
 
 typedef struct s_game{
    void *mlx;
@@ -280,14 +272,17 @@ typedef struct s_game{
    time_t lst_eny_upt;
    time_t lst_exit_upt;
    unsigned long global_timer;
-   void *e;
    int sprite_index;
    int is_paused;   
+   int wait_input;
+   int run_selected;
+   unsigned long message_display_duration;
 }  t_game;
 
 /*
 **                              FUNCTION PROTOTYPES
 */
+
 
 //MAP
 void	create_map(t_game *game);
@@ -305,7 +300,6 @@ void	free_map(t_tile **map);
 void	game_error(int fd, t_map *map, char *error);
 void	put_map(t_game *game);
 void	put_tile(t_game *game, int x, int y);
-
 void render_game(t_game *game);
 
 
@@ -321,6 +315,10 @@ int is_map_rectangular(t_map *map);
 int map_max_size_check(t_game *game,t_map *map);
 int check_file_ext(char *file);
 void check_type(t_game *game, char type, int x, int y);
+int check_map_winability(t_game *game);
+t_tile **duplicate_tile_map(t_tile **map, int lines, int colun);
+void explore_map(t_game *game, t_tile **map, int x, int y, int *collec_found, int *exit_found);
+
 
 
 //sprite
@@ -336,8 +334,13 @@ void    create_character(t_sprite *sprite, t_game *game, int posx, int posy);
 char	*get_player_path(t_game *game, char c);
 void init_player(t_game *game);
 
+//player
+void init_player_sprites(t_game *game);
+
+
 //goblins
 void init_goblin(t_goblin *goblin);
+void init_goblin_sprites(t_goblin *goblin);
 void add_goblin_to_list(t_game *game, int x, int y);
 void    create_goblin(t_sprite *sprite, t_game *game, int posx, int posy);
 void	put_goblin(t_game *game, t_goblin *goblin, int sprite_index);
@@ -353,6 +356,7 @@ int move_goblins_check(t_game *game, t_goblin *eny, int dx, int dy);
 
 //enemys
 void init_enemy(t_enemy *enemy);
+void init_enemy_sprites(t_enemy *enemy);
 void add_enemy_to_list(t_game *game, int x, int y);
 void    create_enemy(t_sprite *sprite, t_game *game, int posx, int posy);
 void	put_enemy(t_game *game, t_enemy *enemy, int sprite_index);
@@ -362,16 +366,16 @@ t_enemy *new_enemy(void);
 void init_list_enemy(t_game *game);
 void init_rand_dir_enemy(t_enemy *enemy, int random_dir);
 void move_rand_enemys(t_game *game);
-void init_directions(int directions[4][2]);
 void update_enemy_sprite_randomly(t_game *game);
 int move_enemys_check(t_game *game, t_enemy *gbl, int dx, int dy);
 
 // utils
-int check_file_ext(char *file);
-
+int game_loop_hook(void *param);
 
 //moves
 int key_pressed(int key, t_game *game);
+int handle_battle_keys(int key, t_game *game);
+int handle_player_movement(int key, t_game *game);
 void move_player(t_game *game, int dx, int dy);
 void player_mov(t_game *game);
 void	move_dir(t_game *game);
@@ -384,17 +388,23 @@ void update_enemy_position(t_enemy *eny);
 void put_moves(t_game *game);
 void update_map_tiles(t_game *game, int old_x, int old_y, int new_x, int new_y, char type);
 void check_position(t_game *game, int dx, int dy);
+void handle_enemies_and_victory(t_game *game, int dx, int dy);
+void handle_goblins(t_game *game, int dx, int dy); 
+
 
 //battle
 void init_battle(t_game *game);
-void start_battle(t_game *game);
+void start_battle(t_game *game, char enemy_type);
 void    create_battle(t_sprite *sprite, t_game *game);
 void	create_battle_screen(t_game *game);
-void render_battle(t_game *game);
+void battle_keys(int key, t_game *game);
+int battle_loop_hook(void *param);
+void close_battle(t_game *game);
+void	battle_load(t_game *game);
+void destroy_sprite(t_sprite **sprite, void *mlx);
 
 //free exit
 int gameover(t_game *game);
-
 
 
 
