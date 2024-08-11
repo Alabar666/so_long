@@ -21,13 +21,15 @@ int update_frame(void *param)
     static clock_t last_time = 0;
     clock_t current_time = clock();
     float delta_time = (float)(current_time - last_time) / CLOCKS_PER_SEC;
-    
+
     if (delta_time < 1.0f / 60.0f || game->is_paused)
         return 0;
-
+	else{
     game->global_timer += delta_time;
 	update_player_position(game);
     cur_gbl = game->gbl;
+	if (game->p1.alive)
+    {
     while (cur_gbl != NULL)
     {
         update_goblin_position(cur_gbl);
@@ -51,9 +53,11 @@ int update_frame(void *param)
         game->lst_eny_upt = time(NULL);
     } 
 ////////
-
+	}
     render_game(game);
+	
 	last_time = current_time;
+	}
     return 0;
 } 
 
@@ -82,8 +86,11 @@ void render_game(t_game *game)
         put_enemy(game, current_enemy, current_enemy->current_sprite);
         current_enemy= current_enemy->next;
     }
-	update_goblin_sprite_randomly(game);
-	update_enemy_sprite_randomly(game);
+	if (game->p1.alive)
+    {
+		update_goblin_sprite_randomly(game);
+		update_enemy_sprite_randomly(game);
+	}
 	put_exit(game);
     put_player(game, game->p1.current_sprite);
 	put_moves(game);	
