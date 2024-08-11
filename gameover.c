@@ -23,14 +23,24 @@ void	game_error(int fd, t_map *map, char *error)
 }
 int	gameover(t_game *game)
 {
-  //  free_map(game->map);
-	free(game->map.map);
-	mlx_destroy_image(game->mlx, game->world->img);
-	free(game->world);	
-	mlx_clear_window(game->mlx, game->win);
-	mlx_destroy_window(game->mlx, game->win);
-	mlx_destroy_display(game->mlx);
-	free(game->mlx);
+
+
+	if (game->map.map)
+		free(game->map.map);
+	if (game->map.map)
+		mlx_destroy_image(game->mlx, game->world->img);
+	if (game->world)
+		free(game->world);
+	if (game->win)
+    {		
+		mlx_clear_window(game->mlx, game->win);
+		mlx_destroy_window(game->mlx, game->win);
+	}
+	if (game->mlx)
+	{
+		mlx_destroy_display(game->mlx);
+		free(game->mlx);
+	}
 	return (0);
 }
 void	free_map(t_tile **map)
