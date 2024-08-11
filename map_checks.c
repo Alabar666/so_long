@@ -27,7 +27,8 @@ void map_checks(t_game *game)
         game_error(0 , &game->map, MAP_ERROR);
     if (check_wall(game->map) == 0)
         game_error(0 , &game->map, MAP_ERROR);
-    
+    if(!check_map_winability(game))    
+        game_error(0 , &game->map, MAP_ERROR);
 }
 
 int check_file_ext(char *file)
@@ -96,3 +97,4 @@ int check_wall(t_map map)
     }
     return (1);    
 }
+
