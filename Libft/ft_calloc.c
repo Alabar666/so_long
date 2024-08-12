@@ -25,13 +25,13 @@
 
 void	*ft_calloc(size_t count, size_t size)
 {
-	char	*str;
-	unsigned int i;
+	char			*str;
+	unsigned int	i;
 
 	str = malloc(size * count);
 	if (str)
 	{
-		i = 0;	
+		i = 0;
 		while (i < count * size)
 		{
 			str[i] = (unsigned char)0;

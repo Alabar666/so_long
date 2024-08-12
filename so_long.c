@@ -6,68 +6,54 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 16:13:44 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/08/05 20:19:29 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/08/12 20:20:10 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "so_long.h"
 
 static void	start_world(t_game *game);
 
-#define MALLOC_ERROR    1
-
-int main(int ac, char **av)
+int	main(int ac, char **av)
 {
-    srand(time(NULL));
-    t_game  game;
-    
-    if(ac == 2)
-    {
-        init_list_goblin(&game);
-        map_start(av[1], &game);
-        start_world(&game);
-        battle_load(&game);
-        init_player(&game);
-        init_exit(&game);
-        create_map(&game);
-        update_frame(&game);
+	t_game	game;
 
-        mlx_hook(game.win, KeyPress, KeyPressMask, key_pressed, &game);
-        mlx_loop_hook(game.mlx, game_loop_hook, &game);
-        mlx_loop(game.mlx);
-
-        
-        mlx_destroy_image(game.mlx, game.world);
-        mlx_destroy_window(game.mlx, game.win);
-        mlx_destroy_display(game.mlx);
-        free(game.mlx);     
-    }
-        
+	srand(time(NULL));
+	if (ac == 2)
+	{
+		init_list_goblin(&game);
+		map_start(av[1], &game);
+		start_world(&game);
+		battle_load(&game);
+		init_player(&game);
+		init_exit(&game);
+		create_map(&game);
+		update_frame(&game);
+		mlx_hook(game.win, KeyPress, KeyPressMask, key_pressed, &game);
+		mlx_loop_hook(game.mlx, game_loop_hook, &game);
+		mlx_loop(game.mlx);
+		mlx_destroy_image(game.mlx, game.world);
+		mlx_destroy_window(game.mlx, game.win);
+		mlx_destroy_display(game.mlx);
+		free(game.mlx);
+	}
 	return (write(2, "Error\nInvalid input\n", 21));
 }
+
 static void	start_world(t_game *game)
 {
 	t_sprite	*world;
 
-
-    game->lst_gbl_upt = time(NULL);
-    game->lst_eny_upt = time(NULL);
-    game->lst_exit_upt = time(NULL);
-    game->global_timer = 0;
-    game->is_paused = 0;
-    game->wait_input = 0;
-        game->run_selected = 0;
- 
-    init_battle(game);
+	init_game(game);
+	init_battle(game);
 	world = (t_sprite *)ft_calloc(1, sizeof(t_sprite));
-    if (!world)
-    {
-        ft_printf("Error\nFailed to allocate memory for world\n");
-        exit(MALLOC_ERROR);
-    }
-	world->img = mlx_new_image(game->mlx,
-			game->map.colun * SZ, game->map.lines * SZ);
+	if (!world)
+	{
+		ft_printf("Error\nFailed to allocate memory for world\n");
+		return ;
+	}
+	world->img = mlx_new_image(game->mlx, game->map.colun * SZ, game->map.lines
+			* SZ);
 	if (!world->img)
 	{
 		free_map(game->map.map);
@@ -77,74 +63,39 @@ static void	start_world(t_game *game)
 			&world->line_length, &world->endian);
 	world->width = game->map.colun * SZ;
 	world->height = game->map.lines * SZ;
-	game->world = world;    
+	game->world = world;
 }
 
 void	battle_load(t_game *game)
 {
 	t_sprite	*battle;
 
-    init_battle(game);
+	init_battle(game);
 	battle = (t_sprite *)ft_calloc(1, sizeof(t_sprite));
-    if (!battle)
-    {
-        ft_printf("Error\nFailed to allocate memory for battle\n");
-        exit(MALLOC_ERROR);
-    }
-	battle->img = mlx_new_image(game->mlx,
-			630, 500);
+	if (!battle)
+	{
+		ft_printf("Error\nFailed to allocate memory for battle\n");
+		exit(0);
+	}
+	battle->img = mlx_new_image(game->mlx, 630, 500);
 	if (!battle->img)
 	{
-        ft_printf("Error\nFailed to allocate memory for battle\n");
-        exit(MALLOC_ERROR);
+		ft_printf("Error\nFailed to allocate memory for battle\n");
+		exit(0);
 	}
 	battle->addr = mlx_get_data_addr(battle->img, &battle->bits_per_pixel,
 			&battle->line_length, &battle->endian);
-	game->battle.btl_img = battle;  
+	game->battle.btl_img = battle;
 }
 
-
-int game_loop_hook(void *param)
+int	game_loop_hook(void *param)
 {
-    t_game *game = (t_game *)param;
+	t_game	*game;
 
-    if (!game->is_paused)
-        update_frame(game);
-    
-    if (game->battle.is_running) 
-       create_battle_screen(game);
-    
- return 0;
+	game = (t_game *)param;
+	if (!game->is_paused)
+		update_frame(game);
+	if (game->battle.is_running)
+		create_battle_screen(game);
+	return (0);
 }
-
-
-
-
-/*
-
-struct do mlx tem o delta
-
-mlx_init() = inicializa a biblioteca
-mlx_new_window = abre uma janela
-mlx_hook(KeyPress) = key continuosly pressed
-mlx_key_hook(game->wd, put_keys, game); -> key pressed once
-mlx_loop_hook = loop to spin the coin and inside move the enemy
-
-//fazer loop antes de encontrar cada C
-//função rand da biblioteca mat
-
-VALIDAÇÕES DO MAPA:
-- se tem caracter invalido (!= 0, 1, P, E, C)
-- se tem somente 1 E e 1 P
-- se tem pelo menos um C
-- se é fechado por 1s
-- tamanho minimo (x + y > 8)
-- se é retangular (tamanho das linhas tem que ser igual)
-- se tem caminho valido pro P chegar ao E (colectables?) (flood fill)
-
-- tamanho maximo (tamanho da tela do pc) - NAO FIZ
-RETORNA mensagem de erro configurável \n
-
-para ser valido, a abertura do mapa tem que ser valida e 
-os 4 ultimos digitos tem que ser ".ber"
-*/

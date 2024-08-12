@@ -12,7 +12,6 @@
 
 #include "libft.h"
 
-
 size_t	ft_strlen_gnl(char *s)
 {
 	size_t	l;
@@ -43,7 +42,8 @@ char	*ft_strjoin_gnl(char *s1, char *s2)
 	unsigned int	j;
 	char			*str;
 
-	str = (char *)ft_calloc_gnl(sizeof(char), (ft_strlen_gnl(s1) + ft_strlen_gnl(s2) + 1));
+	str = (char *)ft_calloc_gnl(sizeof(char), (ft_strlen_gnl(s1)
+				+ ft_strlen_gnl(s2) + 1));
 	if (!str)
 		return (NULL);
 	i = 0;

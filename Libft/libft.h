@@ -15,10 +15,10 @@
 /*
 **                              HEADERS
 */
+# include <stdarg.h> // library for args
 # include <stddef.h> // library for sizeof
 # include <stdlib.h> // library for malloc
 # include <unistd.h> // library for write
-# include <stdarg.h> // library for args
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 1
@@ -74,19 +74,20 @@ char				*ft_substr(char const *s, unsigned int start, size_t len);
 int					ft_tolower(int c);
 int					ft_toupper(int c);
 
-int     ft_printf(const char *format, ...);
-int     ft_putchar(const char c);
-int     ft_putstr(const char *s);
-int     ft_format(const char *format, unsigned int *i, va_list args);
+int					ft_printf(const char *format, ...);
+int					ft_putchar(const char c);
+int					ft_putstr(const char *s);
+int					ft_format(const char *format, unsigned int *i,
+						va_list args);
 
-char	*get_next_line(int fd);
-char	*read_line(int fd, char *backup);
-char	*get_line(char *backup);
-char	*get_next(char *backup);
-size_t	ft_strlen_gnl(char *s);
-char	*ft_strchr_gnl(char *s, int c);
-char	*ft_strjoin_gnl(char *s1, char *s2);
-void	*ft_calloc_gnl(size_t count, size_t size);
+char				*get_next_line(int fd);
+char				*read_line(int fd, char *backup);
+char				*get_line(char *backup);
+char				*get_next(char *backup);
+size_t				ft_strlen_gnl(char *s);
+char				*ft_strchr_gnl(char *s, int c);
+char				*ft_strjoin_gnl(char *s1, char *s2);
+void				*ft_calloc_gnl(size_t count, size_t size);
 /*
 **                              BONUS
 */
