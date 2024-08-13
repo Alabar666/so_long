@@ -12,11 +12,6 @@
 
 #include "so_long.h"
 
-void	init_list_enemy(t_game *game)
-{
-	game->eny = NULL;
-}
-
 void	add_enemy_to_list(t_game *game, int x, int y)
 {
 	t_enemy	*nw_enemy;
@@ -95,13 +90,14 @@ void	init_rand_dir_enemy(t_enemy *enemy, int random_dir)
 
 t_enemy	*new_enemy(void)
 {
-	t_enemy *new_enemy = (t_enemy *)ft_calloc(1, sizeof(t_enemy));
+	t_enemy	*new_enemy;
+
+	new_enemy = (t_enemy *)ft_calloc(1, sizeof(t_enemy));
 	if (!new_enemy)
 	{
-		printf("Error allocating memory for a new enemy.\n");
+		ft_printf("Error allocating memory for a new enemy.\n");
 		return (0);
 	}
 	new_enemy->next = NULL;
-
 	return (new_enemy);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: hugodev <hugodev@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 16:31:08 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/08/12 19:58:56 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/08/13 20:08:37 by hugodev          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,4 +33,34 @@ void	init_game(t_game *game)
 	game->is_paused = 0;
 	game->wait_input = 0;
 	game->run_selected = 0;
+}
+
+void	init_list_enemy(t_game *game)
+{
+	game->eny = NULL;
+}
+
+void	put_pixel(t_sprite *sprite, int x, int y, int color)
+{
+	char	*dst;
+
+	if (x < 0 || x >= sprite->width || y < 0 || y >= sprite->height)
+	{
+		ft_printf("Sprite: %p\n", sprite);
+		ft_printf("Error: Attempt to draw outside the image bounds (%d, %d)\n",
+			x, y);
+		return ;
+	}
+	dst = sprite->addr + (y * sprite->line_length + x * (sprite->bits_per_pixel
+				/ 8));
+	*(unsigned int *)dst = color;
+}
+
+unsigned int	get_color_in_pixel(t_sprite *sprite, int x, int y)
+{
+	unsigned int	color;
+
+	color = *(unsigned int *)(sprite->addr + (y * sprite->line_length + x
+				* (sprite->bits_per_pixel / 8)));
+	return (color);
 }

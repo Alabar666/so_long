@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: hugodev <hugodev@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 16:13:48 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/08/12 20:22:20 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/08/13 21:21:29 by hugodev          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -293,9 +293,10 @@ void				map_start(char *file, t_game *game);
 void				map_malloc(t_map *map);
 void				fill_map(t_game *game);
 void				draw_map(t_game *game);
-void				init_map(t_game *game, int is_init);
+void				init_map(t_game *game);
 int					count_lines(char *file);
-void				read_map(char *file, t_game *game);
+void    read_map(char *file, t_game *game);
+int open_map_file(const char *file);
 void				create_world(t_sprite *sprite, t_game *game, int posx,
 						int posy);
 char				*ft_strcat(char *dest, const char *src);
@@ -317,12 +318,11 @@ void				map_checks(t_game *game);
 int					check_wall(t_map map);
 int					is_map_rectangular(t_map *map);
 int					map_max_size_check(t_game *game, t_map *map);
-int					check_file_ext(char *file);
+int					check_file_ext(const char *file);
 void				check_type(t_game *game, char type, int x, int y);
 int					check_map_winability(t_game *game);
 t_tile				**duplicate_tile_map(t_tile **map, int lines, int colun);
-void				explore_map(t_game *game, t_tile **map, int x, int y,
-						int *collec_found, int *exit_found);
+void	explore_map(t_game *game, t_tile **map, t_pos pos, int *collec_found);
 
 // sprite
 void				load_images(t_game *game);
@@ -337,6 +337,16 @@ void				create_character(t_sprite *sprite, t_game *game, int posx,
 						int posy);
 char				*get_player_path(t_game *game, char c);
 void				init_player(t_game *game);
+void 			resize_combat(t_game *game, t_sprite *resized_combat);
+
+// Render
+void render_background(t_game *game);
+void render_goblins(t_game *game);
+void render_enemies(t_game *game);
+void render_player_and_extras(t_game *game);
+void move_randomly(t_game *game);
+void update_positions(t_game *game);
+void update_game_elements(t_game *game, clock_t *last_time);
 
 // player
 void				init_player_sprites(t_game *game);
@@ -395,8 +405,7 @@ void				update_player_position(t_game *game);
 void				update_goblin_position(t_goblin *gbl);
 void				update_enemy_position(t_enemy *eny);
 void				put_moves(t_game *game);
-void				update_map_tiles(t_game *game, int old_x, int old_y,
-						int new_x, int new_y, char type);
+void update_map_tiles(t_game *game, t_pos old_pos, t_pos new_pos, char type);
 void				check_position(t_game *game, int dx, int dy);
 void				handle_enemies_and_victory(t_game *game, int dx, int dy);
 void				handle_goblins(t_game *game, int dx, int dy);

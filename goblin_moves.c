@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   goblin_moves.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: hugodev <hugodev@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 19:02:48 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/08/12 19:02:53 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/08/13 20:43:46 by hugodev          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,25 +38,26 @@ int	move_goblins_check(t_game *game, t_goblin *gbl, int dx, int dy)
 
 void	move_goblin(t_game *game, t_goblin *gbl, int dx, int dy)
 {
-	int	old_x;
-	int	old_y;
+	t_pos	old_pos;
+	t_pos	new_pos;
 
 	if (gbl->is_moving)
 		return ;
-	old_x = gbl->gbl_p.x;
-	old_y = gbl->gbl_p.y;
+	old_pos.x = gbl->gbl_p.x;
+	old_pos.y = gbl->gbl_p.y;
 	gbl->dx = dx;
 	gbl->dy = dy;
 	gbl->steps_remaining = 10;
 	gbl->step_size = 4;
 	gbl->update_interval = 1000 / 60;
-	gbl->dest_p.x = gbl->gbl_p.x + dx * 20 * 2;
-	gbl->dest_p.y = gbl->gbl_p.y + dy * 20 * 2;
+	new_pos.x = gbl->gbl_p.x + dx * 20 * 2;
+	new_pos.y = gbl->gbl_p.y + dy * 20 * 2;
+	gbl->dest_p = new_pos;
 	gbl->last_update_time = clock();
 	gbl->accumulated_time = 0;
 	gbl->current_sprite = 0;
 	gbl->is_moving = 1;
-	update_map_tiles(game, old_x, old_y, gbl->dest_p.x, gbl->dest_p.y, 'C');
+	update_map_tiles(game, old_pos, new_pos, 'C');
 }
 
 void	update_goblin_position(t_goblin *gbl)

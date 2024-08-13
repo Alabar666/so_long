@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   gameover.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: hugodev <hugodev@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 19:49:26 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/08/12 20:21:23 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/08/13 21:47:46 by hugodev          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,10 @@ void	free_map(t_tile **map)
 {
 	int	i;
 
+    if (!map)
+	{
+        return;
+	}
 	i = -1;
 	while (map[++i])
 		free(map[i]);

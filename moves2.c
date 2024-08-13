@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   moves2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: hugodev <hugodev@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 19:43:53 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/08/12 19:48:29 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/08/13 20:40:12 by hugodev          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,18 +34,17 @@ void	put_moves(t_game *game)
 	free(move_str);
 }
 
-void	update_map_tiles(t_game *game, int old_x, int old_y, int new_x,
-		int new_y, char type)
+void	update_map_tiles(t_game *game, t_pos old_pos, t_pos new_pos, char type)
 {
 	int	map_old_x;
 	int	map_old_y;
 	int	map_new_x;
 	int	map_new_y;
 
-	map_old_x = old_x / SZ;
-	map_old_y = old_y / SZ;
-	map_new_x = new_x / SZ;
-	map_new_y = new_y / SZ;
+	map_old_x = old_pos.x / SZ;
+	map_old_y = old_pos.y / SZ;
+	map_new_x = new_pos.x / SZ;
+	map_new_y = new_pos.y / SZ;
 	if (game->map.map[map_new_y][map_new_x].type == '0')
 	{
 		game->map.map[map_old_y][map_old_x].type = '0';

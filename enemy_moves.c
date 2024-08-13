@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   enemy_moves.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: hugodev <hugodev@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 12:41:27 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/08/12 20:15:45 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/08/13 20:45:37 by hugodev          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,25 +38,26 @@ int	move_enemys_check(t_game *game, t_enemy *eny, int dx, int dy)
 
 void	move_enemy(t_game *game, t_enemy *eny, int dx, int dy)
 {
-	int	old_x;
-	int	old_y;
+	t_pos	old_pos;
+	t_pos	new_pos;
 
 	if (eny->is_moving)
 		return ;
-	old_x = eny->eny_p.x;
-	old_y = eny->eny_p.y;
+	old_pos.x = eny->eny_p.x;
+	old_pos.y = eny->eny_p.y;
 	eny->dx = dx;
 	eny->dy = dy;
 	eny->steps_remaining = 10;
 	eny->step_size = 4;
 	eny->update_interval = 1000 / 60;
-	eny->dest_p.x = eny->eny_p.x + dx * 20 * 2;
-	eny->dest_p.y = eny->eny_p.y + dy * 20 * 2;
+	new_pos.x = eny->eny_p.x + dx * 20 * 2;
+	new_pos.y = eny->eny_p.y + dy * 20 * 2;
+	eny->dest_p = new_pos;
 	eny->last_update_time = clock();
 	eny->accumulated_time = 0;
 	eny->current_sprite = 0;
 	eny->is_moving = 1;
-	update_map_tiles(game, old_x, old_y, eny->dest_p.x, eny->dest_p.y, 'M');
+	update_map_tiles(game, old_pos, new_pos, 'M');
 }
 
 void	update_enemy_position(t_enemy *eny)
@@ -114,10 +115,10 @@ void	move_rand_enemys(t_game *game)
 
 void	update_enemy_sprite_randomly(t_game *game)
 {
-	t_enemy *current_enemy;
-	static int frame_counter;
-	frame_counter++;
+	t_enemy		*current_enemy;
+	static int	frame_counter;
 
+	frame_counter++;
 	if (frame_counter >= 180)
 	{
 		current_enemy = game->eny;

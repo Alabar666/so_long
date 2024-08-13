@@ -48,12 +48,7 @@ void	create_battle(t_sprite *sprite, t_game *game)
 
 void	create_battle_screen(t_game *game)
 {
-	int				x;
-	int				y;
-	unsigned int	color;
-	double			src_x;
-	double			src_y;
-	t_sprite		*resized_combat;
+	t_sprite	*resized_combat;
 
 	resized_combat = (t_sprite *)malloc(sizeof(t_sprite));
 	resized_combat->width = game->map.width;
@@ -63,6 +58,20 @@ void	create_battle_screen(t_game *game)
 	resized_combat->addr = mlx_get_data_addr(resized_combat->img,
 			&resized_combat->bits_per_pixel, &resized_combat->line_length,
 			&resized_combat->endian);
+	resize_combat(game, resized_combat);
+	mlx_put_image_to_window(game->mlx, game->win, resized_combat->img, 0, 0);
+	mlx_destroy_image(game->mlx, resized_combat->img);
+	free(resized_combat);
+}
+
+void	resize_combat(t_game *game, t_sprite *resized_combat)
+{
+	int				x;
+	int				y;
+	unsigned int	color;
+	double			src_x;
+	double			src_y;
+
 	y = -1;
 	while (++y < resized_combat->height)
 	{
@@ -78,20 +87,7 @@ void	create_battle_screen(t_game *game)
 			put_pixel(resized_combat, x, y, color);
 		}
 	}
-	mlx_put_image_to_window(game->mlx, game->win, resized_combat->img, 0, 0);
-	mlx_destroy_image(game->mlx, resized_combat->img);
-	free(resized_combat);
 }
-/*
-t_sprite resize_sprite(t_sprite *sprite)
-{
-    
-
-
-
-    
-}
-*/
 
 void	close_battle(t_game *game)
 {
@@ -111,5 +107,3 @@ void	close_battle(t_game *game)
 	game->battle.is_running = 0;
 	game->is_paused = 0;
 }
-
-

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_checks.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: hugodev <hugodev@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 19:06:50 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/08/12 19:31:10 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/08/13 20:48:38 by hugodev          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,10 @@ void	map_checks(t_game *game)
 		game_error(0, &game->map, MAP_ERROR);
 }
 
-int	check_file_ext(char *file)
+int	check_file_ext(const char *file)
 {
-	size_t	len;
-	char	*exten;
+	size_t		len;
+	const char	*exten;
 
 	len = ft_strlen(file);
 	if (len < 4)
