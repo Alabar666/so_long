@@ -1,2 +1,49 @@
-# so_long
-so_long project from 42 School
+so_long
+A 2D game project developed for the 42 School, using the MiniLibX library.
+
+Overview
+The so_long project is a simple 2D game where the player must navigate through a map, collect items, and reach the exit while avoiding enemies. The game was developed as part of the 42 School curriculum, with the objective of understanding basic game mechanics and graphical rendering using the MiniLibX library.
+
+Features
+2D Game Rendering using MiniLibX
+Player Movement across a grid-based map
+Collectible Items that must be gathered before exiting
+Enemies that the player must avoid
+Customizable Maps created using simple text files
+Installation
+Clone the repository:
+sh
+Copiar código
+git clone https://github.com/Alabar666/so_long.git
+Navigate to the project directory:
+sh
+Copiar código
+cd so_long
+Compile the game:
+sh
+Copiar código
+make
+Run the game with a map file:
+sh
+Copiar código
+./so_long maps/sample_map.ber
+How to Play
+Use the arrow keys to move the character.
+Collect all the items (C) on the map.
+Avoid the enemies (M) and reach the exit (E).
+Example Gameplay
+
+
+
+Map Format
+Maps are simple .ber files that represent the game grid. Each character in the file corresponds to a different element:
+
+1 - Wall
+0 - Empty Space
+P - Player Start Position
+C - Collectible Item
+E - Exit
+M - Enemy
+
+Contributing
+Contributions are welcome! Feel free to submit a pull request or open an issue.
