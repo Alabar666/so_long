@@ -50,25 +50,25 @@ The `so_long` project is a simple 2D game where the player must navigate through
 
 ### Stand Animation
 
-![Stand Animation](gifs/stand.mp4)
+![Stand Animation](gifs/stand.gif)
 
 The character's idle animation when not moving.
 
 ### Kill Goblin Animation
 
-![Kill Goblin Animation](gifs/killgoblin.mp4)
+![Kill Goblin Animation](gifs/killgoblin.gif)
 
 An animation showing the action of killing a goblin.
 
 ### Lose Animation
 
-![Lose Animation](gifs/lose.mp4)
+![Lose Animation](gifs/lose.gif)
 
 An animation that plays when the player loses the game.
 
 ### Victory Animation
 
-![Victory Animation](gifs/victory.mp4)
+![Victory Animation](gifs/victory.gif)
 
 An animation that plays when the player wins the game.
 
