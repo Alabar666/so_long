@@ -6,7 +6,7 @@
 #    By: hugodev <hugodev@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/09 19:22:40 by hluiz-ma          #+#    #+#              #
-#    Updated: 2024/08/13 20:23:27 by hugodev          ###   ########.fr        #
+#    Updated: 2024/08/18 19:36:42 by hugodev          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,8 +20,8 @@ LIBFT = $(LIBFT_DIR)/libft.a
 MLX_DIR = minilibx-linux/
 MLX = $(MLX_DIR)libmlx.a
 MLXFLAGS = -L$(MLX_DIR) -lmlx -lm -lX11 -lXext
-SRCS = so_long.c map.c map2.c map_init.c gameover.c render.c render2.c sprites.c player.c moves.c moves2.c map_checks.c map_checks2.c exit.c goblin.c goblin_moves.c goblin_init.c enemy.c enemy_moves.c enemy_init.c combat.c combat_utils.c \
-utils.c
+SRCS = main.c map.c map2.c map_init.c gameover.c gamefrees.c render.c render2.c sprites.c player.c moves.c moves2.c map_checks.c map_checks2.c exit.c goblin.c goblin_moves.c goblin_init.c enemy.c enemy_moves.c enemy_init.c combat.c combat_utils.c \
+utils.c utils2.c victory_and_lose.c
 BONUS = 
 RM= rm -rf
 
