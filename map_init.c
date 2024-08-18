@@ -16,8 +16,8 @@ void	map_start(char *file, t_game *game)
 		return ;
 	}
 	map_checks(game);
-	game->win = mlx_new_window(game->mlx, SZ * game->map.colun, SZ
-			* game->map.lines, "The Slayer");
+	game->win = mlx_new_window(game->mlx, game->map.width, game->map.height,
+			"The Slayer");
 	if (!game->win)
 	{
 		ft_printf("Error\nFailed to create window\n");
@@ -37,6 +37,7 @@ void	init_map(t_game *game)
 	game->map.enemy = 0;
 	game->map.goblin = 0;
 	game->map.player = 0;
+	game->map.start_p1_p = (t_pos){0, 0};
 }
 
 int	count_lines(char *file)

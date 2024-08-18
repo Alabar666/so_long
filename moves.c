@@ -6,7 +6,7 @@
 /*   By: hugodev <hugodev@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 19:20:13 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/08/13 21:02:24 by hugodev          ###   ########.fr       */
+/*   Updated: 2024/08/18 17:32:19 by hugodev          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,20 +81,20 @@ int	handle_battle_keys(int key, t_game *game)
 
 void	move_player(t_game *game, int dx, int dy)
 {
-    t_pos old_pos;
-    t_pos new_pos;
+	t_pos	old_pos;
+	t_pos	new_pos;
 
 	if (game->p1.is_moving)
 		return ;
-    old_pos.x = game->p1.p1_p.x;
-    old_pos.y = game->p1.p1_p.y;
+	old_pos.x = game->p1.p1_p.x;
+	old_pos.y = game->p1.p1_p.y;
 	game->p1.dx = dx;
 	game->p1.dy = dy;
 	game->p1.steps_remaining = 10;
 	game->p1.step_size = 4;
 	game->p1.update_interval = 1000 / 60;
-    new_pos.x = game->p1.p1_p.x + dx * 20 * 2;
-    new_pos.y = game->p1.p1_p.y + dy * 20 * 2;
+	new_pos.x = game->p1.p1_p.x + dx * 20 * 2;
+	new_pos.y = game->p1.p1_p.y + dy * 20 * 2;
 	game->p1.dest_p = new_pos;
 	game->p1.last_update_time = clock();
 	game->p1.accumulated_time = 0;
@@ -104,7 +104,8 @@ void	move_player(t_game *game, int dx, int dy)
 	ft_printf("Moves amount: %i\n", game->p1.moves);
 	put_moves(game);
 	check_position(game, game->p1.dest_p.x, game->p1.dest_p.y);
-    update_map_tiles(game, old_pos, new_pos, 'P');
+	update_map_tiles(game, old_pos, new_pos, 'P');
+	check_for_overlap(game);
 }
 
 void	update_player_position(t_game *game)
@@ -133,4 +134,5 @@ void	update_player_position(t_game *game)
 		game->p1.current_sprite = 0;
 	}
 	game->p1.last_update_time = current_time;
+	check_for_overlap(game);
 }

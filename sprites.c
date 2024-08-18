@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sprites.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: hugodev <hugodev@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 15:25:58 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/08/12 20:06:48 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/08/17 00:11:47 by hugodev          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,8 +122,12 @@ void	put_tile(t_game *game, int x, int y)
 	char		*sprite_path;
 	t_sprite	*sprite;
 
-	sprite_path = game->map.map[y][x].sprt_path;
-	sprite = NULL;
+	sprite_path = ft_strdup(game->map.map[y][x].sprt_path);
+	if (!sprite_path)
+	{
+		gameover(game);
+		return;
+	}
 	sprite = create_sprite(game, sprite_path);
 	create_world(sprite, game, x, y);
 	mlx_destroy_image(game->mlx, sprite->img);

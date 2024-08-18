@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   goblin_init.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: hugodev <hugodev@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 19:01:22 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/08/12 19:01:25 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/08/18 14:28:30 by hugodev          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,9 @@ void	init_goblin(t_goblin *goblin)
 {
 	int	random_dir;
 
+	goblin->gbl_p = (t_pos){0, 0};
+	goblin->dest_p = (t_pos){0, 0};
+	goblin->gbl = NULL;
 	goblin->is_alive = 1;
 	goblin->current_sprite = 0;
 	goblin->is_moving = 0;
@@ -59,10 +62,10 @@ void	init_goblin(t_goblin *goblin)
 	goblin->update_interval = 1000 / 60;
 	goblin->last_update_time = clock();
 	goblin->accumulated_time = 0;
-	goblin->dead = ft_strdup(BLOOD);
 	init_goblin_sprites(goblin);
 	random_dir = rand() % 4;
 	init_rand_dir_goblin(goblin, random_dir);
+	goblin->next = NULL;
 }
 
 void	init_goblin_sprites(t_goblin *goblin)

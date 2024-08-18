@@ -6,7 +6,7 @@
 /*   By: hugodev <hugodev@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 21:07:19 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/08/13 20:34:43 by hugodev          ###   ########.fr       */
+/*   Updated: 2024/08/18 18:02:02 by hugodev          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,5 +72,23 @@ void	map_malloc(t_map *map)
 				* SZ);
 		if (!map->map[i++])
 			game_error(0, map, MAP_ERROR);
+	}
+}
+
+void	update_map_tiles(t_game *game, t_pos old_pos, t_pos new_pos, char type)
+{
+	int	map_old_x;
+	int	map_old_y;
+	int	map_new_x;
+	int	map_new_y;
+
+	map_old_x = old_pos.x / SZ;
+	map_old_y = old_pos.y / SZ;
+	map_new_x = new_pos.x / SZ;
+	map_new_y = new_pos.y / SZ;
+	if (game->map.map[map_new_y][map_new_x].type == '0')
+	{
+		game->map.map[map_old_y][map_old_x].type = '0';
+		game->map.map[map_new_y][map_new_x].type = type;
 	}
 }

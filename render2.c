@@ -17,6 +17,8 @@ void	render_background(t_game *game)
 {
 	put_map(game);
 	put_exit(game);
+	if(!game->p1.alive)
+		put_dead(game);
 }
 
 void	render_goblins(t_game *game)

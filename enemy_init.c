@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   enemy_init.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: hugodev <hugodev@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 19:41:27 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/08/12 19:01:55 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/08/18 14:29:49 by hugodev          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,9 @@ void	init_enemy(t_enemy *enemy)
 {
 	int	random_dir;
 
+	enemy->eny_p = (t_pos){0, 0};
+	enemy->dest_p = (t_pos){0, 0};
+	enemy->eny = NULL;
 	enemy->is_alive = 1;
 	enemy->current_sprite = 0;
 	enemy->is_moving = 0;
@@ -57,6 +60,7 @@ void	init_enemy(t_enemy *enemy)
 	init_enemy_sprites(enemy);
 	random_dir = rand() % 4;
 	init_rand_dir_enemy(enemy, random_dir);
+	enemy->next = NULL;
 }
 
 void	init_enemy_sprites(t_enemy *enemy)

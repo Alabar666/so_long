@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   goblin.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: hugodev <hugodev@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 19:41:27 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/08/12 19:03:17 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/08/18 19:42:42 by hugodev          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,8 @@ void	put_goblin(t_game *game, t_goblin *goblin, int sprite_index)
 	}
 	else
 		current_sprite = goblin->dead;
+	if (goblin->gbl)
+		destroy_sprite(&goblin->gbl, game->mlx);	
 	goblin->gbl = create_sprite(game, current_sprite);
 	create_character(goblin->gbl, game, x, y);
 }

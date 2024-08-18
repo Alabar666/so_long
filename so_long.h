@@ -6,7 +6,7 @@
 /*   By: hugodev <hugodev@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 16:13:48 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/08/13 22:07:23 by hugodev          ###   ########.fr       */
+/*   Updated: 2024/08/18 19:34:25 by hugodev          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,16 @@
 # define CENYATK "./img/cavernbgatkeny.xpm"
 # define CENYRUN "./img/cavernbgruneny.xpm"
 
+# define VICTORY1 "./img/victory1.xpm"
+# define VICTORY2 "./img/victory2.xpm"
+# define VICTORY3 "./img/victory3.xpm"
+# define VICTORY4 "./img/victory4.xpm"
+# define VICTORY5 "./img/victory5.xpm"
+# define VICTORY6 "./img/victory6.xpm"
+
+# define LOSE1 "./img/youdead.xpm"
+# define LOSE2 "./img/youdead2.xpm"
+
 # define EXIT_FRONT "./img/prissfront.xpm"
 # define EXIT_BACK "./img/prissback.xpm"
 # define EXIT_LEFT "./img/prissleft.xpm"
@@ -131,6 +141,12 @@ typedef struct s_pos
 	int				y;
 
 }					t_pos;
+
+typedef struct s_pos_double
+{
+	double			x;
+	double			y;
+}					t_pos_double;
 
 typedef struct s_tile
 {
@@ -267,6 +283,7 @@ typedef struct s_game
 	void			*win;
 	t_map			map;
 	t_sprite		*world;
+	t_sprite		*end_img;
 	t_player		p1;
 	t_goblin		*gbl;
 	t_enemy			*eny;
@@ -280,6 +297,7 @@ typedef struct s_game
 	int				is_paused;
 	int				wait_input;
 	int				run_selected;
+	int				show_end_screen;
 	unsigned long	message_display_duration;
 }					t_game;
 
@@ -295,13 +313,12 @@ void				fill_map(t_game *game);
 void				draw_map(t_game *game);
 void				init_map(t_game *game);
 int					count_lines(char *file);
-void    read_map(char *file, t_game *game);
-int open_map_file(const char *file);
+void				read_map(char *file, t_game *game);
+int					open_map_file(const char *file);
 void				create_world(t_sprite *sprite, t_game *game, int posx,
 						int posy);
 char				*ft_strcat(char *dest, const char *src);
 t_tile				new_type(char type, int x, int y);
-void				free_map(t_tile **map);
 void				game_error(int fd, t_map *map, char *error);
 void				put_map(t_game *game);
 void				put_tile(t_game *game, int x, int y);
@@ -322,8 +339,8 @@ int					check_file_ext(const char *file);
 void				check_type(t_game *game, char type, int x, int y);
 int					check_map_winability(t_game *game);
 t_tile				**duplicate_tile_map(t_tile **map, int lines, int colun);
-void	explore_map(t_game *game, t_tile **map, int x, int y, int *collec_found,
-		int *exit_found);
+void				explore_map(t_game *game, t_tile **map, int x, int y,
+						int *collec_found, int *exit_found);
 
 // sprite
 void				load_images(t_game *game);
@@ -338,16 +355,16 @@ void				create_character(t_sprite *sprite, t_game *game, int posx,
 						int posy);
 char				*get_player_path(t_game *game, char c);
 void				init_player(t_game *game);
-void 			resize_combat(t_game *game, t_sprite *resized_combat);
+void				resize_combat(t_game *game, t_sprite *resized_combat);
 
 // Render
-void render_background(t_game *game);
-void render_goblins(t_game *game);
-void render_enemies(t_game *game);
-void render_player_and_extras(t_game *game);
-void move_randomly(t_game *game);
-void update_positions(t_game *game);
-void update_game_elements(t_game *game, clock_t *last_time);
+void				render_background(t_game *game);
+void				render_goblins(t_game *game);
+void				render_enemies(t_game *game);
+void				render_player_and_extras(t_game *game);
+void				move_randomly(t_game *game);
+void				update_positions(t_game *game);
+void				update_game_elements(t_game *game, clock_t *last_time);
 
 // player
 void				init_player_sprites(t_game *game);
@@ -391,6 +408,15 @@ int					move_enemys_check(t_game *game, t_enemy *gbl, int dx,
 // utils
 int					game_loop_hook(void *param);
 void				init_game(t_game *game);
+void				create_end_screen(t_game *game);
+void				end_game(t_game *game);
+void				render_end_screen(t_game *game);
+void				resize_end(t_game *game, t_sprite *resized_end,
+						char *image_path);
+void				put_dead(t_game *game);
+void				resize_end_text(t_sprite *dest, t_sprite *src);
+void				animate_end_screen(t_game *game);
+void				initialize_end_images(char *images[]);
 
 // moves
 int					key_pressed(int key, t_game *game);
@@ -406,10 +432,12 @@ void				update_player_position(t_game *game);
 void				update_goblin_position(t_goblin *gbl);
 void				update_enemy_position(t_enemy *eny);
 void				put_moves(t_game *game);
-void update_map_tiles(t_game *game, t_pos old_pos, t_pos new_pos, char type);
+void				update_map_tiles(t_game *game, t_pos old_pos, t_pos new_pos,
+						char type);
 void				check_position(t_game *game, int dx, int dy);
 void				handle_enemies_and_victory(t_game *game, int dx, int dy);
 void				handle_goblins(t_game *game, int dx, int dy);
+void				check_for_overlap(t_game *game);
 
 // battle
 void				init_battle(t_game *game);
@@ -424,5 +452,13 @@ void				destroy_sprite(t_sprite **sprite, void *mlx);
 
 // free exit
 int					gameover(t_game *game);
+void				free_goblin_sprites(t_goblin *goblin);
+void				free_enemy_sprites(t_enemy *enemy);
+void				free_player_sprites(t_player *player);
+void				free_exit_sprites(t_exit *exit);
+void				free_all_goblins(t_goblin *goblin_list);
+void				free_all_enemies(t_enemy *enemy_list);
+void				free_map(t_map *map);
+void				free_tile_map(t_tile **tile_map, int lines);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: hugodev <hugodev@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 19:43:53 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/08/13 20:40:12 by hugodev          ###   ########.fr       */
+/*   Updated: 2024/08/18 18:50:50 by hugodev          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,24 +32,6 @@ void	put_moves(t_game *game)
 	}
 	mlx_string_put(game->mlx, game->win, text_x, text_y, 0xFFFF00, move_str);
 	free(move_str);
-}
-
-void	update_map_tiles(t_game *game, t_pos old_pos, t_pos new_pos, char type)
-{
-	int	map_old_x;
-	int	map_old_y;
-	int	map_new_x;
-	int	map_new_y;
-
-	map_old_x = old_pos.x / SZ;
-	map_old_y = old_pos.y / SZ;
-	map_new_x = new_pos.x / SZ;
-	map_new_y = new_pos.y / SZ;
-	if (game->map.map[map_new_y][map_new_x].type == '0')
-	{
-		game->map.map[map_old_y][map_old_x].type = '0';
-		game->map.map[map_new_y][map_new_x].type = type;
-	}
 }
 
 void	check_position(t_game *game, int dx, int dy)
@@ -92,19 +74,48 @@ void	handle_enemies_and_victory(t_game *game, int dx, int dy)
 	if (enemy_type == 'M')
 	{
 		start_battle(game, enemy_type);
-		ft_printf("You are dead!\n");
 		game->p1.p1 = create_sprite(game, PDEAD);
 		game->p1.alive = 0;
+		game->map.map[dy / SZ][dx / SZ].type = '0';
 		if (!game->wait_input && !game->p1.alive)
 		{
-			usleep(700000);
-			gameover(game);
+			ft_printf("You are dead!\n");
 		}
 	}
 	if (game->map.goblin == 0 && enemy_type == 'E')
 	{
 		ft_printf("You saved the priestess!\n");
-		usleep(700000);
-		gameover(game);
+		end_game(game);
+	}
+}
+
+void	check_for_overlap(t_game *game)
+{
+	int player_x;
+	int player_y;
+	t_goblin *cur_gbl;
+	t_enemy *cur_eny;
+
+	player_x = game->p1.p1_p.x;
+	player_y = game->p1.p1_p.y;
+	cur_gbl = game->gbl;
+	cur_eny = game->eny;
+	while (cur_gbl != NULL)
+	{
+		if (cur_gbl->gbl_p.x == player_x && cur_gbl->gbl_p.y == player_y)
+		{
+			handle_goblins(game, player_x, player_y);
+			break ;
+		}
+		cur_gbl = cur_gbl->next;
+	}
+	while (cur_eny != NULL)
+	{
+		if (cur_eny->eny_p.x == player_x && cur_eny->eny_p.y == player_y)
+		{
+			handle_enemies_and_victory(game, player_x, player_y);
+			break ;
+		}
+		cur_eny = cur_eny->next;
 	}
 }

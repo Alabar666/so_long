@@ -6,7 +6,7 @@
 /*   By: hugodev <hugodev@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 16:31:08 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/08/13 20:08:37 by hugodev          ###   ########.fr       */
+/*   Updated: 2024/08/18 19:40:25 by hugodev          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,28 @@ void	init_directions(int directions[4][2])
 
 void	init_game(t_game *game)
 {
+	if (game == NULL)
+		return ;
+	game->mlx = NULL;
+	game->win = NULL;
+	init_map(game);
+	game->world = NULL;
+	game->end_img = NULL;
+	init_player(game);
+	game->gbl = NULL;
+	game->eny = NULL;
+	init_exit(game);
+	init_battle(game);
 	game->lst_gbl_upt = time(NULL);
 	game->lst_eny_upt = time(NULL);
 	game->lst_exit_upt = time(NULL);
 	game->global_timer = 0;
+	game->sprite_index = 0;
 	game->is_paused = 0;
 	game->wait_input = 0;
 	game->run_selected = 0;
+	game->show_end_screen = 0;
+	game->message_display_duration = 0;
 }
 
 void	init_list_enemy(t_game *game)

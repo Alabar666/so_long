@@ -6,7 +6,7 @@
 /*   By: hugodev <hugodev@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 19:02:48 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/08/13 20:43:46 by hugodev          ###   ########.fr       */
+/*   Updated: 2024/08/18 12:23:23 by hugodev          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ void	move_goblin(t_game *game, t_goblin *gbl, int dx, int dy)
 	gbl->current_sprite = 0;
 	gbl->is_moving = 1;
 	update_map_tiles(game, old_pos, new_pos, 'C');
+	check_for_overlap(game);
 }
 
 void	update_goblin_position(t_goblin *gbl)

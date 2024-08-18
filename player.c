@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: hugodev <hugodev@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 20:10:30 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/08/12 19:43:04 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/08/18 14:26:11 by hugodev          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,14 @@ void	init_player(t_game *game)
 {
 	game->p1.p1_p.x = game->map.start_p1_p.x;
 	game->p1.p1_p.y = game->map.start_p1_p.y;
+	game->p1.p1 = NULL;
+    game->p1.bl = NULL;
 	game->p1.alive = 1;
 	game->p1.mv_dir = STAND;
 	game->p1.is_moving = 0;
 	game->p1.moves = 0;
 	game->p1.current_sprite = 0;
+	init_player_sprites(game);
 	game->p1.dx = 0;
 	game->p1.dy = 0;
 	game->p1.steps_remaining = 0;
@@ -28,8 +31,11 @@ void	init_player(t_game *game)
 	game->p1.update_interval = 1000 / 60;
 	game->p1.last_update_time = clock();
 	game->p1.accumulated_time = 0;
-	init_player_sprites(game);
+	game->p1.p1 = NULL;
+    game->p1.bl = NULL;
+    game->p1.dest_p = (t_pos){0, 0};
 }
+
 
 void	init_player_sprites(t_game *game)
 {
@@ -73,6 +79,8 @@ void	put_player(t_game *game, int sprite_index)
 	}
 	else
 		current_sprite = ft_strdup(PDEAD);
+	if (game->p1.p1)
+		destroy_sprite(&game->p1.p1, game->mlx);
 	game->p1.p1 = create_sprite(game, current_sprite);
 	create_character(game->p1.p1, game, x, y);
 }

@@ -103,6 +103,7 @@ void	put_map(t_game *game)
 			create_world(sprite, game, x, y);
 			mlx_destroy_image(game->mlx, sprite->img);
 			free(sprite);
+			sprite = NULL;
 		}
 	}
 }

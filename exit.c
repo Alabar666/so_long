@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: hugodev <hugodev@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 15:42:29 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/08/12 19:01:39 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/08/16 20:44:54 by hugodev          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,10 @@
 
 void	init_exit(t_game *game)
 {
+	game->ext.ex_p.x = 0;
+	game->ext.ex_p.y = 0;
+	game->ext.ex1 = NULL;
+	game->ext.bl = NULL;
 	game->ext.current_sprite = 0;
 	game->ext.exit_sprites[0] = ft_strdup(EXIT_FRONT);
 	game->ext.exit_sprites[1] = ft_strdup(EXIT_BACK);
@@ -31,13 +35,15 @@ void	put_exit(t_game *game)
 	char		*current_ballom;
 	static int	frame_counter;
 
-	current_exit = NULL;
-	current_ballom = NULL;
 	current_exit = game->ext.exit_sprites[(frame_counter / 120) % 4];
 	if (frame_counter % 180 < 60)
 		current_ballom = game->ext.exit_ballom[(frame_counter / 180) % 4];
 	else
 		current_ballom = NULL;
+	if (game->ext.ex1)
+		destroy_sprite(&game->ext.ex1, game->mlx);
+	if (game->ext.bl)
+		destroy_sprite(&game->ext.bl, game->mlx);
 	game->ext.ex1 = create_sprite(game, current_exit);
 	create_character(game->ext.ex1, game, game->ext.ex_p.x, game->ext.ex_p.y);
 	if (current_ballom)
@@ -47,4 +53,6 @@ void	put_exit(t_game *game)
 			- 40);
 	}
 	frame_counter++;
+	if (frame_counter > 720)
+		frame_counter = 0;
 }

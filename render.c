@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: hugodev <hugodev@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 19:59:35 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/08/12 20:07:18 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/08/18 18:52:48 by hugodev          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,15 @@ int	update_frame(void *param)
 	delta_time = (float)(current_time - last_time) / CLOCKS_PER_SEC;
 	if (delta_time >= 1.0f / 60.0f && !game->is_paused)
 	{
-		update_game_elements(game, &last_time);
-		render_game(game);
+		if (!game->show_end_screen)
+		{
+			update_game_elements(game, &last_time);
+			render_game(game);
+		}
+		else
+		{
+			render_end_screen(game);
+		}
 	}
 	return (0);
 }
