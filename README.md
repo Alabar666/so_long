@@ -46,6 +46,32 @@ The `so_long` project is a simple 2D game where the player must navigate through
 - Collect all the items (`C`) on the map.
 - Avoid the enemies (`M`) and reach the exit (`E`).
 
+## Example Gameplay
+
+### Stand Animation
+
+![Stand Animation](gifs/stand.mp4)
+
+The character's idle animation when not moving.
+
+### Kill Goblin Animation
+
+![Kill Goblin Animation](gifs/killgoblin.mp4)
+
+An animation showing the action of killing a goblin.
+
+### Lose Animation
+
+![Lose Animation](gifs/lose.mp4)
+
+An animation that plays when the player loses the game.
+
+### Victory Animation
+
+![Victory Animation](gifs/victory.mp4)
+
+An animation that plays when the player wins the game.
+
 ## Map Format
 
 Maps are simple `.ber` files that represent the game grid. Each character in the file corresponds to a different element:
