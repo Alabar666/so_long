@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   moves2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hugodev <hugodev@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 19:43:53 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/08/18 18:50:50 by hugodev          ###   ########.fr       */
+/*   Updated: 2024/08/19 20:18:38 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,11 @@ void	put_moves(t_game *game)
 	balloon_y = game->p1.p1_p.y - 40;
 	text_x = balloon_x + 16;
 	text_y = balloon_y + 19;
+	if (game->p1.bl != NULL)
+	{
+		destroy_sprite(&game->p1.bl, game->mlx);  // Certifique-se de que destroy_sprite está corretamente implementada
+		game->p1.bl = NULL;
+	}
 	if (game->p1.moves != 0)
 	{
 		game->p1.bl = create_sprite(game, game->p1.pl_ballom);

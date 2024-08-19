@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 19:41:27 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/08/12 18:58:09 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/08/19 20:08:43 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,8 @@ void	put_enemy(t_game *game, t_enemy *enemy, int sprite_index)
 	}
 	else
 		current_sprite = enemy->dead;
+	if (enemy->eny)
+		destroy_sprite(&enemy->eny, game->mlx);	
 	enemy->eny = create_sprite(game, current_sprite);
 	create_character(enemy->eny, game, x, y);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hugodev <hugodev@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 16:13:48 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/08/18 20:50:03 by hugodev          ###   ########.fr       */
+/*   Updated: 2024/08/19 19:37:28 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -339,8 +339,7 @@ int					check_file_ext(const char *file);
 void				check_type(t_game *game, char type, int x, int y);
 int					check_map_winability(t_game *game);
 t_tile				**duplicate_tile_map(t_tile **map, int lines, int colun);
-void				explore_map(t_game *game, t_tile **map, int x, int y,
-						int *collec_found, int *exit_found);
+void				explore_map(t_game *game, t_tile **map, int x, int y);
 
 // sprite
 void				load_images(t_game *game);

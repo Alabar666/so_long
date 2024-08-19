@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   enemy_moves.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hugodev <hugodev@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 12:41:27 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/08/18 17:41:56 by hugodev          ###   ########.fr       */
+/*   Updated: 2024/08/19 19:22:04 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ void	move_enemy(t_game *game, t_enemy *eny, int dx, int dy)
 	eny->current_sprite = 0;
 	eny->is_moving = 1;
 	update_map_tiles(game, old_pos, new_pos, 'M');
-	check_for_overlap(game);
 }
 
 void	update_enemy_position(t_enemy *eny)

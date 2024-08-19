@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hugodev <hugodev@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 19:59:35 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/08/18 18:52:48 by hugodev          ###   ########.fr       */
+/*   Updated: 2024/08/19 19:23:19 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void	update_game_elements(t_game *game, clock_t *last_time)
 	{
 		update_positions(game);
 		move_randomly(game);
+		check_for_overlap(game);
 	}
 	*last_time = current_time;
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   gameover.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hugodev <hugodev@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 19:49:26 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/08/17 00:08:06 by hugodev          ###   ########.fr       */
+/*   Updated: 2024/08/19 20:30:11 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ int	gameover(t_game *game)
 void	free_map(t_map *map)
 {
 	int	i;
+	int j;
 
 	if (!map)
 	{
@@ -89,10 +90,14 @@ void	free_map(t_map *map)
 		{
 			if (map->map[i])
 			{
-				if (map->map[i]->sprt_path)
+				j = -1;
+				while (++j < map->colun) 
 				{
-					free(map->map[i]->sprt_path);
-					map->map[i]->sprt_path = NULL;
+					if (map->map[i][j].sprt_path)
+					{
+						free(map->map[i][j].sprt_path);
+						map->map[i][j].sprt_path = NULL;
+					}
 				}
 				free(map->map[i]);
 				map->map[i] = NULL;

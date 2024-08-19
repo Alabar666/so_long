@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hugodev <hugodev@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 20:10:30 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/08/18 14:26:11 by hugodev          ###   ########.fr       */
+/*   Updated: 2024/08/19 19:15:32 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ void	init_player(t_game *game)
     game->p1.bl = NULL;
     game->p1.dest_p = (t_pos){0, 0};
 }
-
 
 void	init_player_sprites(t_game *game)
 {

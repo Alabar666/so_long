@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   combat_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hugodev <hugodev@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 12:41:27 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/08/18 14:31:01 by hugodev          ###   ########.fr       */
+/*   Updated: 2024/08/19 19:17:50 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,29 +23,6 @@ void	init_battle(t_game *game)
 	game->message_display_duration = 0;
 	game->battle.enemy_type = '\0';
 }
-/*
-void	create_battle(t_sprite *sprite, t_game *game)
-{
-	int				x;
-	int				y;
-	unsigned int	color;
-	unsigned int	trans_color;
-
-	trans_color = 0xFFC0CB;
-	y = -1;
-	while (++y < sprite->height)
-	{
-		x = -1;
-		while (++x < sprite->width)
-		{
-			color = get_color_in_pixel(sprite, x, y);
-			if (color != trans_color)
-			{
-				put_pixel(game->battle.btl_img, x, y, color);
-			}
-		}
-	}
-}*/
 
 void	create_battle_screen(t_game *game)
 {
