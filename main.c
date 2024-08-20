@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 16:13:44 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/08/19 19:18:22 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/08/20 20:25:00 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ int	main(int ac, char **av)
 	if (ac == 2)
 	{
 		init_game(&game);
-		init_exit(&game);
 		init_list_goblin(&game);
 		map_start(av[1], &game);
 		start_world(&game);
@@ -46,7 +45,7 @@ static void	start_world(t_game *game)
 {
 	t_sprite	*world;
 
-	init_battle(game);
+	//init_battle(game);
 	world = (t_sprite *)ft_calloc(1, sizeof(t_sprite));
 	if (!world)
 	{
@@ -58,7 +57,7 @@ static void	start_world(t_game *game)
 	if (!world->img)
 	{
 		gameover(game);
-		exit(0);
+		return;
 	}
 	world->addr = mlx_get_data_addr(world->img, &world->bits_per_pixel,
 			&world->line_length, &world->endian);
@@ -71,22 +70,23 @@ void	battle_load(t_game *game)
 {
 	t_sprite	*battle;
 
-	init_battle(game);
+//	init_battle(game);
 	battle = (t_sprite *)ft_calloc(1, sizeof(t_sprite));
 	if (!battle)
 	{
 		ft_printf("Error\nFailed to allocate memory for battle\n");
-		exit(0);
+		gameover(game);
 	}
 	battle->img = mlx_new_image(game->mlx, 630, 500);
 	if (!battle->img)
 	{
 		ft_printf("Error\nFailed to allocate memory for battle\n");
-		exit(0);
+		gameover(game);
 	}
 	battle->addr = mlx_get_data_addr(battle->img, &battle->bits_per_pixel,
 			&battle->line_length, &battle->endian);
 	game->battle.btl_img = battle;
+	free(battle);
 }
 
 int	game_loop_hook(void *param)

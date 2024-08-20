@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 19:41:27 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/08/19 19:17:57 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/08/20 19:18:30 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	add_enemy_to_list(t_game *game, int x, int y)
 	{
 		printf("Error creating enemy.\n");
 		free_enemys(game->eny);
-		exit(1);
+		gameover(game);
 	}
 	init_enemy(nw_enemy);
 	nw_enemy->eny_p.x = x;

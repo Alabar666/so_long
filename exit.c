@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 15:42:29 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/08/19 19:18:05 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/08/20 19:48:07 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,5 @@ void	put_exit(t_game *game)
 	}
 	frame_counter++;
 	if (frame_counter > 720)
-		frame_counter = 0;
+		frame_counter = 0;	
 }

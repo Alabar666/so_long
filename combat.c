@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 12:41:27 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/08/19 19:17:54 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/08/20 20:19:30 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ void	battle_keys(int key, t_game *game)
 	}
 	else if (key == KEY_A || key == LEFT)
 	{
+		if (game->battle.btl_img) 
+            destroy_sprite(&game->battle.btl_img, game->mlx);
 		if (game->battle.enemy_type == 'C')
 			game->battle.btl_img = create_sprite(game, CGBLATK);
 		else if (game->battle.enemy_type == 'M')
@@ -51,6 +53,8 @@ void	battle_keys(int key, t_game *game)
 	}
 	else if (key == KEY_D || key == RIGHT)
 	{
+		if (game->battle.btl_img)
+            destroy_sprite(&game->battle.btl_img, game->mlx);
 		if (game->battle.enemy_type == 'C')
 			game->battle.btl_img = create_sprite(game, CGBLRUN);
 		else if (game->battle.enemy_type == 'M')

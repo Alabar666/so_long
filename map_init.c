@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 19:14:40 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/08/19 19:14:45 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/08/20 19:50:47 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	map_start(char *file, t_game *game)
 {
-	init_map(game);
+	//init_map(game);
 	read_map(file, game);
 	game->map.width = game->map.colun * SZ;
 	game->map.height = game->map.lines * SZ;
@@ -24,7 +24,7 @@ void	map_start(char *file, t_game *game)
 	if (!game->mlx)
 	{
 		ft_printf("Error\nFailed to initialize mlx\n");
-		return ;
+		gameover(game);
 	}
 	map_checks(game);
 	game->win = mlx_new_window(game->mlx, game->map.width, game->map.height,
@@ -32,7 +32,7 @@ void	map_start(char *file, t_game *game)
 	if (!game->win)
 	{
 		ft_printf("Error\nFailed to create window\n");
-		return ;
+		gameover(game);
 	}
 }
 

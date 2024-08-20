@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 19:13:57 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/08/19 19:18:07 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/08/20 19:46:04 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +81,15 @@ void	free_exit_sprites(t_exit *exit)
 	while (++i < 4)
 	{
 		if (exit->exit_sprites[i])
+		{
 			free(exit->exit_sprites[i]);
+			exit->exit_sprites[i] = NULL;
+		}
 		if (exit->exit_ballom[i])
+		{
 			free(exit->exit_ballom[i]);
+			exit->exit_ballom[i] = NULL;
+		}
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 19:49:26 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/08/19 20:30:11 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/08/20 20:37:31 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,8 +119,11 @@ void	destroy_sprite(t_sprite **sprite, void *mlx)
 		if ((*sprite)->img)
 		{
 			mlx_destroy_image(mlx, (*sprite)->img);
+			(*sprite)->img = NULL;
 		}
 		free(*sprite);
 		*sprite = NULL;
 	}
 }
+
+

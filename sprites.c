@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 15:25:58 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/08/19 19:17:25 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/08/20 20:30:42 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ t_sprite	*create_sprite(t_game *game, char *sprite_path)
 	sprite = (t_sprite *)ft_calloc(1, sizeof(t_sprite));
 	if (!sprite)
 	{
-		return (NULL);
 		free(sprite_path);
 		gameover(game);
+		return (NULL);
 	}
 	sprite->img = mlx_xpm_file_to_image(game->mlx, sprite_path, &sprite->width,
 			&sprite->height);
@@ -73,18 +73,18 @@ char	*get_sprite_path(t_game *game, char c)
 	if (c == '1')
 	{
 		if (rand() % 2 == 0)
-			path = ft_strdup(WALL);
+			path = WALL;
 		else
-			path = ft_strdup(WALL2);
+			path = WALL2;
 	}
 	else if (c == '0' || c == 'C' || c == 'E' || c == 'P' || c == 'M')
 	{
 		if (rand() % 2 == 0)
-			path = ft_strdup(FLOOR);
+			path = FLOOR;
 		else if (rand() % 3 == 0)
-			path = ft_strdup(FLOOR2);
+			path = FLOOR2;
 		else
-			path = ft_strdup(FLOOR3);
+			path = FLOOR3;
 	}
 	if (!path)
 	{

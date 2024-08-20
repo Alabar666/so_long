@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 19:01:22 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/08/19 19:18:14 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/08/20 19:16:47 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	add_goblin_to_list(t_game *game, int x, int y)
 	{
 		ft_printf("Error creating goblin.\n");
 		free_goblins(game->gbl);
-		exit(1);
+		return;
 	}
 	init_goblin(nw_goblin);
 	nw_goblin->gbl_p.x = x;
