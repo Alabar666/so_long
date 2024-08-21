@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 20:10:30 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/08/20 20:09:14 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/08/21 20:55:31 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,8 @@ void	put_player(t_game *game, int sprite_index)
 	}
 	else
 		current_sprite = PDEAD;
-	if (game->p1.p1)
-		destroy_sprite(&game->p1.p1, game->mlx);
 	game->p1.p1 = create_sprite(game, current_sprite);
 	create_character(game->p1.p1, game, x, y);
+	if (game->p1.p1)
+		destroy_sprite(&game->p1.p1, game->mlx);
 }

@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 19:06:50 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/08/19 19:14:30 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/08/21 21:07:38 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,35 @@ void	map_checks(t_game *game)
 
 	map = game->map;
 	if (map.lines * map.colun < 4 * 4)
+	{
 		game_error(0, &game->map, MAP_ERROR);
+//free_mlx(game);
+	}
 	if (map.goblin == 0 || map.player == 0 || map.exit != 1)
+	{
 		game_error(0, &game->map, MAP_ERROR);
+		//free_mlx(game);
+			}
 	if (map_max_size_check(game, &game->map) == 0)
+		{
 		game_error(0, &game->map, MAP_ERROR);
+		//		free_mlx(game);
+		}
 	if ((int)ft_strlen(map.map_data) != map.colun * map.lines + map.lines)
+		{
 		game_error(0, &game->map, MAP_ERROR);
+			//	free_mlx(game);
+		}
 	if (check_wall(game->map) == 0)
+		{	
 		game_error(0, &game->map, MAP_ERROR);
+		//		free_mlx(game);
+		}
 	if (!check_map_winability(game))
+	{
 		game_error(0, &game->map, MAP_ERROR);
+	//			free_mlx(game);
+	}
 }
 
 int	check_file_ext(const char *file)
@@ -53,9 +71,15 @@ int	map_max_size_check(t_game *game, t_map *map)
 	if (map == NULL)
 		return (ft_printf("Error: Invalid map pointer.\n"), 0);
 	if (game->mlx == NULL)
-		return (ft_printf("Error: Invalid game->mlx pointer.\n"), 0);
+	{
+		ft_printf("Error: Invalid game->mlx pointer.\n");
+		gameover(game);
+	}
 	if (mlx_get_screen_size(game->mlx, &screen_width, &screen_height) != 0)
-		return (ft_printf("Error\nFailed to get screen size.\n"), 0);
+	{
+		ft_printf("Error\nFailed to get screen size.\n");
+		gameover(game);
+	}
 	if (map->width > screen_width || map->height > screen_height)
 		return (ft_printf("Error\nMap size exceeds screen dimensions.\n"), 0);
 	return (1);

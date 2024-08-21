@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 19:02:48 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/08/19 19:10:17 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/08/21 20:34:27 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ void	move_goblin(t_game *game, t_goblin *gbl, int dx, int dy)
 	gbl->is_moving = 1;
 	update_map_tiles(game, old_pos, new_pos, 'C');
 	check_for_overlap(game);
+	destroy_sprite(&game->gbl->gbl, game->mlx);
 }
 
 void	update_goblin_position(t_goblin *gbl)

@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 16:13:44 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/08/20 20:25:00 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/08/21 21:08:32 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,10 @@ int	main(int ac, char **av)
 {
 	t_game	game;
 
-	srand(time(NULL));
-	if (ac == 2)
+	if (ac == 2 && av[1])
 	{
+		srand(time(NULL));
 		init_game(&game);
-		init_list_goblin(&game);
 		map_start(av[1], &game);
 		start_world(&game);
 		battle_load(&game);
@@ -45,7 +44,6 @@ static void	start_world(t_game *game)
 {
 	t_sprite	*world;
 
-	//init_battle(game);
 	world = (t_sprite *)ft_calloc(1, sizeof(t_sprite));
 	if (!world)
 	{
@@ -70,7 +68,7 @@ void	battle_load(t_game *game)
 {
 	t_sprite	*battle;
 
-//	init_battle(game);
+	init_battle(game);
 	battle = (t_sprite *)ft_calloc(1, sizeof(t_sprite));
 	if (!battle)
 	{

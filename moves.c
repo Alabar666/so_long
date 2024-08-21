@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 19:20:13 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/08/19 19:15:07 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/08/21 21:46:04 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	handle_player_movement(int key, t_game *game)
 
 int	handle_battle_keys(int key, t_game *game)
 {
-	if (key == ENTER)
+	if (key == ENTER || key == SPACE)
 	{
 		if (game->run_selected)
 		{

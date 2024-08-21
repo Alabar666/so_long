@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 12:41:27 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/08/19 19:17:50 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/08/21 21:13:08 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 void	init_battle(t_game *game)
 {
 	game->battle.btl_img = NULL;
-	game->battle.gatk_path = ft_strdup(CGBLATK);
-	game->battle.grun_path = ft_strdup(CGBLRUN);
-	game->battle.eatk_path = ft_strdup(CENYATK);
-	game->battle.erun_path = ft_strdup(CENYRUN);
+	game->battle.gatk_path = (CGBLATK);
+	game->battle.grun_path = (CGBLRUN);
+	game->battle.eatk_path = (CENYATK);
+	game->battle.erun_path = (CENYRUN);
 	game->battle.is_running = 0;
 	game->message_display_duration = 0;
 	game->battle.enemy_type = '\0';
@@ -70,18 +70,25 @@ void	resize_combat(t_game *game, t_sprite *resized_combat)
 void	close_battle(t_game *game)
 {
 	destroy_sprite(&game->battle.btl_img, game->mlx);
-	if (game->battle.gatk_path)
-		free(game->battle.gatk_path);
-	if (game->battle.grun_path)
-		free(game->battle.grun_path);
-	if (game->battle.eatk_path)
-		free(game->battle.eatk_path);
-	if (game->battle.erun_path)
-		free(game->battle.erun_path);
+//	if (game->battle.gatk_path)
+//		free(game->battle.gatk_path);
+//	if (game->battle.grun_path)
+//		free(game->battle.grun_path);
+//	if (game->battle.eatk_path)
+//		free(game->battle.eatk_path);
+//	if (game->battle.erun_path)
+//		free(game->battle.erun_path);
 	game->battle.gatk_path = NULL;
 	game->battle.grun_path = NULL;
 	game->battle.eatk_path = NULL;
 	game->battle.erun_path = NULL;
 	game->battle.is_running = 0;
 	game->is_paused = 0;
+	if (game->battle.btl_img)
+    {
+        mlx_destroy_image(game->mlx, game->battle.btl_img);
+        free(game->battle.btl_img);
+        game->battle.btl_img = NULL;
+    }
 }
+

@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 16:31:08 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/08/20 19:51:24 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/08/21 20:57:21 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,10 @@ void	init_game(t_game *game)
 		return ;
 	game->mlx = NULL;
 	game->win = NULL;
-	init_map(game);
 	game->world = NULL;
 	game->end_img = NULL;
 	game->gbl = NULL;
 	game->eny = NULL;
-	init_exit(game);
-	init_battle(game);
 	game->lst_gbl_upt = time(NULL);
 	game->lst_eny_upt = time(NULL);
 	game->lst_exit_upt = time(NULL);

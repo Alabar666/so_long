@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 19:43:53 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/08/19 20:18:38 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/08/21 21:17:35 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,11 @@ void	put_moves(t_game *game)
 	balloon_y = game->p1.p1_p.y - 40;
 	text_x = balloon_x + 16;
 	text_y = balloon_y + 19;
-	if (game->p1.bl != NULL)
-	{
-		destroy_sprite(&game->p1.bl, game->mlx);  // Certifique-se de que destroy_sprite está corretamente implementada
-		game->p1.bl = NULL;
-	}
 	if (game->p1.moves != 0)
 	{
 		game->p1.bl = create_sprite(game, game->p1.pl_ballom);
 		create_character(game->p1.bl, game, balloon_x, balloon_y);
+		destroy_sprite(&game->p1.bl, game->mlx);
 	}
 	mlx_string_put(game->mlx, game->win, text_x, text_y, 0xFFFF00, move_str);
 	free(move_str);
@@ -80,6 +76,7 @@ void	handle_enemies_and_victory(t_game *game, int dx, int dy)
 	{
 		start_battle(game, enemy_type);
 		game->p1.p1 = create_sprite(game, PDEAD);
+		destroy_sprite(&game->p1.p1, game->mlx);
 		game->p1.alive = 0;
 		game->map.map[dy / SZ][dx / SZ].type = '0';
 		if (!game->wait_input && !game->p1.alive)

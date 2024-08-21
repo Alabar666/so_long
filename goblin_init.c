@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 19:01:22 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/08/20 19:16:47 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/08/21 20:23:44 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,19 +70,19 @@ void	init_goblin(t_goblin *goblin)
 
 void	init_goblin_sprites(t_goblin *goblin)
 {
-	goblin->dead = ft_strdup(BLOOD);
-	goblin->front_sprites[0] = ft_strdup(GOBLIN_FRONT_STAND);
-	goblin->front_sprites[1] = ft_strdup(GOBLIN_FRONT_MV1);
-	goblin->front_sprites[2] = ft_strdup(GOBLIN_FRONT_MV2);
-	goblin->back_sprites[0] = ft_strdup(GOBLIN_BACK_MV1);
-	goblin->back_sprites[1] = ft_strdup(GOBLIN_BACK_MV2);
-	goblin->back_sprites[2] = ft_strdup(GOBLIN_BACK_MV3);
-	goblin->left_sprites[0] = ft_strdup(GOBLIN_LEFT_MV1);
-	goblin->left_sprites[1] = ft_strdup(GOBLIN_LEFT_MV2);
-	goblin->left_sprites[2] = ft_strdup(GOBLIN_LEFT_MV3);
-	goblin->right_sprites[0] = ft_strdup(GOBLIN_RIGHT_MV1);
-	goblin->right_sprites[1] = ft_strdup(GOBLIN_RIGHT_MV2);
-	goblin->right_sprites[2] = ft_strdup(GOBLIN_RIGHT_MV3);
+	goblin->dead = (BLOOD);
+	goblin->front_sprites[0] = (GOBLIN_FRONT_STAND);
+	goblin->front_sprites[1] = (GOBLIN_FRONT_MV1);
+	goblin->front_sprites[2] = (GOBLIN_FRONT_MV2);
+	goblin->back_sprites[0] = (GOBLIN_BACK_MV1);
+	goblin->back_sprites[1] = (GOBLIN_BACK_MV2);
+	goblin->back_sprites[2] = (GOBLIN_BACK_MV3);
+	goblin->left_sprites[0] = (GOBLIN_LEFT_MV1);
+	goblin->left_sprites[1] = (GOBLIN_LEFT_MV2);
+	goblin->left_sprites[2] = (GOBLIN_LEFT_MV3);
+	goblin->right_sprites[0] = (GOBLIN_RIGHT_MV1);
+	goblin->right_sprites[1] = (GOBLIN_RIGHT_MV2);
+	goblin->right_sprites[2] = (GOBLIN_RIGHT_MV3);
 }
 
 void	init_rand_dir_goblin(t_goblin *goblin, int random_dir)

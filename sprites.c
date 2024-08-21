@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 15:25:58 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/08/20 20:30:42 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/08/21 20:48:58 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 t_sprite	*create_sprite(t_game *game, char *sprite_path)
 {
 	t_sprite	*sprite;
-
+	
 	sprite = (t_sprite *)ft_calloc(1, sizeof(t_sprite));
 	if (!sprite)
 	{

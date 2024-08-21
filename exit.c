@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 15:42:29 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/08/20 19:48:07 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/08/21 20:54:59 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,17 +40,17 @@ void	put_exit(t_game *game)
 		current_ballom = game->ext.exit_ballom[(frame_counter / 180) % 4];
 	else
 		current_ballom = NULL;
-	if (game->ext.ex1)
-		destroy_sprite(&game->ext.ex1, game->mlx);
-	if (game->ext.bl)
-		destroy_sprite(&game->ext.bl, game->mlx);
 	game->ext.ex1 = create_sprite(game, current_exit);
 	create_character(game->ext.ex1, game, game->ext.ex_p.x, game->ext.ex_p.y);
+	if (game->ext.ex1)
+		destroy_sprite(&game->ext.ex1, game->mlx);
 	if (current_ballom)
 	{
 		game->ext.bl = create_sprite(game, current_ballom);
 		create_character(game->ext.bl, game, game->ext.ex_p.x, game->ext.ex_p.y
 			- 40);
+		if (game->ext.bl)
+			destroy_sprite(&game->ext.bl, game->mlx);		
 	}
 	frame_counter++;
 	if (frame_counter > 720)

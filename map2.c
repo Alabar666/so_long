@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 19:14:56 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/08/19 19:15:01 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/08/21 20:31:25 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ void	check_type(t_game *game, char type, int x, int y)
 		}
 		else if (type == 'E')
 		{
+			init_exit(game);
 			game->map.exit++;
 			game->ext.ex_p.x = x * SZ;
 			game->ext.ex_p.y = y * SZ;

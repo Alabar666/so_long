@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 19:13:57 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/08/20 19:46:04 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/08/21 20:24:08 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ void	free_all_goblins(t_goblin *goblin_list)
 	while (current)
 	{
 		next = current->next;
-		free_goblin_sprites(current);
+		//free_goblin_sprites(current);
 		free(current);
 		current = next;
 	}

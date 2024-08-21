@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 16:13:48 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/08/19 19:37:28 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/08/21 21:45:52 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@
 # define KEY_D 100
 # define ESC 65307
 # define ENTER 65293
+# define SPACE 32
 
 # define STAND 0
 # define DIR_LEFT 1
@@ -459,5 +460,6 @@ void				free_all_goblins(t_goblin *goblin_list);
 void				free_all_enemies(t_enemy *enemy_list);
 void				free_map(t_map *map);
 void				free_tile_map(t_tile **tile_map, int lines);
+void free_mlx(t_game *game);
 
 #endif
