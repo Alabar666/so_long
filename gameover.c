@@ -6,32 +6,23 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 19:49:26 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/08/21 21:04:27 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/08/22 21:59:33 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	game_error(int fd, t_map *map, char *error)
+void	game_error(int fd, t_game *game)
 {
 	if (fd)
 		close(fd);
-	if (map)
-		free_map(map);
-	if (error)
-		printf("%s", error);
-	else
-		printf("Unknown error occurred.\n");
-	exit(0);
+	gameover(game);
 }
 
 int	gameover(t_game *game)
 {
 	if (game == NULL)
 		return (-1);
-
-	free_player_sprites(&game->p1);
-	free_exit_sprites(&game->ext);
 	free_map(&game->map);
 	if (game->gbl)
 	{
@@ -53,38 +44,24 @@ int	gameover(t_game *game)
 		free(game->world);
 		game->world = NULL;
 	}
-		if (game->mlx)
-	{
-		mlx_destroy_display(game->mlx);
-		free(game->mlx);
-		game->mlx = NULL;
-	}	
+	free_mlx(game);
+	exit(0);
+}
+void free_mlx(t_game *game)
+{
 	if (game->win)
 	{
 		mlx_clear_window(game->mlx, game->win);
 		mlx_destroy_window(game->mlx, game->win);
 		game->win = NULL;
 	}
-	exit(0);
-	return (0);
-}
-void free_mlx(t_game *game)
-{
 	if (game->mlx)
 	{
 		mlx_destroy_display(game->mlx);
 		free(game->mlx);
 		game->mlx = NULL;
-	}	
-	if (game->win)
-	{
-		mlx_clear_window(game->mlx, game->win);
-		mlx_destroy_window(game->mlx, game->win);
-		game->win = NULL;
 	}
-
 }
-
 
 void	free_map(t_map *map)
 {

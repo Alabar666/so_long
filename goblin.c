@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 19:41:27 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/08/21 20:52:39 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/08/22 22:02:12 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,14 +54,6 @@ void	free_goblins(t_goblin *head)
 	while (current != NULL)
 	{
 		next = current->next;
-		while (i < 3)
-		{
-			free(current->front_sprites[i]);
-			free(current->back_sprites[i]);
-			free(current->left_sprites[i]);
-			free(current->right_sprites[i]);
-			i++;
-		}
 		free(current->gbl);
 		free(current);
 		current = next;
@@ -93,7 +85,6 @@ void	put_goblin(t_game *game, t_goblin *goblin, int sprite_index)
 	}
 	else
 		current_sprite = goblin->dead;
-
 	goblin->gbl = create_sprite(game, current_sprite);
 	create_character(goblin->gbl, game, x, y);
 		if (goblin->gbl)

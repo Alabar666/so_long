@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 12:41:27 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/08/20 20:19:30 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/08/22 20:17:51 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,8 @@ void	start_battle(t_game *game, char enemy_type)
 		game->battle.btl_img = create_sprite(game, CENYATK);
 }
 
-int	battle_loop_hook(void *param)
+int	battle_loop_hook(t_game *game)
 {
-	t_game	*game;
-
-	game = (t_game *)param;
 	if (game->battle.is_running)
 		create_battle_screen(game);
 	return (0);

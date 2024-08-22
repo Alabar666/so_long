@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 19:41:27 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/08/20 19:18:30 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/08/22 20:52:34 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,19 +65,19 @@ void	init_enemy(t_enemy *enemy)
 
 void	init_enemy_sprites(t_enemy *enemy)
 {
-	enemy->dead = ft_strdup(BLOOD);
-	enemy->front_sprites[0] = ft_strdup(ENEMY_FRONT_STAND);
-	enemy->front_sprites[1] = ft_strdup(ENEMY_FRONT_MV1);
-	enemy->front_sprites[2] = ft_strdup(ENEMY_FRONT_MV2);
-	enemy->back_sprites[0] = ft_strdup(ENEMY_BACK_MV1);
-	enemy->back_sprites[1] = ft_strdup(ENEMY_BACK_MV2);
-	enemy->back_sprites[2] = ft_strdup(ENEMY_BACK_MV3);
-	enemy->left_sprites[0] = ft_strdup(ENEMY_LEFT_MV1);
-	enemy->left_sprites[1] = ft_strdup(ENEMY_LEFT_MV2);
-	enemy->left_sprites[2] = ft_strdup(ENEMY_LEFT_MV3);
-	enemy->right_sprites[0] = ft_strdup(ENEMY_RIGHT_MV1);
-	enemy->right_sprites[1] = ft_strdup(ENEMY_RIGHT_MV2);
-	enemy->right_sprites[2] = ft_strdup(ENEMY_RIGHT_MV3);
+	enemy->dead = (BLOOD);
+	enemy->front_sprites[0] = (ENEMY_FRONT_STAND);
+	enemy->front_sprites[1] = (ENEMY_FRONT_MV1);
+	enemy->front_sprites[2] = (ENEMY_FRONT_MV2);
+	enemy->back_sprites[0] = (ENEMY_BACK_MV1);
+	enemy->back_sprites[1] = (ENEMY_BACK_MV2);
+	enemy->back_sprites[2] = (ENEMY_BACK_MV3);
+	enemy->left_sprites[0] = (ENEMY_LEFT_MV1);
+	enemy->left_sprites[1] = (ENEMY_LEFT_MV2);
+	enemy->left_sprites[2] = (ENEMY_LEFT_MV3);
+	enemy->right_sprites[0] = (ENEMY_RIGHT_MV1);
+	enemy->right_sprites[1] = (ENEMY_RIGHT_MV2);
+	enemy->right_sprites[2] = (ENEMY_RIGHT_MV3);
 }
 
 void	init_rand_dir_enemy(t_enemy *enemy, int random_dir)

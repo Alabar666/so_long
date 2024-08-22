@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 19:14:56 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/08/21 20:31:25 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/08/22 22:04:10 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	fill_map(t_game *game)
 	mapd = game->map.map_data;
 	y = 0;
 	i = 0;
-	while (mapd[i])
+	while (mapd[i] && mapd[i] != '\n')
 	{
 		x = 0;
 		while (mapd[i] && mapd[i] != '\n')
@@ -51,8 +51,6 @@ void	fill_map(t_game *game)
 
 void	check_type(t_game *game, char type, int x, int y)
 {
-	if (type)
-	{
 		if (type == 'P')
 		{
 			game->map.player++;
@@ -76,7 +74,6 @@ void	check_type(t_game *game, char type, int x, int y)
 			game->map.enemy++;
 			add_enemy_to_list(game, x * SZ, y * SZ);
 		}
-	}
 }
 
 char	*ft_strcat(char *dest, const char *src)

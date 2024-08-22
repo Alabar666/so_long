@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 19:06:50 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/08/21 21:07:38 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/08/22 22:02:47 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,35 +18,17 @@ void	map_checks(t_game *game)
 
 	map = game->map;
 	if (map.lines * map.colun < 4 * 4)
-	{
-		game_error(0, &game->map, MAP_ERROR);
-//free_mlx(game);
-	}
+		game_error(0, game);
 	if (map.goblin == 0 || map.player == 0 || map.exit != 1)
-	{
-		game_error(0, &game->map, MAP_ERROR);
-		//free_mlx(game);
-			}
+		game_error(0, game);
 	if (map_max_size_check(game, &game->map) == 0)
-		{
-		game_error(0, &game->map, MAP_ERROR);
-		//		free_mlx(game);
-		}
+		game_error(0, game);
 	if ((int)ft_strlen(map.map_data) != map.colun * map.lines + map.lines)
-		{
-		game_error(0, &game->map, MAP_ERROR);
-			//	free_mlx(game);
-		}
+		game_error(0, game);
 	if (check_wall(game->map) == 0)
-		{	
-		game_error(0, &game->map, MAP_ERROR);
-		//		free_mlx(game);
-		}
+		game_error(0, game);
 	if (!check_map_winability(game))
-	{
-		game_error(0, &game->map, MAP_ERROR);
-	//			free_mlx(game);
-	}
+		game_error(0, game);
 }
 
 int	check_file_ext(const char *file)

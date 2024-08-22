@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 21:07:19 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/08/19 19:14:50 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/08/22 21:54:36 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,13 @@ void	read_map(char *file, t_game *game)
 	fd = open_map_file(file);
 	game->map.lines = count_lines(file);
 	map = get_next_line(fd);
+	if(!map)
+		game_error(fd, game);		
 	game->map.colun = ft_strlen(map) - 1;
 	mapfile = ft_calloc(sizeof(char), 10000);
 	if (!mapfile)
 	{
-		game_error(fd, &game->map, MAP_ERROR);
+		game_error(fd, game);
 	}
 	mapfile[0] = '\0';
 	while (map)
@@ -58,20 +60,20 @@ int	open_map_file(const char *file)
 	return (fd);
 }
 
-void	map_malloc(t_map *map)
+void	map_malloc(t_game *game)
 {
 	int	i;
 
 	i = 0;
-	map->map = (t_tile **)ft_calloc(map->lines + 1, sizeof(t_tile *) * SZ);
-	if (!map->map)
-		game_error(0, map, MAP_ERROR);
-	while (i < map->lines)
+	game->map.map = (t_tile **)ft_calloc(game->map.lines + 1, sizeof(t_tile *) * SZ);
+	if (!game->map.map)
+		game_error(0, game);
+	while (i < game->map.lines)
 	{
-		map->map[i] = (t_tile *)ft_calloc(map->colun + 1, sizeof(t_tile *)
+		game->map.map[i] = (t_tile *)ft_calloc(game->map.colun + 1, sizeof(t_tile *)
 				* SZ);
-		if (!map->map[i++])
-			game_error(0, map, MAP_ERROR);
+		if (!game->map.map[i++])
+			game_error(0, game);
 	}
 }
 

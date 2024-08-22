@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 15:42:29 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/08/21 20:54:59 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/08/22 20:51:29 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,14 @@ void	init_exit(t_game *game)
 	game->ext.ex1 = NULL;
 	game->ext.bl = NULL;
 	game->ext.current_sprite = 0;
-	game->ext.exit_sprites[0] = ft_strdup(EXIT_FRONT);
-	game->ext.exit_sprites[1] = ft_strdup(EXIT_BACK);
-	game->ext.exit_sprites[2] = ft_strdup(EXIT_LEFT);
-	game->ext.exit_sprites[3] = ft_strdup(EXIT_RIGHT);
-	game->ext.exit_ballom[0] = ft_strdup(EXIT_BHELP);
-	game->ext.exit_ballom[1] = ft_strdup(EXIT_BCRY);
-	game->ext.exit_ballom[2] = ft_strdup(EXIT_BFEAR);
-	game->ext.exit_ballom[3] = ft_strdup(EXIT_BSAD);
+	game->ext.exit_sprites[0] = (EXIT_FRONT);
+	game->ext.exit_sprites[1] = (EXIT_BACK);
+	game->ext.exit_sprites[2] = (EXIT_LEFT);
+	game->ext.exit_sprites[3] = (EXIT_RIGHT);
+	game->ext.exit_ballom[0] = (EXIT_BHELP);
+	game->ext.exit_ballom[1] = (EXIT_BCRY);
+	game->ext.exit_ballom[2] = (EXIT_BFEAR);
+	game->ext.exit_ballom[3] = (EXIT_BSAD);
 }
 
 void	put_exit(t_game *game)

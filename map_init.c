@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 19:14:40 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/08/21 20:05:58 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/08/22 20:24:42 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	map_start(char *file, t_game *game)
 	read_map(file, game);
 	game->map.width = game->map.colun * SZ;
 	game->map.height = game->map.lines * SZ;
-	map_malloc(&game->map);
+	map_malloc(game);
 	fill_map(game);
 	game->mlx = mlx_init();
 	if (!game->mlx)

@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 20:10:30 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/08/21 20:55:31 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/08/22 20:53:03 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,19 +38,19 @@ void	init_player(t_game *game)
 
 void	init_player_sprites(t_game *game)
 {
-	game->p1.front_sprites[0] = ft_strdup(PLAYER_FRONT_STAND);
-	game->p1.front_sprites[1] = ft_strdup(PLAYER_FRONT_MV1);
-	game->p1.front_sprites[2] = ft_strdup(PLAYER_FRONT_MV2);
-	game->p1.back_sprites[0] = ft_strdup(PLAYER_BACK_MV1);
-	game->p1.back_sprites[1] = ft_strdup(PLAYER_BACK_MV2);
-	game->p1.back_sprites[2] = ft_strdup(PLAYER_BACK_MV3);
-	game->p1.left_sprites[0] = ft_strdup(PLAYER_LEFT_MV1);
-	game->p1.left_sprites[1] = ft_strdup(PLAYER_LEFT_MV2);
-	game->p1.left_sprites[2] = ft_strdup(PLAYER_LEFT_MV3);
-	game->p1.right_sprites[0] = ft_strdup(PLAYER_RIGHT_MV1);
-	game->p1.right_sprites[1] = ft_strdup(PLAYER_RIGHT_MV2);
-	game->p1.right_sprites[2] = ft_strdup(PLAYER_RIGHT_MV3);
-	game->p1.pl_ballom = ft_strdup(PLAYER_BALLOM);
+	game->p1.front_sprites[0] = (PLAYER_FRONT_STAND);
+	game->p1.front_sprites[1] = (PLAYER_FRONT_MV1);
+	game->p1.front_sprites[2] = (PLAYER_FRONT_MV2);
+	game->p1.back_sprites[0] = (PLAYER_BACK_MV1);
+	game->p1.back_sprites[1] = (PLAYER_BACK_MV2);
+	game->p1.back_sprites[2] = (PLAYER_BACK_MV3);
+	game->p1.left_sprites[0] = (PLAYER_LEFT_MV1);
+	game->p1.left_sprites[1] = (PLAYER_LEFT_MV2);
+	game->p1.left_sprites[2] = (PLAYER_LEFT_MV3);
+	game->p1.right_sprites[0] = (PLAYER_RIGHT_MV1);
+	game->p1.right_sprites[1] = (PLAYER_RIGHT_MV2);
+	game->p1.right_sprites[2] = (PLAYER_RIGHT_MV3);
+	game->p1.pl_ballom = (PLAYER_BALLOM);
 }
 
 void	put_player(t_game *game, int sprite_index)

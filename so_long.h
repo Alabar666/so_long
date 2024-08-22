@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 16:13:48 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/08/21 21:45:52 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/08/22 22:01:37 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -309,7 +309,7 @@ typedef struct s_game
 // MAP
 void				create_map(t_game *game);
 void				map_start(char *file, t_game *game);
-void				map_malloc(t_map *map);
+void	map_malloc(t_game *game);
 void				fill_map(t_game *game);
 void				draw_map(t_game *game);
 void				init_map(t_game *game);
@@ -320,7 +320,6 @@ void				create_world(t_sprite *sprite, t_game *game, int posx,
 						int posy);
 char				*ft_strcat(char *dest, const char *src);
 t_tile				new_type(char type, int x, int y);
-void				game_error(int fd, t_map *map, char *error);
 void				put_map(t_game *game);
 void				put_tile(t_game *game, int x, int y);
 void				render_game(t_game *game);
@@ -349,7 +348,6 @@ char				*get_sprite_path(t_game *game, char c);
 void				put_pixel(t_sprite *sprite, int x, int y, int color);
 t_sprite			*create_sprite(t_game *game, char *sprite_path);
 unsigned int		get_color_in_pixel(t_sprite *sprite, int x, int y);
-int					update_frame(void *param);
 void				put_player(t_game *game, int sprite_index);
 void				create_character(t_sprite *sprite, t_game *game, int posx,
 						int posy);
@@ -365,6 +363,7 @@ void				render_player_and_extras(t_game *game);
 void				move_randomly(t_game *game);
 void				update_positions(t_game *game);
 void				update_game_elements(t_game *game, clock_t *last_time);
+int	update_frame(t_game *game);
 
 // player
 void				init_player_sprites(t_game *game);
@@ -406,7 +405,7 @@ int					move_enemys_check(t_game *game, t_enemy *gbl, int dx,
 						int dy);
 
 // utils
-int					game_loop_hook(void *param);
+int					game_loop_hook(t_game *game);
 void				init_game(t_game *game);
 void				create_end_screen(t_game *game);
 void				end_game(t_game *game);
@@ -445,21 +444,18 @@ void				start_battle(t_game *game, char enemy_type);
 void				create_battle(t_sprite *sprite, t_game *game);
 void				create_battle_screen(t_game *game);
 void				battle_keys(int key, t_game *game);
-int					battle_loop_hook(void *param);
+int					battle_loop_hook(t_game	*game);
 void				close_battle(t_game *game);
 void				battle_load(t_game *game);
 void				destroy_sprite(t_sprite **sprite, void *mlx);
 
 // free exit
 int					gameover(t_game *game);
-void				free_goblin_sprites(t_goblin *goblin);
-void				free_enemy_sprites(t_enemy *enemy);
-void				free_player_sprites(t_player *player);
-void				free_exit_sprites(t_exit *exit);
 void				free_all_goblins(t_goblin *goblin_list);
 void				free_all_enemies(t_enemy *enemy_list);
 void				free_map(t_map *map);
 void				free_tile_map(t_tile **tile_map, int lines);
 void free_mlx(t_game *game);
+void	game_error(int fd, t_game *game);
 
 #endif

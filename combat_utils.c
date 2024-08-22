@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 12:41:27 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/08/21 21:13:08 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/08/22 20:11:03 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,15 +69,8 @@ void	resize_combat(t_game *game, t_sprite *resized_combat)
 
 void	close_battle(t_game *game)
 {
-	destroy_sprite(&game->battle.btl_img, game->mlx);
-//	if (game->battle.gatk_path)
-//		free(game->battle.gatk_path);
-//	if (game->battle.grun_path)
-//		free(game->battle.grun_path);
-//	if (game->battle.eatk_path)
-//		free(game->battle.eatk_path);
-//	if (game->battle.erun_path)
-//		free(game->battle.erun_path);
+	if(game->battle.btl_img)
+		destroy_sprite(&game->battle.btl_img, game->mlx);
 	game->battle.gatk_path = NULL;
 	game->battle.grun_path = NULL;
 	game->battle.eatk_path = NULL;

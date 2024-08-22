@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 19:17:37 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/08/19 19:17:40 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/08/22 22:05:45 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,9 @@ void	animate_end_screen(t_game *game)
 		game->end_img = create_sprite(game, images[frame]);
 		resize_end(game, game->end_img, images[frame]);
 		render_end_screen(game);
-		usleep(200000);
+		if (game->end_img)
+		destroy_sprite(&game->end_img, game->mlx);
+		usleep(150000);
 		frame++;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 16:13:44 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/08/21 21:08:32 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/08/22 20:18:14 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,14 +84,12 @@ void	battle_load(t_game *game)
 	battle->addr = mlx_get_data_addr(battle->img, &battle->bits_per_pixel,
 			&battle->line_length, &battle->endian);
 	game->battle.btl_img = battle;
+	mlx_destroy_image(game->mlx, battle->img);
 	free(battle);
 }
 
-int	game_loop_hook(void *param)
+int	game_loop_hook(t_game	*game)
 {
-	t_game	*game;
-
-	game = (t_game *)param;
 	if (!game->is_paused)
 		update_frame(game);
 	if (game->battle.is_running)

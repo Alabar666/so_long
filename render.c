@@ -6,20 +6,18 @@
 /*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 19:59:35 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/08/19 19:23:19 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/08/22 20:16:18 by hluiz-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-int	update_frame(void *param)
+int	update_frame(t_game *game)
 {
-	t_game			*game;
 	static clock_t	last_time = 0;
 	clock_t			current_time;
 	float			delta_time;
 
-	game = (t_game *)param;
 	current_time = clock();
 	delta_time = (float)(current_time - last_time) / CLOCKS_PER_SEC;
 	if (delta_time >= 1.0f / 60.0f && !game->is_paused)
