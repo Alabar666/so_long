@@ -100,7 +100,7 @@ int	map_caracter(t_game *game)
 		current_char = game->map.map_data[i];
 		if (current_char != '1' && current_char != '0' && current_char != 'P'
 			&& current_char != 'C' && current_char != 'E'
-			&& current_char != '\n')
+			&& current_char != 'M' && current_char != '\n')
 		{
 			return (0);
 		}
