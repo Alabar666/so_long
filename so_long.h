@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: hugodev <hugodev@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 16:13:48 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/08/22 22:01:37 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/08/24 11:27:16 by hugodev          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -309,7 +309,7 @@ typedef struct s_game
 // MAP
 void				create_map(t_game *game);
 void				map_start(char *file, t_game *game);
-void	map_malloc(t_game *game);
+void				map_malloc(t_game *game);
 void				fill_map(t_game *game);
 void				draw_map(t_game *game);
 void				init_map(t_game *game);
@@ -363,7 +363,7 @@ void				render_player_and_extras(t_game *game);
 void				move_randomly(t_game *game);
 void				update_positions(t_game *game);
 void				update_game_elements(t_game *game, clock_t *last_time);
-int	update_frame(t_game *game);
+int					update_frame(t_game *game);
 
 // player
 void				init_player_sprites(t_game *game);
@@ -444,7 +444,7 @@ void				start_battle(t_game *game, char enemy_type);
 void				create_battle(t_sprite *sprite, t_game *game);
 void				create_battle_screen(t_game *game);
 void				battle_keys(int key, t_game *game);
-int					battle_loop_hook(t_game	*game);
+int					battle_loop_hook(t_game *game);
 void				close_battle(t_game *game);
 void				battle_load(t_game *game);
 void				destroy_sprite(t_sprite **sprite, void *mlx);
@@ -454,8 +454,8 @@ int					gameover(t_game *game);
 void				free_all_goblins(t_goblin *goblin_list);
 void				free_all_enemies(t_enemy *enemy_list);
 void				free_map(t_map *map);
-void				free_tile_map(t_tile **tile_map, int lines);
-void free_mlx(t_game *game);
-void	game_error(int fd, t_game *game);
+void				free_tile_map(t_tile **tile_map, int lines, int colun);
+void				free_mlx(t_game *game);
+void				game_error(int fd, t_game *game);
 
 #endif

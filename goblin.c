@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   goblin.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: hugodev <hugodev@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 19:41:27 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/08/22 22:02:12 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/08/24 11:40:29 by hugodev          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,8 @@ void	free_goblins(t_goblin *head)
 {
 	t_goblin	*current;
 	t_goblin	*next;
-	int			i;
 
 	current = head;
-	i = 0;
 	while (current != NULL)
 	{
 		next = current->next;
@@ -63,11 +61,9 @@ void	free_goblins(t_goblin *head)
 void	put_goblin(t_game *game, t_goblin *goblin, int sprite_index)
 {
 	char	*current_sprite;
-	int		x;
-	int		y;
+	t_pos	pos;
 
-	x = goblin->gbl_p.x;
-	y = goblin->gbl_p.y;
+	pos = goblin->gbl_p;
 	if (goblin->is_alive)
 	{
 		if (sprite_index < 0 || sprite_index >= 3)
@@ -86,7 +82,7 @@ void	put_goblin(t_game *game, t_goblin *goblin, int sprite_index)
 	else
 		current_sprite = goblin->dead;
 	goblin->gbl = create_sprite(game, current_sprite);
-	create_character(goblin->gbl, game, x, y);
-		if (goblin->gbl)
-		destroy_sprite(&goblin->gbl, game->mlx);	
+	create_character(goblin->gbl, game, pos.x, pos.y);
+	if (goblin->gbl)
+		destroy_sprite(&goblin->gbl, game->mlx);
 }

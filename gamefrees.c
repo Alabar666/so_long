@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "so_long.h"
 
 void	free_all_goblins(t_goblin *goblin_list)
@@ -29,8 +28,8 @@ void	free_all_goblins(t_goblin *goblin_list)
 
 void	free_all_enemies(t_enemy *enemy_list)
 {
-	t_enemy *current;
-	t_enemy *next;
+	t_enemy	*current;
+	t_enemy	*next;
 
 	current = enemy_list;
 	while (current)

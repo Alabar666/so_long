@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   moves2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: hugodev <hugodev@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 19:43:53 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/08/21 21:17:35 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/08/24 11:37:17 by hugodev          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,29 +93,27 @@ void	handle_enemies_and_victory(t_game *game, int dx, int dy)
 
 void	check_for_overlap(t_game *game)
 {
-	int player_x;
-	int player_y;
-	t_goblin *cur_gbl;
-	t_enemy *cur_eny;
+	t_pos		p1_pos;
+	t_goblin	*cur_gbl;
+	t_enemy		*cur_eny;
 
-	player_x = game->p1.p1_p.x;
-	player_y = game->p1.p1_p.y;
+	p1_pos = game->p1.p1_p;
 	cur_gbl = game->gbl;
-	cur_eny = game->eny;
 	while (cur_gbl != NULL)
 	{
-		if (cur_gbl->gbl_p.x == player_x && cur_gbl->gbl_p.y == player_y)
+		if (cur_gbl->gbl_p.x == p1_pos.x && cur_gbl->gbl_p.y == p1_pos.y)
 		{
-			handle_goblins(game, player_x, player_y);
+			handle_goblins(game, p1_pos.x, p1_pos.y);
 			break ;
 		}
 		cur_gbl = cur_gbl->next;
 	}
+	cur_eny = game->eny;
 	while (cur_eny != NULL)
 	{
-		if (cur_eny->eny_p.x == player_x && cur_eny->eny_p.y == player_y)
+		if (cur_eny->eny_p.x == p1_pos.x && cur_eny->eny_p.y == p1_pos.y)
 		{
-			handle_enemies_and_victory(game, player_x, player_y);
+			handle_enemies_and_victory(game, p1_pos.x, p1_pos.y);
 			break ;
 		}
 		cur_eny = cur_eny->next;

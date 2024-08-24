@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   gameover.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: hugodev <hugodev@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 19:49:26 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/08/22 21:59:33 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/08/24 11:38:02 by hugodev          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ int	gameover(t_game *game)
 	free_mlx(game);
 	exit(0);
 }
-void free_mlx(t_game *game)
+
+void	free_mlx(t_game *game)
 {
 	if (game->win)
 	{
@@ -65,9 +66,6 @@ void free_mlx(t_game *game)
 
 void	free_map(t_map *map)
 {
-	int	i;
-	int j;
-
 	if (!map)
 	{
 		ft_printf("Warning: Attempting to free a NULL map.\n");
@@ -80,29 +78,7 @@ void	free_map(t_map *map)
 	}
 	if (map->map)
 	{
-		i = -1;
-		while (++i < map->lines)
-		{
-			if (map->map[i])
-			{
-				j = -1;
-				while (++j < map->colun) 
-				{
-					if (map->map[i][j].sprt_path)
-					{
-						free(map->map[i][j].sprt_path);
-						map->map[i][j].sprt_path = NULL;
-					}
-				}
-				free(map->map[i]);
-				map->map[i] = NULL;
-			}
-			else
-			{
-				ft_printf("Warning: Attempting to free a NULL row.\n");
-			}
-		}
-		free(map->map);
+		free_tile_map(map->map, map->lines, map->colun);
 		map->map = NULL;
 	}
 }
@@ -120,5 +96,3 @@ void	destroy_sprite(t_sprite **sprite, void *mlx)
 		*sprite = NULL;
 	}
 }
-
-

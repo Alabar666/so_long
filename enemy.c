@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   enemy.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: hugodev <hugodev@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 19:41:27 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/08/22 21:58:13 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/08/24 11:42:15 by hugodev          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,9 @@ void	free_enemys(t_enemy *head)
 void	put_enemy(t_game *game, t_enemy *enemy, int sprite_index)
 {
 	char	*current_sprite;
-	int		x;
-	int		y;
+	t_pos	pos;
 
-	x = enemy->eny_p.x;
-	y = enemy->eny_p.y;
+	pos = enemy->eny_p;
 	if (enemy->is_alive)
 	{
 		if (sprite_index < 0 || sprite_index >= 3)
@@ -79,7 +77,7 @@ void	put_enemy(t_game *game, t_enemy *enemy, int sprite_index)
 	else
 		current_sprite = enemy->dead;
 	enemy->eny = create_sprite(game, current_sprite);
-	create_character(enemy->eny, game, x, y);
+	create_character(enemy->eny, game, pos.x, pos.y);
 	if (enemy->eny)
-		destroy_sprite(&enemy->eny, game->mlx);	
+		destroy_sprite(&enemy->eny, game->mlx);
 }

@@ -51,29 +51,29 @@ void	fill_map(t_game *game)
 
 void	check_type(t_game *game, char type, int x, int y)
 {
-		if (type == 'P')
-		{
-			game->map.player++;
-			game->map.start_p1_p.x = x * SZ;
-			game->map.start_p1_p.y = y * SZ;
-		}
-		else if (type == 'E')
-		{
-			init_exit(game);
-			game->map.exit++;
-			game->ext.ex_p.x = x * SZ;
-			game->ext.ex_p.y = y * SZ;
-		}
-		else if (type == 'C')
-		{
-			game->map.goblin++;
-			add_goblin_to_list(game, x * SZ, y * SZ);
-		}
-		else if (type == 'M')
-		{
-			game->map.enemy++;
-			add_enemy_to_list(game, x * SZ, y * SZ);
-		}
+	if (type == 'P')
+	{
+		game->map.player++;
+		game->map.start_p1_p.x = x * SZ;
+		game->map.start_p1_p.y = y * SZ;
+	}
+	else if (type == 'E')
+	{
+		init_exit(game);
+		game->map.exit++;
+		game->ext.ex_p.x = x * SZ;
+		game->ext.ex_p.y = y * SZ;
+	}
+	else if (type == 'C')
+	{
+		game->map.goblin++;
+		add_goblin_to_list(game, x * SZ, y * SZ);
+	}
+	else if (type == 'M')
+	{
+		game->map.enemy++;
+		add_enemy_to_list(game, x * SZ, y * SZ);
+	}
 }
 
 char	*ft_strcat(char *dest, const char *src)

@@ -15,7 +15,7 @@
 t_sprite	*create_sprite(t_game *game, char *sprite_path)
 {
 	t_sprite	*sprite;
-	
+
 	sprite = (t_sprite *)ft_calloc(1, sizeof(t_sprite));
 	if (!sprite)
 	{
@@ -126,7 +126,7 @@ void	put_tile(t_game *game, int x, int y)
 	if (!sprite_path)
 	{
 		gameover(game);
-		return;
+		return ;
 	}
 	sprite = create_sprite(game, sprite_path);
 	create_world(sprite, game, x, y);

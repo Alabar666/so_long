@@ -78,7 +78,7 @@ void	animate_end_screen(t_game *game)
 		resize_end(game, game->end_img, images[frame]);
 		render_end_screen(game);
 		if (game->end_img)
-		destroy_sprite(&game->end_img, game->mlx);
+			destroy_sprite(&game->end_img, game->mlx);
 		usleep(150000);
 		frame++;
 	}

@@ -40,8 +40,8 @@ void	battle_keys(int key, t_game *game)
 	}
 	else if (key == KEY_A || key == LEFT)
 	{
-		if (game->battle.btl_img) 
-            destroy_sprite(&game->battle.btl_img, game->mlx);
+		if (game->battle.btl_img)
+			destroy_sprite(&game->battle.btl_img, game->mlx);
 		if (game->battle.enemy_type == 'C')
 			game->battle.btl_img = create_sprite(game, CGBLATK);
 		else if (game->battle.enemy_type == 'M')
@@ -51,7 +51,7 @@ void	battle_keys(int key, t_game *game)
 	else if (key == KEY_D || key == RIGHT)
 	{
 		if (game->battle.btl_img)
-            destroy_sprite(&game->battle.btl_img, game->mlx);
+			destroy_sprite(&game->battle.btl_img, game->mlx);
 		if (game->battle.enemy_type == 'C')
 			game->battle.btl_img = create_sprite(game, CGBLRUN);
 		else if (game->battle.enemy_type == 'M')

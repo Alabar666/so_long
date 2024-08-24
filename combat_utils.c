@@ -69,7 +69,7 @@ void	resize_combat(t_game *game, t_sprite *resized_combat)
 
 void	close_battle(t_game *game)
 {
-	if(game->battle.btl_img)
+	if (game->battle.btl_img)
 		destroy_sprite(&game->battle.btl_img, game->mlx);
 	game->battle.gatk_path = NULL;
 	game->battle.grun_path = NULL;
@@ -78,10 +78,9 @@ void	close_battle(t_game *game)
 	game->battle.is_running = 0;
 	game->is_paused = 0;
 	if (game->battle.btl_img)
-    {
-        mlx_destroy_image(game->mlx, game->battle.btl_img);
-        free(game->battle.btl_img);
-        game->battle.btl_img = NULL;
-    }
+	{
+		mlx_destroy_image(game->mlx, game->battle.btl_img);
+		free(game->battle.btl_img);
+		game->battle.btl_img = NULL;
+	}
 }
-

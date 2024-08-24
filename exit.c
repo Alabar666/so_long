@@ -50,9 +50,9 @@ void	put_exit(t_game *game)
 		create_character(game->ext.bl, game, game->ext.ex_p.x, game->ext.ex_p.y
 			- 40);
 		if (game->ext.bl)
-			destroy_sprite(&game->ext.bl, game->mlx);		
+			destroy_sprite(&game->ext.bl, game->mlx);
 	}
 	frame_counter++;
 	if (frame_counter > 720)
-		frame_counter = 0;	
+		frame_counter = 0;
 }

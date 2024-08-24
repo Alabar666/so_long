@@ -55,7 +55,7 @@ static void	start_world(t_game *game)
 	if (!world->img)
 	{
 		gameover(game);
-		return;
+		return ;
 	}
 	world->addr = mlx_get_data_addr(world->img, &world->bits_per_pixel,
 			&world->line_length, &world->endian);
@@ -88,7 +88,7 @@ void	battle_load(t_game *game)
 	free(battle);
 }
 
-int	game_loop_hook(t_game	*game)
+int	game_loop_hook(t_game *game)
 {
 	if (!game->is_paused)
 		update_frame(game);

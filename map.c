@@ -21,8 +21,8 @@ void	read_map(char *file, t_game *game)
 	fd = open_map_file(file);
 	game->map.lines = count_lines(file);
 	map = get_next_line(fd);
-	if(!map)
-		game_error(fd, game);		
+	if (!map)
+		game_error(fd, game);
 	game->map.colun = ft_strlen(map) - 1;
 	mapfile = ft_calloc(sizeof(char), 10000);
 	if (!mapfile)
@@ -65,13 +65,14 @@ void	map_malloc(t_game *game)
 	int	i;
 
 	i = 0;
-	game->map.map = (t_tile **)ft_calloc(game->map.lines + 1, sizeof(t_tile *) * SZ);
+	game->map.map = (t_tile **)ft_calloc(game->map.lines + 1, sizeof(t_tile *)
+			* SZ);
 	if (!game->map.map)
 		game_error(0, game);
 	while (i < game->map.lines)
 	{
-		game->map.map[i] = (t_tile *)ft_calloc(game->map.colun + 1, sizeof(t_tile *)
-				* SZ);
+		game->map.map[i] = (t_tile *)ft_calloc(game->map.colun + 1,
+				sizeof(t_tile *) * SZ);
 		if (!game->map.map[i++])
 			game_error(0, game);
 	}

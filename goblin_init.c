@@ -27,7 +27,7 @@ void	add_goblin_to_list(t_game *game, int x, int y)
 	{
 		ft_printf("Error creating goblin.\n");
 		free_goblins(game->gbl);
-		return;
+		return ;
 	}
 	init_goblin(nw_goblin);
 	nw_goblin->gbl_p.x = x;

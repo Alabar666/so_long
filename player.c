@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hluiz-ma <hluiz-ma@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: hugodev <hugodev@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 20:10:30 by hluiz-ma          #+#    #+#             */
-/*   Updated: 2024/08/22 20:53:03 by hluiz-ma         ###   ########.fr       */
+/*   Updated: 2024/08/24 11:41:30 by hugodev          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	init_player(t_game *game)
 	game->p1.p1_p.x = game->map.start_p1_p.x;
 	game->p1.p1_p.y = game->map.start_p1_p.y;
 	game->p1.p1 = NULL;
-    game->p1.bl = NULL;
+	game->p1.bl = NULL;
 	game->p1.alive = 1;
 	game->p1.mv_dir = STAND;
 	game->p1.is_moving = 0;
@@ -32,8 +32,8 @@ void	init_player(t_game *game)
 	game->p1.last_update_time = clock();
 	game->p1.accumulated_time = 0;
 	game->p1.p1 = NULL;
-    game->p1.bl = NULL;
-    game->p1.dest_p = (t_pos){0, 0};
+	game->p1.bl = NULL;
+	game->p1.dest_p = (t_pos){0, 0};
 }
 
 void	init_player_sprites(t_game *game)
@@ -56,11 +56,9 @@ void	init_player_sprites(t_game *game)
 void	put_player(t_game *game, int sprite_index)
 {
 	char	*current_sprite;
-	int		x;
-	int		y;
+	t_pos	pos;
 
-	x = game->p1.p1_p.x;
-	y = game->p1.p1_p.y;
+	pos = game->p1.p1_p;
 	if (game->p1.alive)
 	{
 		if (sprite_index < 0 || sprite_index >= 3)
@@ -79,7 +77,7 @@ void	put_player(t_game *game, int sprite_index)
 	else
 		current_sprite = PDEAD;
 	game->p1.p1 = create_sprite(game, current_sprite);
-	create_character(game->p1.p1, game, x, y);
+	create_character(game->p1.p1, game, pos.x, pos.y);
 	if (game->p1.p1)
 		destroy_sprite(&game->p1.p1, game->mlx);
 }
