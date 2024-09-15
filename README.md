@@ -6,6 +6,10 @@ A 2D game project developed for the 42 School, using the MiniLibX library.
 
 The so_long project is a simple 2D game where the player must navigate through a map, collect items, and reach the exit while avoiding enemies. The game was developed as part of the 42 School curriculum, with the objective of understanding basic game mechanics and graphical rendering using the MiniLibX library.
 
+### Reference to Commented Branches
+
+For more details about the game, please refer to [this commented branch](https://github.com/Alabar666/so_long/tree/Commented-so-long).
+
 ## Example Gameplay
 
 ### Stand Animation
