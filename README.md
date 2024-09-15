@@ -1,3 +1,11 @@
+## Example Gameplay
+
+### Stand Animation
+
+![Stand Animation](gifs/stand.gif)
+
+The character's idle animation when not moving.
+
 # so_long
 
 A 2D game project developed for the 42 School, using the MiniLibX library.
@@ -9,14 +17,6 @@ The so_long project is a simple 2D game where the player must navigate through a
 ### Reference to Commented Branches
 
 For more details about the game, please refer to [this commented branch](https://github.com/Alabar666/so_long/tree/Commented-so-long).
-
-## Example Gameplay
-
-### Stand Animation
-
-![Stand Animation](gifs/stand.gif)
-
-The character's idle animation when not moving.
 
 ### Kill Goblin Animation
 
